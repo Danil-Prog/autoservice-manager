@@ -1,0 +1,43 @@
+version: '3.7'
+
+services:
+  psql:
+    container_name: psql_server
+    image: postgres:16.1
+    environment:
+      POSTGRES_DB: "${DB_NAME}"
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+    networks:
+      - network-manager
+    ports:
+      - "5432:5432"
+
+  # --------BACKEND_SERVICE--------
+
+  backend:
+    container_name: backend_service
+    image: autoservice-manager/backend:latest
+    environment:
+      gateway.jwt.secret: ${JWT_ACCESS_SECRET}
+      gateway.jwt.refresh: ${JWT_REFRESH_SECRET}
+      gateway.jwt.expiration_access_token_in_mills: ${JWT_EXPIRATION_ACCESS_TOKEN_IN_MILLS}
+      gateway.jwt.expiration_refresh_token_in_mills: ${JWT_EXPIRATION_REFRESH_TOKEN_IN_MILLS}
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://psql_server:5432/${DB_NAME}"
+      SPRING_DATASOURCE_USERNAME: "${DB_USERNAME}"
+      SPRING_DATASOURCE_PASSWORD: "${DB_PASSWORD}"
+    ports:
+      - "8080:8080"
+    networks:
+      - network-manager
+    depends_on:
+      - psql
+    links:
+      - "psql"
+    restart: always
+
+# -------------------------------
+
+networks:
+  network-manager:
+    driver: bridge
