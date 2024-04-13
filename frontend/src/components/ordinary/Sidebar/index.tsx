@@ -3,7 +3,6 @@ import {inject} from "mobx-react";
 import {observer} from "mobx-react-lite";
 import React from "react";
 import {IClientStore} from "~/core/stores/Client.store";
-
 interface ISidebarProps {
     clientStore: IClientStore;
 }
@@ -17,8 +16,21 @@ const Sidebar: React.FC<ISidebarProps> = ({ clientStore }) => {
 
   return (
       <div className={styles.container}>
+          <div className={styles.search}>
+              <select className={styles.searchSelect}>
+                  <option>Номер машины</option>
+                  <option>Номер телефона</option>
+                  <option>Фио</option>
+              </select>
+              <input style={styles.searchInput} type="text"/>
+          </div>
           {clients?.map((client, index) => (
-              <div key={index}>{client.name}</div>
+              <div key={index} className={styles.clientItem}>
+                  <p style={{flex: 1, paddingLeft: 5}}>{client.reg}</p>
+                  <p>{client.brand}</p>
+                  <p>{client.model}</p>
+                  <p style={{paddingRight: 5}}>{client.name}</p>
+              </div>
           ))}
       </div>
   )

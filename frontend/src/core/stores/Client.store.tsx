@@ -18,12 +18,9 @@ class ClientStore {
 
     receiveListClients = () => {
         try {
-            // console.log(this.isLoading)
             this.setLoading(true);
             // const response = await $api.post<AuthResponse>('/authenticate');
-            // debugger
             const response = require('./__mock__/data.js').data['/clients'];
-            console.log('resp -->', response);
             runInAction(() => {
                 this.clients = response;
             })
