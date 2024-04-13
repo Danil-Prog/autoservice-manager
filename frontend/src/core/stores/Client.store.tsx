@@ -1,6 +1,5 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import { toast } from 'react-hot-toast';
-import $api from "~/core/services/http";
 
 class ClientStore {
     isLoading: boolean = false;

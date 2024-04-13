@@ -1,8 +1,4 @@
-import $api from '~/core/services/http';
-import { AuthResponse } from '~/core/models/response/AuthResponse';
-import { ROUTE_PREFIX } from '~/core/config/api.config';
 import React from 'react';
-import { toast } from 'react-hot-toast';
 import {inject} from "mobx-react";
 import {observer} from "mobx-react-lite";
 import {IClientStore} from "~/core/stores/Client.store";
@@ -16,14 +12,6 @@ interface IHomePage {
 
 const HomePage: React.FC<IHomePage> = ({ clientStore }) => {
   const { currentClient } = clientStore
-
-  const handleClick = async () => {
-    try {
-      await $api.get<AuthResponse>(`${ROUTE_PREFIX}/user/test`);
-    } catch (e: any) {
-      toast.error(`${e?.response?.data?.message}`);
-    }
-  };
 
   React.useEffect(() => {}, [currentClient])
   React.useEffect(() => {}, [])
