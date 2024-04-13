@@ -9,12 +9,13 @@ interface ILogPanel {
 
 const LogPanel: React.FC<ILogPanel> = ({}) => {
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>Header</div>
-      <div className={styles.content}>
-        LOGPANEL
-      </div>
-    </div>
+    // <div className={styles.container}>
+    //   <div className={styles.header}>Header</div>
+    //   <div className={styles.content}>
+    //     LOGPANEL
+    //   </div>
+    // </div>
+      <></>
   );
 };
 

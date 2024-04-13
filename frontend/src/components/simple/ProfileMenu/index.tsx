@@ -14,25 +14,21 @@ interface IProfileMenuProps {
 
 const ProfileMenu: React.FC<IProfileMenuProps> = ({ authStore }) => {
   const [isShow, setIsShow] = React.useState(false);
-  const pkg = require('../../../../package.json');
   const handleClickLogout = async () => {
     await localStorage.removeItem('token');
     await authStore?.setAuth(false);
   };
   const ref = React.useRef(null);
   const handleClickOutside = (event) => {
-    if (ref.current && !ref.current.contains(event.target)) {
-      console.log('Клик вне компонента');
-      setIsShow(false);
-      // Здесь можно добавить логику, которая должна выполняться при клике вне компонента
-    }
+      if (ref.current && !ref.current.contains(event.target)) {
+        setIsShow(false);
+      }
   };
 
   React.useEffect(() => {
-    // Добавляем обработчик событий при монтировании компонента
+    // Добавляем обработчик нажатия вне компонента при монтировании компонента
     document.addEventListener('mousedown', handleClickOutside);
-
-    // Удаляем обработчик событий при размонтировании компонента
+    // Удаляем обработчик нажатия вне компонента при размонтировании компонента
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
@@ -62,8 +58,7 @@ const ProfileMenu: React.FC<IProfileMenuProps> = ({ authStore }) => {
               <IconLogout />
               <p>Выход</p>
             </a>
-
-            <p className={styles.version}>Версия приложения: {pkg.version}</p>
+            <p className={styles.version}>Версия приложения: {process.env.REACT_APP_VERSION}</p>
           </motion.div>
           : null}
       </AnimatePresence>

@@ -28,7 +28,7 @@ const App: React.FC<IAppProps> = observer(({ authStore, themeStore }) => {
   }, []);
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
-      authStore.checkAuth();
+      // authStore.checkAuth();
       authStore.setAuth(true);
     } else {
       authStore.setAuth(false);

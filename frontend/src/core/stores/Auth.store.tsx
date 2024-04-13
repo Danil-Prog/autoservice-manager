@@ -53,23 +53,6 @@ class AuthStore {
     }
   }
 
-  async checkAuth() {
-    this.setLoading(true);
-    try {
-      const response = await axios.get<AuthResponse>(`${REACT_APP_BASE_URL}/auth/refresh`, { withCredentials: true });
-      localStorage.setItem('token', response.data.token);
-      this.setAuth(true);
-    } catch (error) {
-      if (error.response && error.response.status == 401) {
-        localStorage.removeItem('token');
-        this.setAuth(false);
-      }
-      console.error('*---checkAuth', error);
-    } finally {
-      this.setLoading(false);
-    }
-  }
-
   public clearAll() {
     this.isAuthenticated = false;
   }
