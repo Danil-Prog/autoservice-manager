@@ -9,7 +9,8 @@ interface ISidebarProps {
 
 const Sidebar: React.FC<ISidebarProps> = ({ clientStore }) => {
 
-    const { receiveListClients, clients } = clientStore;
+    const { receiveListClients, clients, receiveCurrentClient } = clientStore;
+
     React.useEffect(() => {
         receiveListClients()
     }, [])
@@ -25,7 +26,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ clientStore }) => {
               <input style={styles.searchInput} type="text"/>
           </div>
           {clients?.map((client, index) => (
-              <div key={index} className={styles.clientItem}>
+              <div key={index} className={styles.clientItem} onClick={() => receiveCurrentClient(client.id)}>
                   <p style={{flex: 1, paddingLeft: 5}}>{client.reg}</p>
                   <p>{client.brand}</p>
                   <p>{client.model}</p>
