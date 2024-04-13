@@ -1,0 +1,14 @@
+.baseButton {
+  padding: 7px 30px 7px 30px;
+  border-radius: 5px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all .2s ease-in-out;
+  background-color: var(--container);
+
+  &:hover {
+    background-color: var(--primary);
+    color: var(--text_light);
+  }
+}
