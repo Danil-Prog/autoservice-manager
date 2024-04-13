@@ -16,8 +16,8 @@ import StaticElements from '~/components/simple/StaticElements';
 interface IAppProps {
 }
 
-
 const App: React.FC<IAppProps> = observer(({ authStore, themeStore }) => {
+
   React.useEffect(() => {
     // Установите тему по умолчанию при загрузке приложения
     if (localStorage.getItem('theme')?.length) {
@@ -26,14 +26,15 @@ const App: React.FC<IAppProps> = observer(({ authStore, themeStore }) => {
       document.body.dataset.theme = themeStore.isDarkMode ? 'dark' : 'light';
     }
   }, []);
+
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
-      // authStore.checkAuth();
       authStore.setAuth(true);
     } else {
       authStore.setAuth(false);
     }
   }, [authStore.isAuthenticated]);
+
   return (
     <div className="App">
       <Toaster
