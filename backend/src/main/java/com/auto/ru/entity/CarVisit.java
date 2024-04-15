@@ -1,5 +1,6 @@
 package com.auto.ru.entity;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -35,7 +36,7 @@ public class CarVisit {
     @Column(name = "date_visit")
     private Instant visitDate = Instant.now();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     @Column(name = "jobs")
     private List<Job> jobs;
 
