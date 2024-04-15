@@ -16,7 +16,8 @@
   display: flex;
   flex-direction: column;
   gap: 3px;
-  padding: 5px;
+  padding: 0;
+  overflow: hidden;
   border-radius: 5px;
   animation: heightZeroToFull .5s;
 
@@ -42,6 +43,8 @@
     justify-content: space-between;
     gap: 10px;
     max-height: 40px;
+    cursor: pointer;
+    padding: 5px;
 
     svg {
       width: 20px;
@@ -58,6 +61,14 @@
     label {
       display: flex;
       justify-self: flex-end;
+    }
+
+    &:hover {
+      background-color: var(--hover);
+    }
+
+    &:active {
+      background-color: var(--active);
     }
   }
 

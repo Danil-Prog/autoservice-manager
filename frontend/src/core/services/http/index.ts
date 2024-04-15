@@ -1,11 +1,9 @@
 import axios from 'axios';
-import { REACT_APP_BASE_URL } from '~/core/config/api.config';
-import { AuthResponse } from '~/core/models/response/AuthResponse';
 import { toast } from 'react-hot-toast';
 
 const $api = axios.create({
   withCredentials: true,
-  baseURL: REACT_APP_BASE_URL
+  baseURL: process.env.REACT_APP_BASE_URL,
 });
 
 $api.interceptors.request.use((config) => {
@@ -22,20 +20,13 @@ $api.interceptors.request.use((config) => {
 
 $api.interceptors.response.use((config) => {
   console.log(`<--- ${config.config.url}`, config);
+  console.log(`<--- config.data`, config.data);
   return config;
 }, async (error) => {
   console.error(`<--- ${error.config.url}`, error);
-  const originalRequest = error.config;
   if (error.response.status == 401 && error.config && !error.config._isRetry) {
-    originalRequest._isRetry = true;
-    try {
-      const response = await axios.get<AuthResponse>(`${REACT_APP_BASE_URL}/auth/refresh`, { withCredentials: true });
-      localStorage.setItem('token', response.data.token);
-      return $api.request(originalRequest);
-    } catch (e) {
-      console.log(`<--- ${e}`);
-      localStorage.removeItem('token');
-    }
+    toast.error(`${error.response.message}`);
+    localStorage.removeItem('token');
   } else {
     toast.success(`${error.response.message}`);
   }

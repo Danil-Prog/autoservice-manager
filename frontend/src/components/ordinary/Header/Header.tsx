@@ -22,12 +22,11 @@ const Header: React.FC<IHeaderProps> = ({ authStore }) => {
     <>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <div className={styles.firstLetters}>VM</div>
-          <div className={styles.mainLetters}>Control</div>
+          <div className={styles.firstLetters}>Autoservice</div>
+          <div className={styles.mainLetters}> Manager</div>
         </div>
         <div className={styles.rightMenu}>
           <ProfileMenu />
-
         </div>
       </div>
     </>

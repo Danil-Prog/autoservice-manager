@@ -50,13 +50,10 @@ const AuthPage: React.FC<IAuthPage> = ({ authStore }) => {
 
   return (
     <div className={styles.container}>
-      <form
-        className={styles.formContainer}
-      >
+      <form className={styles.formContainer}>
         <BaseInput onChange={handleChangeUsername} name={'username'} title={'username'} />
         <BaseInput onChange={handleChangePassword} name={'password'} type={'password'} title={'password'} />
         <BaseButton type={'submit'} value={'Вход'} onClick={() => signIn(username, password)} />
-
       </form>
       {isModalCookie ?
         <CookiesModal isModalCookie={isModalCookie} setIsModalCookie={handleClickCookie} />

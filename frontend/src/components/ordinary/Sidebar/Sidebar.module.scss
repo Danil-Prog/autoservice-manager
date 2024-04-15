@@ -2,6 +2,30 @@
   background-color: var(--container);
   display: flex;
   flex: 1;
-  height: 60dvh;
-  padding: 10px;
+  flex-direction: column;
+  gap: 5px;
+
+  .search {
+    .searchSelect {
+
+    }
+    .searchInput {
+
+    }
+  }
+
+  .carItem {
+    flex: 1;
+    max-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    cursor: pointer;
+    gap: 4px;
+    background-color: var(--background);
+
+    &:hover {
+      background-color: var(--hover);
+    }
+  }
 }

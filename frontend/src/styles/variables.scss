@@ -1,17 +1,21 @@
 :root {
-  --primary: #ED8D35;
+  --primary: #3e66e1;
   --background: #cbcbcb;
   --container: #ffffff;
   --text-light: #ffffff;
   --text-dark: #000000;
   --text: #000000;
   --shadow-dark: rgba(0, 0, 0, 0.32);
+  --hover: rgba(0, 0, 0, 0.16);
+  --active: rgba(0, 0, 0, 0.20);
 }
 
 [data-theme="dark"] {
-  --primary: #BB6F29;
+  --primary: #3c56a5;
   --background: #303030;
   --container: #3E3E3E;
   --text: #ffffff;
   --shadow-dark: rgba(255, 255, 255, 0.32);
+  --hover: rgba(0, 0, 0, 0.16);
+  --active: rgba(0, 0, 0, 0.20);
 }
