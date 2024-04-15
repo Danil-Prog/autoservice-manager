@@ -1,4 +1,4 @@
-type TClients = {
+type TCars = {
     id: number;
     name: string;
     lastname: string;
@@ -11,4 +11,23 @@ type TClients = {
     color: string;
     descriptionCar: string;
     card: string;
+}
+
+type TAttachment = {
+    id: number;
+    name: string;
+}
+
+type TWorks = {
+    id: number;
+    name: string;
+    price: string;
+    date: string;
+}
+
+type TVisits = {
+    id: number;
+    description: string;
+    attachments: TAttachment[];
+    works: TWorks[];
 }

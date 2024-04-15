@@ -1,11 +1,9 @@
 import axios from 'axios';
-import { REACT_APP_BASE_URL } from '~/core/config/api.config';
-import { AuthResponse } from '~/core/models/response/AuthResponse';
 import { toast } from 'react-hot-toast';
 
 const $api = axios.create({
   withCredentials: true,
-  baseURL: REACT_APP_BASE_URL
+  baseURL: process.env.REACT_APP_BASE_URL,
 });
 
 $api.interceptors.request.use((config) => {

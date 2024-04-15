@@ -2,17 +2,17 @@ import styles from './Sidebar.module.scss';
 import {inject} from "mobx-react";
 import {observer} from "mobx-react-lite";
 import React from "react";
-import {IClientStore} from "~/core/stores/Client.store";
+import {ICarStore} from "~/core/stores/Car.store";
 interface ISidebarProps {
-    clientStore: IClientStore;
+    carStore: ICarStore;
 }
 
-const Sidebar: React.FC<ISidebarProps> = ({ clientStore }) => {
+const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
 
-    const { receiveListClients, clients, receiveCurrentClient } = clientStore;
+    const { receiveListCars, cars, receiveCurrentCar } = carStore;
 
     React.useEffect(() => {
-        receiveListClients()
+        receiveListCars()
     }, [])
 
   return (
@@ -25,16 +25,16 @@ const Sidebar: React.FC<ISidebarProps> = ({ clientStore }) => {
               </select>
               <input style={styles.searchInput} type="text"/>
           </div>
-          {clients?.map((client, index) => (
-              <div key={index} className={styles.clientItem} onClick={() => receiveCurrentClient(client.id)}>
-                  <p style={{flex: 1, paddingLeft: 5}}>{client.reg}</p>
-                  <p>{client.brand}</p>
-                  <p>{client.model}</p>
-                  <p style={{paddingRight: 5}}>{client.name}</p>
+          {cars?.map((car, index) => (
+              <div key={index} className={styles.carItem} onClick={() => receiveCurrentCar(car.id)}>
+                  <p style={{flex: 1, paddingLeft: 5}}>{car.reg}</p>
+                  <p>{car.brand}</p>
+                  <p>{car.model}</p>
+                  <p style={{paddingRight: 5}}>{car.name}</p>
               </div>
           ))}
       </div>
   )
 }
 
-export default inject('clientStore')(observer(Sidebar));
+export default inject('carStore')(observer(Sidebar));

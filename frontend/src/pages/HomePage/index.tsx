@@ -1,21 +1,21 @@
 import React from 'react';
 import {inject} from "mobx-react";
 import {observer} from "mobx-react-lite";
-import {IClientStore} from "~/core/stores/Client.store";
+import {ICarStore} from "~/core/stores/Car.store";
 import styles from './HomePage.module.scss'
-import ClientCard from "~/components/ordinary/ClientCard/ClientCard";
-import ClientCardInfo from "~/components/ordinary/ClientCardInfo/ClientCardInfo";
+import ClientCard from "~/components/ordinary/ClientCard/CarCard";
+import ClientCardInfo from "~/components/ordinary/ClientCardInfo/CarCardInfo";
 
 interface IHomePage {
-  clientStore: IClientStore;
+  carStore: ICarStore;
 }
 
-const HomePage: React.FC<IHomePage> = ({ clientStore }) => {
-  const { currentClient } = clientStore
+const HomePage: React.FC<IHomePage> = ({ carStore }) => {
+  const { currentCar } = carStore
 
-  React.useEffect(() => {}, [currentClient])
+  React.useEffect(() => {}, [currentCar])
   React.useEffect(() => {}, [])
-  console.log(JSON.stringify(clientStore.currentClient));
+  console.log(JSON.stringify(carStore.currentCar));
 
   return (
     <div className={styles.container}>
@@ -25,4 +25,4 @@ const HomePage: React.FC<IHomePage> = ({ clientStore }) => {
   );
 };
 
-export default inject('clientStore')(observer(HomePage));
+export default inject('carStore')(observer(HomePage));

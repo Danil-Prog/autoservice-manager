@@ -1,8 +1,5 @@
 import { makeAutoObservable } from 'mobx';
-import axios from 'axios';
-import { REACT_APP_BASE_URL } from '~/core/config/api.config';
 import AuthService from '~/core/services/AuthService';
-import { AuthResponse } from '~/core/models/response/AuthResponse';
 import { toast } from 'react-hot-toast';
 
 class AuthStore {
