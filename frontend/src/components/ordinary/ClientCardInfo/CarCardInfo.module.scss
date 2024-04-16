@@ -25,5 +25,45 @@
     justify-content: center;
     background-color: #d88787;
     width: 100%;
+
+    .jobsContainer {
+      flex: 1;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background-color: #2c52b5;
+
+      .job {
+        flex: 9;
+        background-color: #abb8d8;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .jobs {
+          display: flex;
+          align-items: flex-start;
+          justify-content: space-around;
+          width: 100%;
+          background-color: rgba(0, 0, 0, 0.39);
+        }
+        .addJob {
+          background-color: rgba(0, 0, 0, 0.39);
+        }
+      }
+      .comment {
+        flex: 4;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      button {
+        flex: 1;
+      }
+    }
   }
 }

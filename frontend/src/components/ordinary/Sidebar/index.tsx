@@ -3,6 +3,7 @@ import {inject} from "mobx-react";
 import {observer} from "mobx-react-lite";
 import React from "react";
 import {ICarStore} from "~/core/stores/Car.store";
+
 interface ISidebarProps {
     carStore: ICarStore;
 }
@@ -17,8 +18,9 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
         year: '',
         bodyNumber: '',
         oil: '',
-        odometer: 0
+        odometer: null
     })
+    const [isShowFrom, setIsShowFrom] = React.useState(false);
 
     React.useEffect(() => {
         receiveListCars()
@@ -36,6 +38,9 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
         e.preventDefault();
         console.log(car);
         createCar(car)
+
+        setIsShowFrom(false)
+
         setCar({
             licencePlate: '',
             stamp: '',
@@ -43,7 +48,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
             year: '',
             bodyNumber: '',
             oil: '',
-            odometer: 0
+            odometer: null
         });
     };
 
@@ -56,6 +61,8 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                   <option>Фио</option>
               </select>
               <input style={styles.searchInput} type="text"/>
+              <button onClick={() => setIsShowFrom(!isShowFrom)}>Добавить машину +</button>
+              {isShowFrom ?
               <form onSubmit={handleSubmit} className={styles.createCarForm}>
                   <label>
                       <p>Номер машины:</p>
@@ -116,12 +123,13 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                       <input
                           type="text"
                           name="odometer"
-                          value={car.odometer}
+                          value={car.odometer ?? ''}
                           onChange={handleChange}
                       />
                   </label>
                   <button type="submit">Submit</button>
               </form>
+              : null}
           </div>
           {cars?.map((car, index) => (
               <div key={index} className={styles.carItem} onClick={() => receiveCurrentCar(car.id)}>
