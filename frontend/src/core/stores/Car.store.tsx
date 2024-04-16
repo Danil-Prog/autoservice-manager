@@ -1,10 +1,12 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import { toast } from 'react-hot-toast';
+import $api from "~/core/services/http";
+import {AuthResponse, CarResponse} from "~/core/models/response/AuthResponse";
 
 class CarStore {
     isLoading: boolean = false;
-    cars: TCars[] = [];
-    currentCar: TCars;
+    cars: TCar[] = [];
+    currentCar: TCar;
     currentCarVisits: TVisits[] = []
 
     constructor() {
@@ -15,18 +17,25 @@ class CarStore {
         this.isLoading = bool;
     }
     
-    createCar = (Car: TCars) => {
-        
+    createCar = async (car: any) => {
+        try {
+            await $api.post<CarResponse>('/car', {
+                body: car,
+            });
+        } catch (error) {
+            toast.error(`${error}`);
+        }
+
     }
 
     // Получение списка машин
-    receiveListCars = () => {
+    receiveListCars = async () => {
         try {
             this.setLoading(true);
-            // const response = await $api.post<AuthResponse>('/Cars');
-            const response = require('./__mock__/data.js').data['/clients'];
+            const response = await $api.post<CarResponse>('/car');
+            // const response = require('./__mock__/data.js').data['/clients'];
             runInAction(() => {
-                this.cars = response;
+                this.cars = response.content;
             })
         } catch (error) {
             console.error('*---receiveListCars', error);

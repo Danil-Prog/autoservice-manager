@@ -1,4 +1,7 @@
 export interface AuthResponse {
   token: string;
-  refresh: string;
+}
+
+export interface CarResponse {
+  content: TCar[];
 }

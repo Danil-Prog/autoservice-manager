@@ -1,16 +1,27 @@
-type TCars = {
+type TCar = {
     id: number;
-    name: string;
-    lastname: string;
-    midname: string;
-    reg: string;
-    brand: string;
+    licencePlate: string;
+    stamp: string;
     model: string;
     year: string;
-    vin: string;
-    color: string;
-    descriptionCar: string;
-    card: string;
+    bodyNumber: string;
+    oil: string;
+    odometer: number;
+    carVisit: TCarVisit[]
+}
+
+type TCarVisit = {
+    visitDate: string;
+    comment: string;
+    carId: number;
+    jobs: TJobs[];
+}
+
+type TJobs = {
+    type: string;
+    description: string;
+    price: number;
+    isDone: boolean;
 }
 
 type TAttachment = {

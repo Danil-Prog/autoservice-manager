@@ -9,11 +9,43 @@ interface ISidebarProps {
 
 const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
 
-    const { receiveListCars, cars, receiveCurrentCar } = carStore;
+    const { receiveListCars, cars, receiveCurrentCar, createCar } = carStore;
+    const [car, setCar] = React.useState({
+        licencePlate: '',
+        stamp: '',
+        model: '',
+        year: '',
+        bodyNumber: '',
+        oil: '',
+        odometer: 0
+    })
 
     React.useEffect(() => {
         receiveListCars()
     }, [])
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setCar(prevCar => ({
+            ...prevCar,
+            [name]: value,
+        }));
+    };
+
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(car);
+        createCar(car)
+        setCar({
+            licencePlate: '',
+            stamp: '',
+            model: '',
+            year: '',
+            bodyNumber: '',
+            oil: '',
+            odometer: 0
+        });
+    };
 
   return (
       <div className={styles.container}>
@@ -24,6 +56,72 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                   <option>Фио</option>
               </select>
               <input style={styles.searchInput} type="text"/>
+              <form onSubmit={handleSubmit} className={styles.createCarForm}>
+                  <label>
+                      <p>Номер машины:</p>
+                      <input
+                          type="text"
+                          name="licencePlate"
+                          value={car.licencePlate}
+                          onChange={handleChange}
+                      />
+                  </label>
+                  <label>
+                      <p>Марка:</p>
+                      <input
+                          type="text"
+                          name="stamp"
+                          value={car.stamp}
+                          onChange={handleChange}
+                      />
+                  </label>
+                  <label>
+                      <p>Модель:</p>
+                      <input
+                          type="text"
+                          name="model"
+                          value={car.model}
+                          onChange={handleChange}
+                      />
+                  </label>
+                  <label>
+                      <p>VIN:</p>
+                      <input
+                          type="text"
+                          name="bodyNumber"
+                          value={car.bodyNumber}
+                          onChange={handleChange}
+                      />
+                  </label>
+                  <label>
+                      <p>Год:</p>
+                      <input
+                          type="text"
+                          name="year"
+                          value={car.year}
+                          onChange={handleChange}
+                      />
+                  </label>
+                  <label>
+                      <p>Масло:</p>
+                      <input
+                          type="text"
+                          name="oil"
+                          value={car.oil}
+                          onChange={handleChange}
+                      />
+                  </label>
+                  <label>
+                      <p>Пробег:</p>
+                      <input
+                          type="text"
+                          name="odometer"
+                          value={car.odometer}
+                          onChange={handleChange}
+                      />
+                  </label>
+                  <button type="submit">Submit</button>
+              </form>
           </div>
           {cars?.map((car, index) => (
               <div key={index} className={styles.carItem} onClick={() => receiveCurrentCar(car.id)}>
