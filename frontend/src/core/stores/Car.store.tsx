@@ -1,7 +1,7 @@
 import {makeAutoObservable, runInAction} from 'mobx';
 import { toast } from 'react-hot-toast';
 import $api from "~/core/services/http";
-import {AuthResponse, CarResponse} from "~/core/models/response/AuthResponse";
+import {CarResponse} from "~/core/models/response/AuthResponse";
 
 class CarStore {
     isLoading: boolean = false;
@@ -32,10 +32,10 @@ class CarStore {
     receiveListCars = async () => {
         try {
             this.setLoading(true);
-            const response = await $api.post<CarResponse>('/car');
-            // const response = require('./__mock__/data.js').data['/clients'];
+            // const response = await $api.post<CarResponse>('/car');
+            const response = require('./__mock__/data.js').data['/clients'];
             runInAction(() => {
-                this.cars = response.content;
+                this.cars = response;
             })
         } catch (error) {
             console.error('*---receiveListCars', error);

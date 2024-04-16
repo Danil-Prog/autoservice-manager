@@ -1,0 +1,16 @@
+.carItem {
+  flex: 1;
+  max-height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  cursor: pointer;
+  gap: 4px;
+  margin: 5px;
+  border: 1px solid #9fb8ff;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: var(--hover);
+  }
+}
