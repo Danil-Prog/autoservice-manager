@@ -13,11 +13,15 @@ interface ICarCardInfo {
 
 const CarCardInfo: React.FC<ICarCardInfo> = ({ carStore }) => {
     const [isShowFormVisit, setShowFormVisit] = React.useState(false);
+    const { currentVisit, setCurrentVisit } = carStore
     return (
         <div className={styles.container}>
             <div className={styles.header}>
                 <div className={styles.addVisit}>
-                    <Button onClick={() => setShowFormVisit(!isShowFormVisit)} variant="outlined">{isShowFormVisit ? 'Назад' : 'Новое посещение'}</Button>
+                    {currentVisit ?
+                        <Button onClick={() => setCurrentVisit(null)} variant="outlined">Назад</Button>
+                        : <Button onClick={() => setShowFormVisit(!isShowFormVisit)} variant="outlined">{isShowFormVisit ? 'Назад' : 'Новое посещение'}</Button>}
+
                 </div>
             </div>
             <Divider />

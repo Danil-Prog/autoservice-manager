@@ -10,8 +10,8 @@ interface IAddVisit {
 }
 
 const AddVisit: React.FC<IAddVisit> = ({ carStore }) => {
-    const { currentCar } = carStore
-    const [formData, setFormData] = React.useState({
+    const { currentCar, currentVisit } = carStore
+    const [formData, setFormData] = React.useState(currentVisit ?? {
         comment: '',
         carId: currentCar?.id,
         jobs: [
@@ -70,9 +70,9 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore }) => {
                                         <MenuItem value="">
                                             <em>None</em>
                                         </MenuItem>
-                                        <MenuItem value={10}>Ten</MenuItem>
-                                        <MenuItem value={20}>Twenty</MenuItem>
-                                        <MenuItem value={30}>Thirty</MenuItem>
+                                        <MenuItem value={'Работа 1'}>Ten</MenuItem>
+                                        <MenuItem value={'Работа 2'}>Twenty</MenuItem>
+                                        <MenuItem value={'Работа 3'}>Thirty</MenuItem>
                                     </Select>
                                 </FormControl>
                                 <TextField
@@ -106,7 +106,6 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore }) => {
                         // label="Описание"
                         multiline
                         rows={6}
-                        defaultValue=""
                         fullWidth
                         placeholder={'Описание'}
                         name="comment"
