@@ -18,7 +18,7 @@ class CarStore {
         this.isLoading = bool;
     }
     
-    createCar = async (car: any) => {
+    createCar = async (car: TCar) => {
         try {
             await $api.post<CarResponse>('/car', {
                 body: car,
@@ -27,6 +27,15 @@ class CarStore {
             toast.error(`${error}`);
         }
 
+    }
+
+    deleteCar = async (id: number) => {
+        try {
+            await $api.delete<CarResponse>(`/car?id=${id}`);
+            toast.success(`Операция выполнена успешно`);
+        } catch (error) {
+            toast.error(`${error}`);
+        }
     }
 
     // Получение списка машин
