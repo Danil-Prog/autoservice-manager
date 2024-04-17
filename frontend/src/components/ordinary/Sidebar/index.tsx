@@ -7,6 +7,20 @@ import {AnimatePresence, motion} from "framer-motion";
 import {IconDoubleArrow} from "~/components/icons/IconDoubleArrow";
 import {IconArrow} from "~/components/icons/IconArrow";
 import CarItem from "~/components/simple/ListItem/CarItem";
+import {
+    Backdrop,
+    Box,
+    Button,
+    Fade,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Modal,
+    Select,
+    TextField,
+    Typography
+} from "@mui/material";
+import ModalAddCar from "~/components/smart/ModalAddCar/ModalAddCar";
 
 interface ISidebarProps {
     carStore: ICarStore;
@@ -39,23 +53,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
     };
 
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log(car);
-        createCar(car)
 
-        setIsShowFrom(false)
-
-        setCar({
-            licencePlate: '',
-            stamp: '',
-            model: '',
-            year: '',
-            bodyNumber: '',
-            oil: '',
-            odometer: null
-        });
-    };
 
     const sidebarVariants = {
         open: { opacity: 1, width: '400px' },
@@ -67,6 +65,8 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
         setSelectedItem(item);
         receiveCurrentCar(item.id)
     };
+    const [age, setAge] = React.useState('');
+
 
   return (
       <div style={{overflow: 'hidden', backgroundColor: '#fff'}}>
@@ -95,90 +95,41 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                           }}
                       >
                           <div className={styles.search}>
-                              <select className={styles.searchSelect}>
-                                  <option>Номер машины</option>
-                                  <option>Номер телефона</option>
-                                  <option>Фио</option>
-                              </select>
-                              <input className={styles.searchInput} type="text" placeholder={'Поиск...'}/>
+                              <FormControl variant="standard" sx={{m: 1, minWidth: 120}}>
+                                  <InputLabel id="demo-simple-select-standard-label">Поиск по...</InputLabel>
+                                  <Select
+                                      labelId="demo-simple-select-standard-label"
+                                      id="demo-simple-select-standard"
+                                      value={age}
+                                      onChange={handleChange}
+                                      label="Age"
+
+                                  >
+                                      <MenuItem value="">
+                                          <em>None</em>
+                                      </MenuItem>
+                                      <MenuItem value={10}>Номер машины</MenuItem>
+                                      <MenuItem value={20}>Номер телефона</MenuItem>
+                                      <MenuItem value={30}>Фио</MenuItem>
+                                  </Select>
+                              </FormControl>
+                              {/*<select className={styles.searchSelect}>*/}
+                              {/*    <option>Номер машины</option>*/}
+                              {/*    <option>Номер телефона</option>*/}
+                              {/*    <option>Фио</option>*/}
+                              {/*</select>*/}
+                              <TextField id="standard-basic" label="Поиск" variant="standard"/>
                           </div>
-                          <button
-                              onClick={() => setIsShowFrom(!isShowFrom)}
-                              className={styles.addCar}
-                          >
-                              Добавить машину +
-                          </button>
-                          {isShowFrom ?
-                              <form
-                                  onSubmit={handleSubmit}
-                                  className={styles.createCarForm}
-                              >
-                                  <label>
-                                      <p>Номер машины:</p>
-                                      <input
-                                          type="text"
-                                          name="licencePlate"
-                                          value={car.licencePlate}
-                                          onChange={handleChange}
-                                      />
-                                  </label>
-                                  <label>
-                                      <p>Марка:</p>
-                                      <input
-                                          type="text"
-                                          name="stamp"
-                                          value={car.stamp}
-                                          onChange={handleChange}
-                                      />
-                                  </label>
-                                  <label>
-                                      <p>Модель:</p>
-                                      <input
-                                          type="text"
-                                          name="model"
-                                          value={car.model}
-                                          onChange={handleChange}
-                                      />
-                                  </label>
-                                  <label>
-                                      <p>VIN:</p>
-                                      <input
-                                          type="text"
-                                          name="bodyNumber"
-                                          value={car.bodyNumber}
-                                          onChange={handleChange}
-                                      />
-                                  </label>
-                                  <label>
-                                      <p>Год:</p>
-                                      <input
-                                          type="text"
-                                          name="year"
-                                          value={car.year}
-                                          onChange={handleChange}
-                                      />
-                                  </label>
-                                  <label>
-                                      <p>Масло:</p>
-                                      <input
-                                          type="text"
-                                          name="oil"
-                                          value={car.oil}
-                                          onChange={handleChange}
-                                      />
-                                  </label>
-                                  <label>
-                                      <p>Пробег:</p>
-                                      <input
-                                          type="text"
-                                          name="odometer"
-                                          value={car.odometer ?? ''}
-                                          onChange={handleChange}
-                                      />
-                                  </label>
-                                  <button type="submit">Submit</button>
-                              </form>
-                          : null}
+
+                          <ModalAddCar title={'Добавить машину +'}/>
+                          {/*<button*/}
+                          {/*    */}
+                          {/*    className={styles.addCar}*/}
+                          {/*>*/}
+                          {/*    */}
+                          {/*</button>*/}
+
+
 
 
                           {/*{cars?.map((car, index) => (*/}
