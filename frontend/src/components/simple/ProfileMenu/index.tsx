@@ -50,7 +50,6 @@ const ProfileMenu: React.FC<IProfileMenuProps> = ({ authStore }) => {
           <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
               {/*<Typography sx={{ minWidth: 100 }}><ThemeToggle /></Typography>*/}
               <ModalAddCar title={'Добавить клиента'}/>
-              <Tooltip title="Account settings">
                   <IconButton
                       onClick={handleClick}
                       size="small"
@@ -63,7 +62,6 @@ const ProfileMenu: React.FC<IProfileMenuProps> = ({ authStore }) => {
                           <Avatar />
                       </Avatar>
                   </IconButton>
-              </Tooltip>
           </Box>
           <Menu
               anchorEl={anchorEl}
