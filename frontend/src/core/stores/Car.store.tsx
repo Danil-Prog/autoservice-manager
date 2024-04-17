@@ -8,7 +8,7 @@ class CarStore {
     cars: TCar[] = [];
     currentCar: TCar;
     currentCarVisits: TVisits[] = []
-    currentVisit: TVisits;
+    currentVisit: TVisits | null = null;
 
     constructor() {
         makeAutoObservable(this);
@@ -89,7 +89,7 @@ class CarStore {
         }
     }
 
-    setCurrentVisit = (visit: TVisits) => {
+    setCurrentVisit = (visit: TVisits | null) => {
         runInAction(() => {
             this.currentVisit = visit;
         })

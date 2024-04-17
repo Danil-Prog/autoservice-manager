@@ -73,7 +73,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
           <div
             onClick={() => setIsShowSidebar(!isShowSidebar)}
             className={styles.arrow}
-            style={{transform: isShowSidebar ? 'rotate(180deg)' : 'rotate(0deg)',}}
+            style={{transform: isShowSidebar ? 'rotate(180deg)' : 'rotate(0deg)'}}
           >
               <IconArrow />
           </div>
@@ -93,6 +93,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                               duration: 0.01,
                               ease: 'easeInOut',
                           }}
+                          style={{overflow: 'auto'}}
                       >
                           <div className={styles.search}>
                               <FormControl variant="standard" sx={{m: 1, minWidth: 120}}>
@@ -114,8 +115,6 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                                   </Select>
                               </FormControl>
                               <TextField id="standard-basic" label="Поиск" variant="standard"/>
-                          </div>
-                          <div className={styles.addCar}>
                           </div>
                           {cars?.map((car, index) => (
                               <div key={index}>
