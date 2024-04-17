@@ -19,12 +19,12 @@ const HomePage: React.FC<IHomePage> = ({ carStore }) => {
 
   return (
     <div className={styles.container}>
-        {currentCar ?
+         {/*{currentCar ?*/}
             <>
                 <ClientCard />
                 <ClientCardInfo />
             </>
-        : null}
+         {/*: null}*/}
     </div>
   );
 };

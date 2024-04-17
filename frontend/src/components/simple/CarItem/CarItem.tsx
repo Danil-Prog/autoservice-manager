@@ -1,7 +1,13 @@
 import React from 'react';
 import styles from './CarItem.module.scss';
 
-const CarItem = ({key, item, isSelected, onSelect }) => {
+interface ICarItemProps {
+    item: any;
+    isSelected: boolean;
+    onSelect: (item: any) => void;
+}
+
+const CarItem: React.FC<ICarItemProps> = ({ item, isSelected, onSelect }) => {
     const itemRef = React.useRef(null);
 
     React.useEffect(() => {

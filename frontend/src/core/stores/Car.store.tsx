@@ -8,6 +8,7 @@ class CarStore {
     cars: TCar[] = [];
     currentCar: TCar;
     currentCarVisits: TVisits[] = []
+    currentVisit: TVisits;
 
     constructor() {
         makeAutoObservable(this);
@@ -66,8 +67,8 @@ class CarStore {
     receiveListVisits = (id: number) => {
         try {
             this.setLoading(true);
-            // const response = await $api.post<AuthResponse>('/Cars/visits/${id}');
-            const response = require('./__mock__/data.js').data[`/Cars/visits/${id}`];
+            // const response = await $api.post<AuthResponse>('/cars/visits/${id}');
+            const response = require('./__mock__/data.js').data[`/cars/visits/${id}`];
             runInAction(() => {
                 this.currentCarVisits = response;
             })
@@ -77,6 +78,13 @@ class CarStore {
         } finally {
             this.setLoading(false);
         }
+    }
+
+    setCurrentVisit = (visit: TVisits) => {
+        runInAction(() => {
+            this.currentVisit = visit;
+        })
+        console.log(this.currentVisit)
     }
 }
 

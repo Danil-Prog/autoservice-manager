@@ -9,6 +9,7 @@ import { IconLogout } from '~/components/icons/IconLogout';
 import { AnimatePresence, motion } from 'framer-motion';
 import {Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography} from "@mui/material";
 import {Logout, PersonAdd, Settings} from "@mui/icons-material";
+import ModalAddCar from "~/components/smart/ModalAddCar/ModalAddCar";
 
 interface IProfileMenuProps {
   authStore?: AuthStore;
@@ -45,37 +46,10 @@ const ProfileMenu: React.FC<IProfileMenuProps> = ({ authStore }) => {
         setAnchorEl(null);
     };
   return (
-    // <div style={{ position: 'relative' }} ref={ref}>
-    //   <div onClick={() => setIsShow(!isShow)} style={{ cursor: 'pointer' }}>
-    //     <IconUser />
-    //   </div>
-    //   <AnimatePresence>
-    //     {/*{isShow ?*/}
-    //       <motion.div
-    //         className={styles.menuContainer}
-    //         initial={{ opacity: 0 }}
-    //         animate={{ opacity: 1 }}
-    //         exit={{ opacity: 0 }}
-    //         transition={{
-    //           duration: 0.3,
-    //           ease: 'linear'
-    //         }}
-    //       >
-    //         <a className={styles.menuItem}>
-    //           <ThemeToggle />
-    //         </a>
-    //         <a className={styles.menuItem} onClick={handleClickLogout}>
-    //           <IconLogout />
-    //           <p>Выход</p>
-    //         </a>
-    //         <p className={styles.version}>Версия приложения: {process.env.REACT_APP_VERSION}</p>
-    //       </motion.div>
-    //       {/*: null}*/}
-    //   </AnimatePresence>
-    // </div>
       <React.Fragment>
           <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
               {/*<Typography sx={{ minWidth: 100 }}><ThemeToggle /></Typography>*/}
+              <ModalAddCar title={'Добавить клиента'}/>
               <Tooltip title="Account settings">
                   <IconButton
                       onClick={handleClick}

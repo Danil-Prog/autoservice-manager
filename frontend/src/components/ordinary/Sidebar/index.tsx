@@ -6,7 +6,7 @@ import {ICarStore} from "~/core/stores/Car.store";
 import {AnimatePresence, motion} from "framer-motion";
 import {IconDoubleArrow} from "~/components/icons/IconDoubleArrow";
 import {IconArrow} from "~/components/icons/IconArrow";
-import CarItem from "~/components/simple/ListItem/CarItem";
+import CarItem from "~/components/simple/CarItem/CarItem";
 import {
     Backdrop,
     Box,
@@ -116,15 +116,15 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                               <TextField id="standard-basic" label="Поиск" variant="standard"/>
                           </div>
                           <div className={styles.addCar}>
-                              <ModalAddCar title={'Добавить клиента'}/>
                           </div>
                           {cars?.map((car, index) => (
-                              <CarItem
-                                  key={index}
-                                  item={car}
-                                  isSelected={selectedItem === car}
-                                  onSelect={handleSelect}
-                              />
+                              <div key={index}>
+                                  <CarItem
+                                      item={car}
+                                      isSelected={selectedItem === car}
+                                      onSelect={handleSelect}
+                                  />
+                              </div>
                           ))}
                       </motion.div>
                       : null}

@@ -62,7 +62,7 @@ const ModalAddCar: React.FC<IModalAddCarProps>  = ({title, carStore}) => {
     return (
         <div>
             <div>
-                <Button onClick={handleOpen} variant="outlined">{title}</Button>
+                <Button onClick={handleOpen} variant="contained" >{title}</Button>
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"
