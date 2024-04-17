@@ -1,6 +1,6 @@
 .container {
   background-color: #00000033;
-  flex: 3;
+  flex: 5;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,7 +13,8 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: center;
-    background-color: #df1111;
+    background-color: rgb(227, 227, 227);
+    padding-left: 50px;
     width: 100%;
   }
 
@@ -23,7 +24,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #d88787;
+    background-color: #ffffff;
     width: 100%;
 
     .jobsContainer {

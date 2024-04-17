@@ -4,6 +4,7 @@ import React from "react";
 import {ICarStore} from "~/core/stores/Car.store";
 import styles from "./CarCard.module.scss";
 import EmptyItem from "~/components/simple/EmptyItem/EmptyItem";
+import {TextField} from "@mui/material";
 
 interface ICarCard {
     carStore: ICarStore;
@@ -11,20 +12,82 @@ interface ICarCard {
 
 const CarCard: React.FC<ICarCard> = ({ carStore }) => {
     const { currentCar } = carStore
-    React.useEffect(() => {}, [currentCar])
+    React.useEffect(() => {
+    }, [currentCar])
     return (
         <div className={styles.container}>
             {currentCar ?
                 <div className={styles.carInfo}>
-                    <p className={styles.carInfoItem}>{currentCar.lastname}</p>
-                    <p className={styles.carInfoItem}>{currentCar.midname}</p>
-                    <p className={styles.carInfoItem}>{currentCar.reg}</p>
-                    <p className={styles.carInfoItem}>{currentCar.brand}</p>
-                    <p className={styles.carInfoItem}>{currentCar.model}</p>
-                    <p className={styles.carInfoItem}>{currentCar.year}</p>
-                    <p className={styles.carInfoItem}>{currentCar.vin}</p>
-                    <p className={styles.carInfoItem}>{currentCar.color}</p>
-                    <p className={styles.carInfoItem}>{currentCar.descriptionCar}</p>
+                    <TextField
+                        id="standard-read-only-input"
+                        label="Номерной знак"
+                        value={currentCar.licencePlate}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        variant="standard"
+                        className={styles.carInfoItem}
+                    />
+                    <TextField
+                        id="standard-read-only-input"
+                        label="Марка"
+                        value={currentCar.stamp}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        variant="standard"
+                        className={styles.carInfoItem}
+                    />
+                    <TextField
+                        id="standard-read-only-input"
+                        label="Модель"
+                        value={currentCar.model}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        variant="standard"
+                        className={styles.carInfoItem}
+                    />
+                    <TextField
+                        id="standard-read-only-input"
+                        label="VIN"
+                        value={currentCar.bodyNumber}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        variant="standard"
+                        className={styles.carInfoItem}
+                    />
+                    <TextField
+                        id="standard-read-only-input"
+                        label="Год"
+                        value={currentCar.year}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        variant="standard"
+                        className={styles.carInfoItem}
+                    />
+                    <TextField
+                        id="standard-read-only-input"
+                        label="Масло"
+                        value={currentCar.oil}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        variant="standard"
+                        className={styles.carInfoItem}
+                    />
+                    <TextField
+                        id="standard-read-only-input"
+                        label="Пробег"
+                        value={currentCar.odometer}
+                        InputProps={{
+                            readOnly: true,
+                        }}
+                        variant="standard"
+                        className={styles.carInfoItem}
+                    />
                 </div>
             : <EmptyItem /> }
         </div>

@@ -113,33 +113,11 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                                       <MenuItem value={30}>Фио</MenuItem>
                                   </Select>
                               </FormControl>
-                              {/*<select className={styles.searchSelect}>*/}
-                              {/*    <option>Номер машины</option>*/}
-                              {/*    <option>Номер телефона</option>*/}
-                              {/*    <option>Фио</option>*/}
-                              {/*</select>*/}
                               <TextField id="standard-basic" label="Поиск" variant="standard"/>
                           </div>
-
-                          <ModalAddCar title={'Добавить машину +'}/>
-                          {/*<button*/}
-                          {/*    */}
-                          {/*    className={styles.addCar}*/}
-                          {/*>*/}
-                          {/*    */}
-                          {/*</button>*/}
-
-
-
-
-                          {/*{cars?.map((car, index) => (*/}
-                          {/*    <div ref={itemRef} key={index} className={styles.carItem} onClick={handleSelect}>*/}
-                          {/*        <p style={{flex: 1, paddingLeft: 5}}>{car.licencePlate}</p>*/}
-                          {/*        <p>{car.stamp}</p>*/}
-                          {/*        <p>{car.model}</p>*/}
-                          {/*        <p style={{paddingRight: 5}}>{car.year}</p>*/}
-                          {/*    </div>*/}
-                          {/*))}*/}
+                          <div className={styles.addCar}>
+                              <ModalAddCar title={'Добавить клиента'}/>
+                          </div>
                           {cars?.map((car, index) => (
                               <CarItem
                                   key={index}

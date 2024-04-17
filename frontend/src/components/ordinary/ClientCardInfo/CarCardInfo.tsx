@@ -3,6 +3,7 @@ import {observer} from "mobx-react-lite";
 import React from "react";
 import {ICarStore} from "~/core/stores/Car.store";
 import styles from "./CarCardInfo.module.scss";
+import {Button} from "@mui/material";
 
 interface ICarCardInfo {
     carStore: ICarStore;
@@ -53,7 +54,7 @@ const CarCardInfo: React.FC<ICarCardInfo> = ({ carStore }) => {
     return (
         <div className={styles.container}>
             <div className={styles.header}>
-                <button onClick={() => setShowFormVisit(!isShowFormVisit)}>Новое посещение</button>
+                <Button onClick={() => setShowFormVisit(!isShowFormVisit)} variant="outlined">Новое посещение</Button>
             </div>
             <div className={styles.content}>
                 {isShowFormVisit ?

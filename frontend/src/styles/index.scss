@@ -4,14 +4,14 @@
   font-family: sans-serif;
 }
 
-@keyframes fillColorChange {
-  0% {
-    fill: var(--container)
-  }
-  100% {
-    fill: var(--container)
-  }
-}
+//@keyframes fillColorChange {
+//  0% {
+//    fill: var(--container)
+//  }
+//  100% {
+//    fill: var(--container)
+//  }
+//}
 
 svg {
   animation: fillColorChange .3s ease-in-out forwards;
