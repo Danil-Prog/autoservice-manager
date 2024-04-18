@@ -38,17 +38,22 @@ const ModalAddCar: React.FC<IModalAddCarProps>  = ({title, carStore}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(car);
-        createCar(car)
+        try {
+            createCar(car)
+            setCar({
+                licencePlate: '',
+                stamp: '',
+                model: '',
+                year: '',
+                bodyNumber: '',
+                oil: '',
+                odometer: null
+            });
+            setOpen(false)
+        } catch (e) {
 
-        setCar({
-            licencePlate: '',
-            stamp: '',
-            model: '',
-            year: '',
-            bodyNumber: '',
-            oil: '',
-            odometer: null
-        });
+        }
+
     };
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -62,7 +67,7 @@ const ModalAddCar: React.FC<IModalAddCarProps>  = ({title, carStore}) => {
     return (
         <div>
             <div>
-                <Button onClick={handleOpen} variant="outlined">{title}</Button>
+                <Button onClick={handleOpen} variant="contained" color="inherit" >{title}</Button>
                 <Modal
                     aria-labelledby="transition-modal-title"
                     aria-describedby="transition-modal-description"

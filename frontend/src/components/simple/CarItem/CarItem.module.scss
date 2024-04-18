@@ -9,7 +9,7 @@
   margin: 5px;
   border: 1px solid #9fb8ff;
   border-radius: 5px;
-
+  overflow: hidden;
   &:hover {
     background-color: var(--hover);
   }

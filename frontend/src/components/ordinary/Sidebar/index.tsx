@@ -6,7 +6,7 @@ import {ICarStore} from "~/core/stores/Car.store";
 import {AnimatePresence, motion} from "framer-motion";
 import {IconDoubleArrow} from "~/components/icons/IconDoubleArrow";
 import {IconArrow} from "~/components/icons/IconArrow";
-import CarItem from "~/components/simple/ListItem/CarItem";
+import CarItem from "~/components/simple/CarItem/CarItem";
 import {
     Backdrop,
     Box,
@@ -73,7 +73,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
           <div
             onClick={() => setIsShowSidebar(!isShowSidebar)}
             className={styles.arrow}
-            style={{transform: isShowSidebar ? 'rotate(180deg)' : 'rotate(0deg)',}}
+            style={{transform: isShowSidebar ? 'rotate(180deg)' : 'rotate(0deg)'}}
           >
               <IconArrow />
           </div>
@@ -93,6 +93,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                               duration: 0.01,
                               ease: 'easeInOut',
                           }}
+                          style={{overflow: 'auto'}}
                       >
                           <div className={styles.search}>
                               <FormControl variant="standard" sx={{m: 1, minWidth: 120}}>
@@ -115,16 +116,14 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                               </FormControl>
                               <TextField id="standard-basic" label="Поиск" variant="standard"/>
                           </div>
-                          <div className={styles.addCar}>
-                              <ModalAddCar title={'Добавить клиента'}/>
-                          </div>
                           {cars?.map((car, index) => (
-                              <CarItem
-                                  key={index}
-                                  item={car}
-                                  isSelected={selectedItem === car}
-                                  onSelect={handleSelect}
-                              />
+                              <div key={index}>
+                                  <CarItem
+                                      item={car}
+                                      isSelected={selectedItem === car}
+                                      onSelect={handleSelect}
+                                  />
+                              </div>
                           ))}
                       </motion.div>
                       : null}

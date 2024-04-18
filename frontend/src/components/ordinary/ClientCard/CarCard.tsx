@@ -4,14 +4,14 @@ import React from "react";
 import {ICarStore} from "~/core/stores/Car.store";
 import styles from "./CarCard.module.scss";
 import EmptyItem from "~/components/simple/EmptyItem/EmptyItem";
-import {TextField} from "@mui/material";
+import {Button, TextField} from "@mui/material";
 
 interface ICarCard {
     carStore: ICarStore;
 }
 
 const CarCard: React.FC<ICarCard> = ({ carStore }) => {
-    const { currentCar } = carStore
+    const { currentCar, deleteCar } = carStore
     React.useEffect(() => {
     }, [currentCar])
     return (
@@ -88,6 +88,12 @@ const CarCard: React.FC<ICarCard> = ({ carStore }) => {
                         variant="standard"
                         className={styles.carInfoItem}
                     />
+                    <div className={styles.deleteCar}>
+                        <Button variant="outlined" color="error" onClick={() => deleteCar(currentCar.id)}>
+                            Удалить машину
+                        </Button>
+                    </div>
+
                 </div>
             : <EmptyItem /> }
         </div>

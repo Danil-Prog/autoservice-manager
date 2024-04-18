@@ -8,6 +8,7 @@ class CarStore {
     cars: TCar[] = [];
     currentCar: TCar;
     currentCarVisits: TVisits[] = []
+    currentVisit: TVisits | null = null;
 
     constructor() {
         makeAutoObservable(this);
@@ -17,7 +18,7 @@ class CarStore {
         this.isLoading = bool;
     }
     
-    createCar = async (car: any) => {
+    createCar = async (car: TCar) => {
         try {
             await $api.post<CarResponse>('/car', {
                 body: car,
@@ -26,6 +27,15 @@ class CarStore {
             toast.error(`${error}`);
         }
 
+    }
+
+    deleteCar = async (id: number) => {
+        try {
+            await $api.delete<CarResponse>(`/car?id=${id}`);
+            toast.success(`Операция выполнена успешно`);
+        } catch (error) {
+            toast.error(`${error}`);
+        }
     }
 
     // Получение списка машин
@@ -66,8 +76,8 @@ class CarStore {
     receiveListVisits = (id: number) => {
         try {
             this.setLoading(true);
-            // const response = await $api.post<AuthResponse>('/Cars/visits/${id}');
-            const response = require('./__mock__/data.js').data[`/Cars/visits/${id}`];
+            // const response = await $api.post<AuthResponse>('/cars/visits/${id}');
+            const response = require('./__mock__/data.js').data[`/cars/visits/${id}`];
             runInAction(() => {
                 this.currentCarVisits = response;
             })
@@ -77,6 +87,13 @@ class CarStore {
         } finally {
             this.setLoading(false);
         }
+    }
+
+    setCurrentVisit = (visit: TVisits | null) => {
+        runInAction(() => {
+            this.currentVisit = visit;
+        })
+        console.log(this.currentVisit)
     }
 }
 

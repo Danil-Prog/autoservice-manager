@@ -24,21 +24,10 @@ type TJobs = {
     isDone: boolean;
 }
 
-type TAttachment = {
-    id: number;
-    name: string;
-}
-
-type TWorks = {
-    id: number;
-    name: string;
-    price: string;
-    date: string;
-}
-
 type TVisits = {
     id: number;
-    description: string;
-    attachments: TAttachment[];
-    works: TWorks[];
+    visitDate: string;
+    jobs: TJobs[];
+    comment: string;
+    carId: number;
 }

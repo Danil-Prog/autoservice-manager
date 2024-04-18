@@ -3,7 +3,6 @@ import React from 'react';
 import Header from '~/components/ordinary/Header/Header';
 import Sidebar from '~/components/ordinary/Sidebar';
 import PageContainer from '~/components/ordinary/PageContainer/PageContainer';
-import LogPanel from '~/components/ordinary/LogPanel';
 
 import styles from './StaticElements.module.scss';
 
@@ -15,7 +14,6 @@ const StaticElements = () => {
         {<Sidebar />}
         {<PageContainer />}
       </div>
-      {<LogPanel />}
     </div>
   );
 };

@@ -1,5 +1,4 @@
 .container {
-  flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -13,10 +12,19 @@
     align-items: center;
     gap: 15px;
     padding: 20px;
-    border-right: 1px solid var(--background);
+    margin-right: 20px;
+    border-right: 10px solid var(--background);
 
     .carInfoItem {
       margin: 0;
+    }
+
+    .deleteCar {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
     }
   }
 }

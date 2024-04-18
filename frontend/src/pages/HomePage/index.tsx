@@ -5,6 +5,7 @@ import {ICarStore} from "~/core/stores/Car.store";
 import styles from './HomePage.module.scss'
 import ClientCard from "~/components/ordinary/ClientCard/CarCard";
 import ClientCardInfo from "~/components/ordinary/ClientCardInfo/CarCardInfo";
+import EmptyItem from "~/components/simple/EmptyItem/EmptyItem";
 
 interface IHomePage {
   carStore: ICarStore;
@@ -19,12 +20,12 @@ const HomePage: React.FC<IHomePage> = ({ carStore }) => {
 
   return (
     <div className={styles.container}>
-        {currentCar ?
+         {currentCar ?
             <>
                 <ClientCard />
                 <ClientCardInfo />
             </>
-        : null}
+         : <EmptyItem />}
     </div>
   );
 };
