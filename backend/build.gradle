@@ -35,6 +35,9 @@ dependencies {
 	/* JWT */
 	implementation group: 'com.auth0', name: 'java-jwt', version: '4.4.0'
 
+	/* Swagger */
+	implementation group: 'org.springdoc', name: 'springdoc-openapi-starter-webmvc-ui', version: '2.5.0'
+
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'

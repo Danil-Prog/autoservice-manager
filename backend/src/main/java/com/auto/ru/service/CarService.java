@@ -40,10 +40,7 @@ public class CarService {
     }
 
     public void deleteCarById(Long id) {
-        Car existingCar = carRepository.findById(id).orElseThrow(
-                () -> new BadRequestException("Car not found with id: " + id)
-        );
-
+        carRepository.findById(id).orElseThrow(() -> new BadRequestException("Car not found with id: " + id));
         carRepository.deleteById(id);
     }
 

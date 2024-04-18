@@ -1,15 +1,13 @@
 package com.auto.ru.controller;
 
-import com.auto.ru.entity.Car;
-import com.auto.ru.entity.CarVisit;
-import com.auto.ru.service.CarService;
+import com.auto.ru.entity.Job;
+import com.auto.ru.service.JobService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,44 +20,32 @@ import java.util.List;
 import static com.auto.ru.config.SwaggerConfiguration.BEARER_AUTH_SCHEME;
 
 @RestController
-@RequestMapping("/api/v1/car")
-public class CarController {
+@RequestMapping("/api/v1/job")
+public class JobController {
 
-    private final CarService carService;
+    private final JobService jobService;
 
     @Autowired
-    public CarController(CarService carService) {
-        this.carService = carService;
-    }
-
-    @PostMapping
-    @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
-    public ResponseEntity<Car> addCar(@RequestBody Car car) {
-        return ResponseEntity.of(carService.addCar(car));
+    public JobController(JobService jobService) {
+        this.jobService = jobService;
     }
 
     @GetMapping
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
-    public ResponseEntity<Page<Car>> getAllCars(
+    public ResponseEntity<Page<Job>> getAllJobs(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "") String search
     ) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<Car> cars = carService.findAllCars(search, pageRequest);
-        return ResponseEntity.ok(cars);
+        Page<Job> jobs = jobService.findAllJobs(search, pageRequest);
+
+        return ResponseEntity.ok(jobs);
     }
 
-    @DeleteMapping
+    @PostMapping
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
-    public ResponseEntity<Car> deleteCar(@RequestParam Long id) {
-        carService.deleteCarById(id);
-        return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/visit")
-    @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
-    public ResponseEntity<List<CarVisit>> addVisit(@RequestBody CarVisit visit) {
-        return ResponseEntity.of(carService.addVisit(visit));
+    public ResponseEntity<Job> addJob(@RequestBody Job job) {
+        return ResponseEntity.of(jobService.addJob(job));
     }
 }

@@ -44,7 +44,7 @@ public class AuthController {
         return new ResponseEntity<>("User with the same name already exists", HttpStatus.FOUND);
     }
 
-    @PostMapping("/authenticate")
+    @PostMapping("/auth/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authenticationRequest) {
         try {
             authenticationManager.authenticate(
