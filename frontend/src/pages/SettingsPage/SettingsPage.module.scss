@@ -1,0 +1,22 @@
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 300px;
+}
+  .leftMenu {
+    flex: 1;
+    display: flex;
+    align-items: flex-start;
+    height: 100%;
+    //border-right: 1px solid var(--border);
+  }
+
+  .content {
+    flex: 4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }

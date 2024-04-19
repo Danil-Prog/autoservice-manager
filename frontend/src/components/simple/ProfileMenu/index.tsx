@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import {Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography} from "@mui/material";
 import {Logout, PersonAdd, Settings} from "@mui/icons-material";
 import ModalAddCar from "~/components/smart/ModalAddCar/ModalAddCar";
+import {Link} from "react-router-dom";
 
 interface IProfileMenuProps {
   authStore?: AuthStore;
@@ -102,12 +103,19 @@ const ProfileMenu: React.FC<IProfileMenuProps> = ({ authStore }) => {
                   <Avatar /> My account
               </MenuItem>
               <Divider />
-              <MenuItem onClick={handleClose}>
+              <Link to={'/settings'} style={{
+                  textDecoration: 'none',
+                  color: 'inherit',
+              }}>
+                  <MenuItem onClick={handleClose}>
                   <ListItemIcon>
-                      <Settings fontSize="small" />
+
+                        <Settings fontSize="small" />
+
                   </ListItemIcon>
                   Настройки
               </MenuItem>
+              </Link>
               <MenuItem onClick={handleClickLogout}>
                   <ListItemIcon>
                       <Logout className={styles.logout} fontSize="small" />

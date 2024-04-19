@@ -4,23 +4,15 @@ import {observer} from "mobx-react-lite";
 import React from "react";
 import {ICarStore} from "~/core/stores/Car.store";
 import {AnimatePresence, motion} from "framer-motion";
-import {IconDoubleArrow} from "~/components/icons/IconDoubleArrow";
 import {IconArrow} from "~/components/icons/IconArrow";
 import CarItem from "~/components/simple/CarItem/CarItem";
 import {
-    Backdrop,
-    Box,
-    Button,
-    Fade,
     FormControl,
     InputLabel,
     MenuItem,
-    Modal,
-    Select,
+    Select, Skeleton,
     TextField,
-    Typography
 } from "@mui/material";
-import ModalAddCar from "~/components/smart/ModalAddCar/ModalAddCar";
 
 interface ISidebarProps {
     carStore: ICarStore;
@@ -28,7 +20,7 @@ interface ISidebarProps {
 
 const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
 
-    const { receiveListCars, cars, receiveCurrentCar, createCar, currentCar } = carStore;
+    const { receiveListCars, cars, receiveCurrentCar, createCar, currentCar, isLoading, isLoadingNewCar } = carStore;
     const [car, setCar] = React.useState({
         licencePlate: '',
         stamp: '',
@@ -39,11 +31,16 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
         odometer: null
     })
     const [isShowSidebar, setIsShowSidebar] = React.useState(true);
-    const [isShowFrom, setIsShowFrom] = React.useState(false);
-    const itemRef = React.useRef(null);
+    const [selectedItem, setSelectedItem] = React.useState(null);
+    const [age, setAge] = React.useState('');
+
     React.useEffect(() => {
         receiveListCars()
-    }, [])
+    }, [isLoadingNewCar])
+
+    React.useEffect(() => {
+    }, [isLoading])
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setCar(prevCar => ({
@@ -52,21 +49,15 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
         }));
     };
 
-
-
+    const handleSelect = (item) => {
+        receiveCurrentCar(item.id)
+        setSelectedItem(item);
+    };
 
     const sidebarVariants = {
         open: { opacity: 1, width: '400px' },
         closed: { opacity: 0, width: '0' },
     };
-
-    const [selectedItem, setSelectedItem] = React.useState(null);
-    const handleSelect = (item) => {
-        setSelectedItem(item);
-        receiveCurrentCar(item.id)
-    };
-    const [age, setAge] = React.useState('');
-
 
   return (
       <div style={{overflow: 'hidden', backgroundColor: '#fff'}}>
@@ -103,8 +94,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                                       id="demo-simple-select-standard"
                                       value={age}
                                       onChange={handleChange}
-                                      label="Age"
-
+                                      label="Поиск по"
                                   >
                                       <MenuItem value="">
                                           <em>None</em>
@@ -116,15 +106,22 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                               </FormControl>
                               <TextField id="standard-basic" label="Поиск" variant="standard"/>
                           </div>
-                          {cars?.map((car, index) => (
-                              <div key={index}>
-                                  <CarItem
-                                      item={car}
-                                      isSelected={selectedItem === car}
-                                      onSelect={handleSelect}
-                                  />
-                              </div>
-                          ))}
+                          {!isLoading ?
+                              <>
+                                  <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>
+                                  <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>
+                                  <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>
+                                  <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>
+                              </>
+                              : cars?.map((car, index) => (
+                                  <div key={index}>
+                                      <CarItem
+                                          item={car}
+                                          isSelected={selectedItem === car}
+                                          onSelect={handleSelect}
+                                      />
+                                  </div>
+                              ))}
                       </motion.div>
                       : null}
                   <div style={{backgroundColor: '#fff'}}>

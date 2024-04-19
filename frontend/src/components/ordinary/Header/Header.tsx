@@ -7,6 +7,7 @@ import { observer } from 'mobx-react-lite';
 import ThemeToggle from '~/components/simple/ThemeToggle';
 import { IconUser } from '~/components/icons/IconUser';
 import ProfileMenu from '~/components/simple/ProfileMenu';
+import {Link} from "react-router-dom";
 
 interface IHeaderProps {
   authStore?: AuthStore;
@@ -21,10 +22,10 @@ const Header: React.FC<IHeaderProps> = ({ authStore }) => {
   return (
     <>
       <div className={styles.container}>
-        <div className={styles.logo}>
+        <Link to={'/'} className={styles.logo}>
           <div className={styles.firstLetters}>TD</div>
           <div className={styles.mainLetters}>Drive</div>
-        </div>
+        </Link>
         <div className={styles.rightMenu}>
           <ProfileMenu />
         </div>

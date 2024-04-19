@@ -11,7 +11,9 @@ import { observer } from 'mobx-react-lite';
 import { Toaster } from 'react-hot-toast';
 import { Colors } from '~/core/constants/Colors';
 import { inject } from 'mobx-react';
-import StaticElements from '~/components/simple/StaticElements';
+import SettingsPage from "~/pages/SettingsPage";
+import StaticElementsWithSidebar from "src/components/ordinary/StaticElementsWithSidebar";
+import StaticElements from "~/components/ordinary/StaticElements";
 
 interface IAppProps {
 }
@@ -61,12 +63,15 @@ const App: React.FC<IAppProps> = observer(({ authStore, themeStore }) => {
       />
       <BrowserRouter>
         <Routes>
-          <Route path={'/'} element={<StaticElements />}>
+          <Route path={'/'} element={<StaticElementsWithSidebar />}>
             <Route path={'/'} element={
-              // <PrivateRoute>
-                <HomePage />
-              // </PrivateRoute>
-            } />
+              <PrivateRoute><HomePage /></PrivateRoute>}
+            />
+          </Route>
+          <Route path={'/'} element={<StaticElements />}>
+            <Route path={'/settings'} element={
+              <PrivateRoute><SettingsPage /></PrivateRoute>}
+            />
           </Route>
           <Route path={'/login'} element={<AuthPage />} />
           <Route path={'*'} element={<Navigate to={'/'} />} />

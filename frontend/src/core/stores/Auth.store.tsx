@@ -32,7 +32,7 @@ class AuthStore {
       toast.success(`Успешный вход`);
     } catch (error) {
       console.error('*---login', error);
-      toast.error(`${error}`);
+      toast.error(`${error.response.data.message}`);
     } finally {
       this.setLoading(false);
     }

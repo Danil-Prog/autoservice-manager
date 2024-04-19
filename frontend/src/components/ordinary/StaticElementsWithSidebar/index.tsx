@@ -1,10 +1,10 @@
 import React from 'react';
 
-import Header from '~/components/ordinary/Header/Header';
-import Sidebar from '~/components/ordinary/Sidebar';
-import PageContainer from '~/components/ordinary/PageContainer/PageContainer';
+import Header from '../Header/Header';
+import Sidebar from '../Sidebar';
+import PageContainer from '../PageContainer/PageContainer';
 
-import styles from './StaticElements.module.scss';
+import styles from './StaticElementsWithSidebar.module.scss';
 
 const StaticElements = () => {
   return (

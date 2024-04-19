@@ -5,6 +5,7 @@ import {CarResponse} from "~/core/models/response/AuthResponse";
 
 class CarStore {
     isLoading: boolean = false;
+    isLoadingNewCar: boolean = false;
     cars: TCar[] = [];
     currentCar: TCar;
     currentCarVisits: TVisits[] = []
@@ -20,21 +21,30 @@ class CarStore {
     
     createCar = async (car: TCar) => {
         try {
-            await $api.post<CarResponse>('/car', {
-                body: car,
-            });
+            runInAction(() => {
+                this.isLoadingNewCar = true;
+            })
+            await $api.post<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/car',
+                car,
+            );
         } catch (error) {
-            toast.error(`${error}`);
+            // TODO: Сделать отдельную обработку ошибок
+            toast.error(`${error.response.data.violations.map(item => 
+                `${item.fieldName}: ${item.message}; \n`
+            )}`);
+        } finally {
+            runInAction(() => {
+                this.isLoadingNewCar = false;
+            })
         }
-
     }
 
     deleteCar = async (id: number) => {
         try {
-            await $api.delete<CarResponse>(`/car?id=${id}`);
+            await $api.delete<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car?id=${id}`);
             toast.success(`Операция выполнена успешно`);
         } catch (error) {
-            toast.error(`${error}`);
+            toast.error(`${error.response.data.message}`);
         }
     }
 
@@ -42,31 +52,31 @@ class CarStore {
     receiveListCars = async () => {
         try {
             this.setLoading(true);
-            // const response = await $api.post<CarResponse>('/car');
-            const response = require('./__mock__/data.js').data['/clients'];
+            const response = await $api.get<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/car');
+            // const response = require('./__mock__/data.js').data['/clients'];
             runInAction(() => {
-                this.cars = response;
+                this.cars = response.data.content;
             })
         } catch (error) {
             console.error('*---receiveListCars', error);
-            toast.error(`${error}`);
+            toast.error(`${error?.response?.data?.message}`);
         } finally {
             this.setLoading(false);
         }
     }
 
     // Получение информации по выбранной машине
-    receiveCurrentCar = (id: number) => {
+    receiveCurrentCar = async (id: number) => {
         try {
             this.setLoading(true);
-            // const response = await $api.post<AuthResponse>(`/Cars/${id}`);
+            // const response = await $api.post<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car/${id}`);
             const response = require('./__mock__/data.js').data[`/clients/${id}`];
             runInAction(() => {
                 this.currentCar = response;
             })
         } catch (error) {
             console.error('*---receiveCurrentCar', error);
-            toast.error(`${error}`);
+            toast.error(`${error.response.data.message}`);
         } finally {
             this.setLoading(false);
         }
@@ -76,14 +86,14 @@ class CarStore {
     receiveListVisits = (id: number) => {
         try {
             this.setLoading(true);
-            // const response = await $api.post<AuthResponse>('/cars/visits/${id}');
+            // const response = await $api.post<AuthResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/cars/visits/${id}');
             const response = require('./__mock__/data.js').data[`/cars/visits/${id}`];
             runInAction(() => {
                 this.currentCarVisits = response;
             })
         } catch (error) {
             console.error('*---receiveListCars', error);
-            toast.error(`${error}`);
+            toast.error(`${error.response.data.message}`);
         } finally {
             this.setLoading(false);
         }

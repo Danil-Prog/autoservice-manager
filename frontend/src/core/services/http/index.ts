@@ -3,7 +3,7 @@ import { toast } from 'react-hot-toast';
 
 const $api = axios.create({
   withCredentials: true,
-  baseURL: process.env.REACT_APP_BASE_URL + process.env.ROUTE_PREFIX,
+  baseURL: process.env.REACT_APP_BASE_URL,
 });
 
 $api.interceptors.request.use((config) => {
@@ -25,10 +25,10 @@ $api.interceptors.response.use((config) => {
 }, async (error) => {
   console.error(`<--- ${error.config.url}`, error);
   if (error.response.status == 401 && error.config && !error.config._isRetry) {
-    toast.error(`${error.response.message}`);
+    // toast.error(`${error.response.message}`);
     localStorage.removeItem('token');
   } else {
-    toast.success(`${error.response.message}`);
+    // toast.success(`${error.response.message}`);
   }
   throw error;
 });
