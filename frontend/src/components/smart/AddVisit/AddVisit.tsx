@@ -57,7 +57,6 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore }) => {
                     <div >
                         {formData.jobs.map((pair, index) => (
                             <div key={index} className={styles.jobs}>
-
                                 <FormControl variant="standard" sx={{ m: 1, minWidth: 120, maxWidth: 250, width: 250 }}>
                                     <InputLabel id="demo-simple-select-standard-label">Выполненная работа</InputLabel>
                                     <Select

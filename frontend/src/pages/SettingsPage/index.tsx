@@ -16,6 +16,7 @@ import Divider from '@mui/material/Divider';
 import InboxIcon from '@mui/icons-material/Inbox';
 import DraftsIcon from '@mui/icons-material/Drafts';
 import {Container} from "@mui/material";
+import SettingsMain from "~/components/ordinary/SettingsMain/SettingsMain";
 
 interface ISettingsPage {
     carStore: ICarStore;
@@ -42,7 +43,7 @@ const SettingsPage: React.FC<ISettingsPage> = ({ carStore }) => {
     const renderContent = (selected: number) => {
         switch (selected) {
             case 0:
-                return <div>test 1</div>
+                return <SettingsMain />
             case 1:
                 return <div>test 2</div>
             case 2:

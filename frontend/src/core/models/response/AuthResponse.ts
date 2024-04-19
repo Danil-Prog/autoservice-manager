@@ -5,3 +5,6 @@ export interface AuthResponse {
 export interface CarResponse {
   content: TCar[];
 }
+export interface JobResponse {
+  content: TJobs[];
+}

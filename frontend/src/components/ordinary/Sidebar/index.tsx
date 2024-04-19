@@ -84,7 +84,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                               duration: 0.01,
                               ease: 'easeInOut',
                           }}
-                          style={{overflow: 'auto'}}
+                          style={{overflow: 'scroll'}}
                       >
                           <div className={styles.search}>
                               <FormControl variant="standard" sx={{m: 1, minWidth: 120}}>
@@ -106,7 +106,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                               </FormControl>
                               <TextField id="standard-basic" label="Поиск" variant="standard"/>
                           </div>
-                          {!isLoading ?
+                          {isLoading ?
                               <>
                                   <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>
                                   <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>

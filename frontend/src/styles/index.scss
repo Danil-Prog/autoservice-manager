@@ -21,4 +21,19 @@ body {
   margin: 0;
   padding: 0;
   background-color: var(--background);
+
+}
+
+body::-webkit-scrollbar {
+  width: 15px; /* Ширина всего элемента навигации */
+}
+
+body::-webkit-scrollbar-track {
+  background: #fff; /* Цвет дорожки */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #050c26; /* Цвет бегунка */
+  border-radius: 20px; /* Округление бегунка */
+  border: 3px solid #050c26; /* Оформление границ бегунка */
 }
