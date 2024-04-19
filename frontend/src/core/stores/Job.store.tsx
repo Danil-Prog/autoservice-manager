@@ -5,6 +5,7 @@ import {toast} from "react-hot-toast";
 
 class JobStore {
     isLoading: boolean = false;
+    isLoadingNewJob: boolean = false;
     jobs: TJobs[] = [];
 
 
@@ -34,7 +35,7 @@ class JobStore {
     addJob = async (job: TCar) => {
         try {
             runInAction(() => {
-                this.isLoading = true;
+                this.isLoadingNewJob = true;
             })
             await $api.post<JobResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/job',
                 job,
@@ -46,7 +47,7 @@ class JobStore {
             )}`);
         } finally {
             runInAction(() => {
-                this.isLoading = false;
+                this.isLoadingNewJob = false;
             })
         }
     }

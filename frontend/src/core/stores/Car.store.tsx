@@ -5,7 +5,8 @@ import {CarResponse} from "~/core/models/response/AuthResponse";
 
 class CarStore {
     isLoading: boolean = false;
-    isLoadingNewCar: boolean = false;
+    isLoadingSidebar: boolean = false;
+    isLoadingCurrentCar: boolean = false;
     cars: TCar[] = [];
     currentCar: TCar;
     currentCarVisits: TVisits[] = []
@@ -18,11 +19,11 @@ class CarStore {
     setLoading = (bool: boolean) => {
         this.isLoading = bool;
     }
-    
+
     createCar = async (car: TCar) => {
         try {
             runInAction(() => {
-                this.isLoadingNewCar = true;
+                this.isLoadingSidebar = true;
             })
             await $api.post<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/car',
                 car,
@@ -34,17 +35,24 @@ class CarStore {
             )}`);
         } finally {
             runInAction(() => {
-                this.isLoadingNewCar = false;
+                this.isLoadingSidebar = false;
             })
         }
     }
 
     deleteCar = async (id: number) => {
         try {
+            runInAction(() => {
+                this.isLoadingSidebar = true;
+            })
             await $api.delete<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car?id=${id}`);
             toast.success(`Операция выполнена успешно`);
         } catch (error) {
             toast.error(`${error.response.data.message}`);
+        } finally {
+            runInAction(() => {
+                this.isLoadingSidebar = false;
+            })
         }
     }
 
@@ -68,17 +76,22 @@ class CarStore {
     // Получение информации по выбранной машине
     receiveCurrentCar = async (id: number) => {
         try {
-            this.setLoading(true);
-            // const response = await $api.post<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car/${id}`);
-            const response = require('./__mock__/data.js').data[`/clients/${id}`];
             runInAction(() => {
-                this.currentCar = response;
+                this.isLoadingCurrentCar = true;
+            })
+            const response = await $api.get<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car/${id}`);
+            // const response = require('./__mock__/data.js').data[`/clients/${id}`];
+            console.log(response)
+            runInAction(() => {
+                this.currentCar = response.data;
             })
         } catch (error) {
             console.error('*---receiveCurrentCar', error);
             toast.error(`${error.response.data.message}`);
         } finally {
-            this.setLoading(false);
+            runInAction(() => {
+                this.isLoadingCurrentCar = false;
+            })
         }
     }
 

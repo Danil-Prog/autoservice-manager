@@ -20,7 +20,7 @@ interface ISidebarProps {
 
 const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
 
-    const { receiveListCars, cars, receiveCurrentCar, createCar, currentCar, isLoading, isLoadingNewCar } = carStore;
+    const { receiveListCars, cars, receiveCurrentCar, createCar, currentCar, isLoading, isLoadingSidebar } = carStore;
     const [car, setCar] = React.useState({
         licencePlate: '',
         stamp: '',
@@ -36,7 +36,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
 
     React.useEffect(() => {
         receiveListCars()
-    }, [isLoadingNewCar])
+    }, [isLoadingSidebar])
 
     React.useEffect(() => {
     }, [isLoading])
