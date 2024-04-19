@@ -20,7 +20,7 @@ class JobStore {
     receiveJobList = async () => {
         try {
             this.setLoading(true);
-            const response = await $api.get<JobResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/job');
+            const response = await $api.get<JobResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/job?size=9999');
             runInAction(() => {
                 this.jobs = response.data.content;
             })

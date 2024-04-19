@@ -4,13 +4,16 @@ import React from "react";
 import {ICarStore} from "~/core/stores/Car.store";
 import styles from "./AddVisit.module.scss";
 import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
+import jobStore, {IJobStore} from "~/core/stores/Job.store";
 
 interface IAddVisit {
     carStore: ICarStore;
+    jobStore: IJobStore;
 }
 
-const AddVisit: React.FC<IAddVisit> = ({ carStore }) => {
+const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
     const { currentCar, currentVisit, createVisit } = carStore
+    const { receiveJobList, jobs } = jobStore
     const [formData, setFormData] = React.useState(currentVisit ?? {
         comment: '',
         carId: currentCar?.id,
@@ -22,9 +25,25 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore }) => {
     React.useEffect(() => {
     }, [currentCar, currentVisit])
 
+    React.useEffect(() => {
+        receiveJobList()
+    }, [])
+
     const handleInputChange = (index, field, value) => {
         const newjobs = [...formData.jobs];
         newjobs[index][field] = value;
+        setFormData({
+            ...formData,
+            jobs: newjobs
+        });
+    };
+
+    const handleSelectJobs = (index, field, value) => {
+        const newjobs = [...formData.jobs];
+        const selectJob = jobs.find(job => job.type === value)
+        newjobs[index][field] = value;
+        newjobs[index]['description'] = selectJob?.description ?? '';
+        newjobs[index]['price'] = selectJob?.price ?? '';
         setFormData({
             ...formData,
             jobs: newjobs
@@ -63,15 +82,15 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore }) => {
                                         labelId="demo-simple-select-standard-label"
                                         id="demo-simple-select-standard"
                                         value={pair.type}
-                                        onChange={(e) => handleInputChange(index, 'type', e.target.value)}
+                                        onChange={(e) => handleSelectJobs(index, 'type', e.target.value)}
                                         label="Работа"
                                     >
                                         <MenuItem value="">
-                                            <em>None</em>
+                                            <em>Очистить</em>
                                         </MenuItem>
-                                        <MenuItem value={'Работа 1'}>Ten</MenuItem>
-                                        <MenuItem value={'Работа 2'}>Twenty</MenuItem>
-                                        <MenuItem value={'Работа 3'}>Thirty</MenuItem>
+                                        {jobs?.map((job, index) => (
+                                            <MenuItem key={job.id} value={job.type}>{job.type}</MenuItem>
+                                        ))}
                                     </Select>
                                 </FormControl>
                                 <TextField
@@ -125,4 +144,4 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore }) => {
     )
 }
 
-export default inject('carStore')(observer(AddVisit));
+export default inject('carStore', 'jobStore')(observer(AddVisit));
