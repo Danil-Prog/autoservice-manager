@@ -7,6 +7,7 @@ class CarStore {
     isLoading: boolean = false;
     isLoadingSidebar: boolean = false;
     isLoadingCurrentCar: boolean = false;
+    isLoadingSearchCar: boolean = false;
     cars: TCar[] = [];
     currentCar: TCar;
     currentCarVisits: TVisits[] = []
@@ -70,6 +71,25 @@ class CarStore {
             toast.error(`${error?.response?.data?.message}`);
         } finally {
             this.setLoading(false);
+        }
+    }
+    // Поиск машины
+    searchCar = async (field: string, value: string) => {
+        try {
+            runInAction(() => {
+                this.isLoadingSearchCar = true;
+            })
+            const response = await $api.get<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car?field=${field}&value=${value}`);
+            runInAction(() => {
+                this.cars = response.data.content;
+            })
+        } catch (error) {
+            console.error('*---searchCar', error);
+            toast.error(`${error?.response?.data?.message}`);
+        } finally {
+            runInAction(() => {
+                this.isLoadingSearchCar = false;
+            })
         }
     }
 
