@@ -51,7 +51,7 @@ public class JobController {
 
     @PostMapping("/{id}")
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
-    public ResponseEntity<Job> updateJob(@PathVariable("id") Long id) {
+    public ResponseEntity<Job> deleteJob(@PathVariable("id") Long id) {
         Job deletedJob = jobService.deleteJobById(id);
         return ResponseEntity.ok(deletedJob);
     }
