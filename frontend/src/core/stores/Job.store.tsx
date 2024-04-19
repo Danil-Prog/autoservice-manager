@@ -21,8 +21,9 @@ class JobStore {
         try {
             this.setLoading(true);
             const response = await $api.get<JobResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/job?size=9999');
+            const reverseResponse = [...response.data.content].reverse();
             runInAction(() => {
-                this.jobs = response.data.content;
+                this.jobs = reverseResponse
             })
         } catch (error) {
             console.error('*---receiveJobList', error);

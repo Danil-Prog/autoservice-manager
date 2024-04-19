@@ -5,6 +5,7 @@ import {ICarStore} from "~/core/stores/Car.store";
 import styles from "./AddVisit.module.scss";
 import {Button, FormControl, InputLabel, MenuItem, Select, TextField} from "@mui/material";
 import jobStore, {IJobStore} from "~/core/stores/Job.store";
+import {JobResponse} from "~/core/models/response/AuthResponse";
 
 interface IAddVisit {
     carStore: ICarStore;
@@ -14,6 +15,7 @@ interface IAddVisit {
 const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
     const { currentCar, currentVisit, createVisit } = carStore
     const { receiveJobList, jobs } = jobStore
+    const sortedJobs = [...jobs].sort((a: JobResponse, b: JobResponse) => a.type.localeCompare(b.type))
     const [formData, setFormData] = React.useState(currentVisit ?? {
         comment: '',
         carId: currentCar?.id,
@@ -88,7 +90,7 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
                                         <MenuItem value="">
                                             <em>Очистить</em>
                                         </MenuItem>
-                                        {jobs?.map((job, index) => (
+                                        {sortedJobs?.map((job, index) => (
                                             <MenuItem key={job.id} value={job.type}>{job.type}</MenuItem>
                                         ))}
                                     </Select>
