@@ -8,6 +8,7 @@ class CarStore {
     isLoadingSidebar: boolean = false;
     isLoadingCurrentCar: boolean = false;
     isLoadingSearchCar: boolean = false;
+    isLoadingNewVisit: boolean = false;
     cars: TCar[] = [];
     currentCar: TCar;
     currentCarVisits: TVisits[] = []
@@ -53,6 +54,26 @@ class CarStore {
         } finally {
             runInAction(() => {
                 this.isLoadingSidebar = false;
+            })
+        }
+    }
+
+    createVisit = async (visit: TVisits) => {
+        try {
+            runInAction(() => {
+                this.isLoadingNewVisit = true;
+            })
+            await $api.post<any>(process.env.REACT_APP_ROUTE_PREFIX + '/car/visit',
+                visit,
+            );
+        } catch (error) {
+            // TODO: Сделать отдельную обработку ошибок
+            toast.error(`${error.response.data.violations.map(item =>
+                `${item.fieldName}: ${item.message}; \n`
+            )}`);
+        } finally {
+            runInAction(() => {
+                this.isLoadingNewVisit = false;
             })
         }
     }

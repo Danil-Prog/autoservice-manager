@@ -13,11 +13,13 @@ interface IHistoryVisits {
 }
 
 const HistoryVisits: React.FC<IHistoryVisits> = ({ carStore }) => {
-    const { setCurrentVisit, currentVisit, currentCar } = carStore
+    const { setCurrentVisit, currentVisit, currentCar , isLoadingNewVisit,receiveCurrentCar} = carStore
     const handleClickVisit = (visit) => {
         setCurrentVisit(visit)
     }
-
+    React.useEffect(() => {
+        receiveCurrentCar(currentCar.id)
+    }, [isLoadingNewVisit])
 
     return (<>
         {

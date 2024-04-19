@@ -10,7 +10,7 @@ interface IAddVisit {
 }
 
 const AddVisit: React.FC<IAddVisit> = ({ carStore }) => {
-    const { currentCar, currentVisit } = carStore
+    const { currentCar, currentVisit, createVisit } = carStore
     const [formData, setFormData] = React.useState(currentVisit ?? {
         comment: '',
         carId: currentCar?.id,
@@ -20,7 +20,7 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore }) => {
     });
 
     React.useEffect(() => {
-    }, [currentCar])
+    }, [currentCar, currentVisit])
 
     const handleInputChange = (index, field, value) => {
         const newjobs = [...formData.jobs];
@@ -48,7 +48,7 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(formData)
+        createVisit(formData)
     }
     return (
         <form onSubmit={handleSubmit} className={styles.content}>
