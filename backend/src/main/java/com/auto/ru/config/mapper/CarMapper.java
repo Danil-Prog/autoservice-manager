@@ -1,7 +1,7 @@
 package com.auto.ru.config.mapper;
 
 import com.auto.ru.config.dto.CarDto;
-import com.auto.ru.entity.Car;
+import com.auto.ru.entity.car.Car;
 
 public class CarMapper {
 

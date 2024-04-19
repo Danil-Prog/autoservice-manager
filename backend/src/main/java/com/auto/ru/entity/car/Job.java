@@ -1,4 +1,4 @@
-package com.auto.ru.entity;
+package com.auto.ru.entity.car;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

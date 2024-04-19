@@ -1,4 +1,4 @@
-package com.auto.ru.entity;
+package com.auto.ru.entity.car;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -50,6 +50,9 @@ public class Car {
 
     @OneToMany(cascade = CascadeType.REMOVE)
     private List<CarVisit> visits = new ArrayList<>();
+
+    @Column(name = "description", length = 1000)
+    private String description;
 
     public Car(String licencePlate) {
         this.licencePlate = licencePlate;

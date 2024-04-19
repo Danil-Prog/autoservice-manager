@@ -1,7 +1,8 @@
 package com.auto.ru.service;
 
-import com.auto.ru.entity.Car;
-import com.auto.ru.entity.CarVisit;
+import com.auto.ru.entity.car.Car;
+import com.auto.ru.entity.car.CarSearchField;
+import com.auto.ru.entity.car.CarVisit;
 import com.auto.ru.exception.BadRequestException;
 import com.auto.ru.repository.CarRepository;
 import com.auto.ru.repository.CarVisitRepository;
@@ -35,8 +36,21 @@ public class CarService {
         return Optional.of(saveCar);
     }
 
-    public Page<Car> findAllCars(String licencePlate, Pageable pageable) {
-        return carRepository.findAllByLicencePlateContaining(licencePlate, pageable);
+    public Page<Car> findAllCars(CarSearchField field, String value, Pageable pageable) {
+        if (field == null) {
+            return carRepository.findAll(pageable);
+        }
+
+        return switch (field) {
+            case LICENCE_PLATE -> carRepository.findAllByLicencePlateContaining(value, pageable);
+
+            case MODEL -> carRepository.findAllByModelContaining(value, pageable);
+
+            case BODY_NUMBER -> carRepository.findAllByBodyNumberContaining(value, pageable);
+
+            case DESCRIPTION -> carRepository.findAllByDescriptionContaining(value, pageable);
+
+        };
     }
 
     public void deleteCarById(Long id) {

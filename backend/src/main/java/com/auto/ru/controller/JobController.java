@@ -1,6 +1,6 @@
 package com.auto.ru.controller;
 
-import com.auto.ru.entity.Job;
+import com.auto.ru.entity.car.Job;
 import com.auto.ru.service.JobService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;

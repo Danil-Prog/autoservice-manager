@@ -2,8 +2,9 @@ package com.auto.ru.controller;
 
 import com.auto.ru.config.dto.CarDto;
 import com.auto.ru.config.mapper.CarMapper;
-import com.auto.ru.entity.Car;
-import com.auto.ru.entity.CarVisit;
+import com.auto.ru.entity.car.Car;
+import com.auto.ru.entity.car.CarSearchField;
+import com.auto.ru.entity.car.CarVisit;
 import com.auto.ru.service.CarService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -46,10 +47,11 @@ public class CarController {
     public ResponseEntity<Page<CarDto>> getAllCars(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "") String search
+            @RequestParam(defaultValue = "") CarSearchField field,
+            @RequestParam(defaultValue = "") String value
     ) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<CarDto> cars = carService.findAllCars(search, pageRequest).map(CarMapper::toDto);
+        Page<CarDto> cars = carService.findAllCars(field, value, pageRequest).map(CarMapper::toDto);
         return ResponseEntity.ok(cars);
     }
 

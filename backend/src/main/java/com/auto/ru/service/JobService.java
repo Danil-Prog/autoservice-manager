@@ -1,6 +1,6 @@
 package com.auto.ru.service;
 
-import com.auto.ru.entity.Job;
+import com.auto.ru.entity.car.Job;
 import com.auto.ru.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

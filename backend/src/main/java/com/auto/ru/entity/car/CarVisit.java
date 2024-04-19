@@ -1,4 +1,4 @@
-package com.auto.ru.entity;
+package com.auto.ru.entity.car;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -7,18 +7,13 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.NotEmpty;
 
-import java.sql.Date;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 @Getter
