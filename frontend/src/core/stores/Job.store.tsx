@@ -33,7 +33,7 @@ class JobStore {
         }
     }
 
-    addJob = async (job: TCar) => {
+    addJob = async (job: TJobs) => {
         try {
             runInAction(() => {
                 this.isLoadingNewJob = true;
@@ -44,6 +44,25 @@ class JobStore {
         } catch (error) {
             // TODO: Сделать отдельную обработку ошибок
             toast.error(`${error.response.data.violations.map(item =>
+                `${item.fieldName}: ${item.message}; \n`
+            )}`);
+        } finally {
+            runInAction(() => {
+                this.isLoadingNewJob = false;
+            })
+        }
+    }
+
+    deleteJob = async (id: string) => {
+        console.log(id)
+        try {
+            runInAction(() => {
+                this.isLoadingNewJob = true;
+            })
+            await $api.post<JobResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/job/${id}`);
+        } catch (error) {
+            // TODO: Сделать отдельную обработку ошибок
+            toast.error(`${error?.response?.data?.violations?.map(item =>
                 `${item.fieldName}: ${item.message}; \n`
             )}`);
         } finally {

@@ -68,7 +68,7 @@ class CarStore {
             );
         } catch (error) {
             // TODO: Сделать отдельную обработку ошибок
-            toast.error(`${error.response.data.violations.map(item =>
+            toast.error(`${error?.response?.data?.violations?.map(item =>
                 `${item.fieldName}: ${item.message}; \n`
             )}`);
         } finally {
@@ -121,10 +121,10 @@ class CarStore {
                 this.isLoadingCurrentCar = true;
             })
             const response = await $api.get<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car/${id}`);
-            // const response = require('./__mock__/data.js').data[`/clients/${id}`];
-            console.log(response)
+
+            const reverseVisits = [...response.data?.visits]?.reverse();
             runInAction(() => {
-                this.currentCar = response.data;
+                this.currentCar = {...response.data, visits: reverseVisits};
             })
         } catch (error) {
             console.error('*---receiveCurrentCar', error);

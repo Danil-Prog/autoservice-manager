@@ -22,7 +22,7 @@ interface ISettingsMain {
 
 const SettingsMain: React.FC<ISettingsMain> = ({carStore, jobStore}) => {
     const { currentCar, currentVisit } = carStore
-    const { receiveJobList , isLoading, isLoadingNewJob, jobs, addJob} = jobStore
+    const { receiveJobList , isLoading, isLoadingNewJob, jobs, addJob, deleteJob} = jobStore
     const initialFormData = {type: '', description: '', price: '' }
     const [formData, setFormData] = React.useState(initialFormData);
 
@@ -113,6 +113,14 @@ const SettingsMain: React.FC<ISettingsMain> = ({carStore, jobStore}) => {
                                                 value={job.price}
                                                 sx={{m: 1, minWidth: 30, maxWidth: 80}}
                                             />
+                                            <Button
+                                                variant="outlined"
+                                                color="error"
+                                                style={{minWidth: 100, marginRight: 10}}
+                                                onClick={() => deleteJob(job.id)}
+                                            >
+                                                Удалить
+                                            </Button>
                                         </div>
                                     ))}
                             </div>
