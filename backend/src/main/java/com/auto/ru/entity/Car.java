@@ -1,6 +1,5 @@
 package com.auto.ru.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -50,8 +49,6 @@ public class Car {
     private Long odometer;
 
     @OneToMany(cascade = CascadeType.REMOVE)
-    @JsonIgnore
-    @Column(name = "visits")
     private List<CarVisit> visits = new ArrayList<>();
 
     public Car(String licencePlate) {

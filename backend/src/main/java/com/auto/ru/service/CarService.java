@@ -61,4 +61,9 @@ public class CarService {
         Car savedCar = carRepository.save(existsCar);
         return Optional.of(savedCar.getVisits());
     }
+
+    public Car getCarById(Long id) {
+        return carRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Car not found with id: " + id));
+    }
 }

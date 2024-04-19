@@ -1,5 +1,7 @@
 package com.auto.ru.controller;
 
+import com.auto.ru.config.dto.CarDto;
+import com.auto.ru.config.mapper.CarMapper;
 import com.auto.ru.entity.Car;
 import com.auto.ru.entity.CarVisit;
 import com.auto.ru.service.CarService;
@@ -11,6 +13,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,13 +43,13 @@ public class CarController {
 
     @GetMapping
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
-    public ResponseEntity<Page<Car>> getAllCars(
+    public ResponseEntity<Page<CarDto>> getAllCars(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "") String search
     ) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<Car> cars = carService.findAllCars(search, pageRequest);
+        Page<CarDto> cars = carService.findAllCars(search, pageRequest).map(CarMapper::toDto);
         return ResponseEntity.ok(cars);
     }
 
@@ -61,5 +64,12 @@ public class CarController {
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
     public ResponseEntity<List<CarVisit>> addVisit(@RequestBody CarVisit visit) {
         return ResponseEntity.of(carService.addVisit(visit));
+    }
+
+    @GetMapping("/{id}")
+    @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
+    public ResponseEntity<Car> getCarById(@PathVariable Long id) {
+        Car car = carService.getCarById(id);
+        return ResponseEntity.ok(car);
     }
 }
