@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,5 +47,12 @@ public class JobController {
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
     public ResponseEntity<Job> addJob(@RequestBody Job job) {
         return ResponseEntity.of(jobService.addJob(job));
+    }
+
+    @PostMapping("/{id}")
+    @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
+    public ResponseEntity<Job> updateJob(@PathVariable("id") Long id) {
+        Job deletedJob = jobService.deleteJobById(id);
+        return ResponseEntity.ok(deletedJob);
     }
 }

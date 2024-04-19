@@ -1,6 +1,7 @@
 package com.auto.ru.service;
 
 import com.auto.ru.entity.car.Job;
+import com.auto.ru.exception.BadRequestException;
 import com.auto.ru.repository.JobRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,5 +26,12 @@ public class JobService {
 
     public Optional<Job> addJob(Job job) {
         return Optional.of(jobRepository.save(job));
+    }
+
+    public Job deleteJobById(Long id) {
+        Job job = jobRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("Job with id " + id + " not found"));
+        jobRepository.delete(job);
+        return job;
     }
 }
