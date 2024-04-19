@@ -10,7 +10,7 @@ import {
     Button,
     FormControl, InputAdornment,
     InputLabel,
-    MenuItem,
+    MenuItem, Pagination,
     Select, Skeleton,
     TextField,
 } from "@mui/material";
@@ -69,7 +69,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
               <IconArrow />
           </div>
           <AnimatePresence>
-              <motion.div className={styles.container}
+              <motion.div
                           initial="closed"
                           animate={isShowSidebar ? 'open' : 'closed'}
                           variants={sidebarVariants}
@@ -85,6 +85,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                               ease: 'easeInOut',
                           }}
                           style={{overflow: 'scroll'}}
+                          className={styles.container}
                       >
                           <form className={styles.search} onSubmit={handleSubmit}>
                               <FormControl variant="standard" sx={{flex: 1, width: '100%'}}>
@@ -109,32 +110,50 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                                   value={searchValue}
                                   onChange={(e) => setSearchValue(e.target.value)}
                                   InputProps={{
-                                      endAdornment: <Button variant="text" color="primary" type="submit"><EastIcon /></Button>,
+                                      endAdornment: <Button variant="text" color="primary"
+                                                            type="submit"><EastIcon/></Button>,
                                   }}
-                                  sx={{ flex: 1, width: '100%'}}
+                                  sx={{flex: 1, width: '100%'}}
 
                               />
                           </form>
-                          {isLoading ?
-                              <>
-                                  <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>
-                                  <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>
-                                  <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>
-                                  <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>
-                              </>
-                              : cars?.map((car, index) => (
-                                  <div key={index}>
-                                      <CarItem
-                                          item={car}
-                                          isSelected={selectedItem === car}
-                                          onSelect={handleSelect}
-                                      />
-                                  </div>
-                              ))}
+                          <div className={styles.carList}>
+                              {isLoading ?
+                                  <>
+                                      <Skeleton animation="wave" variant="rounded" height={60}
+                                                style={{margin: 5, flex: 1}}/>
+                                      <Skeleton animation="wave" variant="rounded" height={60}
+                                                style={{margin: 5, flex: 1}}/>
+                                      <Skeleton animation="wave" variant="rounded" height={60}
+                                                style={{margin: 5, flex: 1}}/>
+                                      <Skeleton animation="wave" variant="rounded" height={60}
+                                                style={{margin: 5, flex: 1}}/>
+                                  </>
+                                  : cars?.content?.map((car, index) => (
+                                      <div key={index} className={styles.carItem}>
+                                          <CarItem
+                                              item={car}
+                                              isSelected={selectedItem === car}
+                                              onSelect={handleSelect}
+                                          />
+                                      </div>
+                                  ))}
+                          </div>
+                          <div className={styles.pagination}>
+                              {isShowSidebar ?
+                                  <Pagination
+                                      variant="outlined"
+                                      color="primary"
+                                      count={cars.totalPages}
+                                      onChange={(event, page) => {
+                                          receiveListCars(page - 1)
+                                      }}
+                                  />
+                              : null}
+                          </div>
                       </motion.div>
                       : null}
-                  <div style={{backgroundColor: '#fff'}}>
-                  </div>
+
               </motion.div>
           </AnimatePresence>
       </div>

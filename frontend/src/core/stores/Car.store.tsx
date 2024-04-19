@@ -79,13 +79,13 @@ class CarStore {
     }
 
     // Получение списка машин
-    receiveListCars = async () => {
+    receiveListCars = async (page?: number) => {
         try {
             this.setLoading(true);
-            const response = await $api.get<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/car');
+            const response = await $api.get<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car?page=${page ?? '0'}`);
             // const response = require('./__mock__/data.js').data['/clients'];
             runInAction(() => {
-                this.cars = response.data.content;
+                this.cars = response.data;
             })
         } catch (error) {
             console.error('*---receiveListCars', error);
@@ -102,7 +102,7 @@ class CarStore {
             })
             const response = await $api.get<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car?field=${field}&value=${value}`);
             runInAction(() => {
-                this.cars = response.data.content;
+                this.cars = response.data;
             })
         } catch (error) {
             console.error('*---searchCar', error);
