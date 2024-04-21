@@ -32,7 +32,6 @@ public class CarVisit {
     private Instant visitDate = Instant.now();
 
     @OneToMany(cascade = CascadeType.REMOVE)
-    @Column(name = "jobs")
     private List<Job> jobs;
 
     @Column(name = "comment")
