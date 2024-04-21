@@ -13,8 +13,10 @@ interface ICarCardInfo {
 
 const CarCardInfo: React.FC<ICarCardInfo> = ({ carStore }) => {
     const [isShowFormVisit, setShowFormVisit] = React.useState(false);
-    const { currentVisit, setCurrentVisit, currentCar } = carStore
-    React.useEffect(() => {}, [currentCar])
+    const { currentVisit, setCurrentVisit, currentCar, isLoadingNewVisit } = carStore
+    React.useEffect(() => {
+        setShowFormVisit(false)
+    }, [currentCar, isLoadingNewVisit])
 
     return (
         <div className={styles.container}>

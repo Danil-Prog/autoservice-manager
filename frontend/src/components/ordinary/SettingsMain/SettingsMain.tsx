@@ -22,12 +22,13 @@ interface ISettingsMain {
 
 const SettingsMain: React.FC<ISettingsMain> = ({carStore, jobStore}) => {
     const { currentCar, currentVisit } = carStore
-    const { receiveJobList , isLoading, jobs, addJob} = jobStore
-    const [formData, setFormData] = React.useState({type: '', description: '', price: '' });
+    const { receiveJobList , isLoading, isLoadingNewJob, jobs, addJob, deleteJob} = jobStore
+    const initialFormData = {type: '', description: '', price: '' }
+    const [formData, setFormData] = React.useState(initialFormData);
 
     React.useEffect(() => {
         receiveJobList()
-    }, [])
+    }, [isLoadingNewJob])
     React.useEffect(() => {
         console.log(JSON.stringify(jobs))
     }, [isLoading])
@@ -44,6 +45,7 @@ const SettingsMain: React.FC<ISettingsMain> = ({carStore, jobStore}) => {
         event.preventDefault();
         console.log(formData)
         addJob(formData)
+        setFormData(initialFormData)
     };
 
     return (
@@ -111,6 +113,14 @@ const SettingsMain: React.FC<ISettingsMain> = ({carStore, jobStore}) => {
                                                 value={job.price}
                                                 sx={{m: 1, minWidth: 30, maxWidth: 80}}
                                             />
+                                            <Button
+                                                variant="outlined"
+                                                color="error"
+                                                style={{minWidth: 100, marginRight: 10}}
+                                                onClick={() => deleteJob(job.id)}
+                                            >
+                                                Удалить
+                                            </Button>
                                         </div>
                                     ))}
                             </div>

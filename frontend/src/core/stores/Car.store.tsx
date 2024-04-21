@@ -5,7 +5,10 @@ import {CarResponse} from "~/core/models/response/AuthResponse";
 
 class CarStore {
     isLoading: boolean = false;
-    isLoadingNewCar: boolean = false;
+    isLoadingSidebar: boolean = false;
+    isLoadingCurrentCar: boolean = false;
+    isLoadingSearchCar: boolean = false;
+    isLoadingNewVisit: boolean = false;
     cars: TCar[] = [];
     currentCar: TCar;
     currentCarVisits: TVisits[] = []
@@ -18,11 +21,11 @@ class CarStore {
     setLoading = (bool: boolean) => {
         this.isLoading = bool;
     }
-    
+
     createCar = async (car: TCar) => {
         try {
             runInAction(() => {
-                this.isLoadingNewCar = true;
+                this.isLoadingSidebar = true;
             })
             await $api.post<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/car',
                 car,
@@ -34,28 +37,55 @@ class CarStore {
             )}`);
         } finally {
             runInAction(() => {
-                this.isLoadingNewCar = false;
+                this.isLoadingSidebar = false;
             })
         }
     }
 
     deleteCar = async (id: number) => {
         try {
+            runInAction(() => {
+                this.isLoadingSidebar = true;
+            })
             await $api.delete<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car?id=${id}`);
             toast.success(`Операция выполнена успешно`);
         } catch (error) {
             toast.error(`${error.response.data.message}`);
+        } finally {
+            runInAction(() => {
+                this.isLoadingSidebar = false;
+            })
+        }
+    }
+
+    createVisit = async (visit: TVisits) => {
+        try {
+            runInAction(() => {
+                this.isLoadingNewVisit = true;
+            })
+            await $api.post<any>(process.env.REACT_APP_ROUTE_PREFIX + '/car/visit',
+                visit,
+            );
+        } catch (error) {
+            // TODO: Сделать отдельную обработку ошибок
+            toast.error(`${error?.response?.data?.violations?.map(item =>
+                `${item.fieldName}: ${item.message}; \n`
+            )}`);
+        } finally {
+            runInAction(() => {
+                this.isLoadingNewVisit = false;
+            })
         }
     }
 
     // Получение списка машин
-    receiveListCars = async () => {
+    receiveListCars = async (page?: number) => {
         try {
             this.setLoading(true);
-            const response = await $api.get<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/car');
+            const response = await $api.get<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car?page=${page ?? '0'}`);
             // const response = require('./__mock__/data.js').data['/clients'];
             runInAction(() => {
-                this.cars = response.data.content;
+                this.cars = response.data;
             })
         } catch (error) {
             console.error('*---receiveListCars', error);
@@ -64,21 +94,45 @@ class CarStore {
             this.setLoading(false);
         }
     }
+    // Поиск машины
+    searchCar = async (field: string, value: string) => {
+        try {
+            runInAction(() => {
+                this.isLoadingSearchCar = true;
+            })
+            const response = await $api.get<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car?field=${field}&value=${value}`);
+            runInAction(() => {
+                this.cars = response.data;
+            })
+        } catch (error) {
+            console.error('*---searchCar', error);
+            toast.error(`${error?.response?.data?.message}`);
+        } finally {
+            runInAction(() => {
+                this.isLoadingSearchCar = false;
+            })
+        }
+    }
 
     // Получение информации по выбранной машине
     receiveCurrentCar = async (id: number) => {
         try {
-            this.setLoading(true);
-            // const response = await $api.post<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car/${id}`);
-            const response = require('./__mock__/data.js').data[`/clients/${id}`];
             runInAction(() => {
-                this.currentCar = response;
+                this.isLoadingCurrentCar = true;
+            })
+            const response = await $api.get<CarResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/car/${id}`);
+
+            const reverseVisits = [...response.data?.visits]?.reverse();
+            runInAction(() => {
+                this.currentCar = {...response.data, visits: reverseVisits};
             })
         } catch (error) {
             console.error('*---receiveCurrentCar', error);
             toast.error(`${error.response.data.message}`);
         } finally {
-            this.setLoading(false);
+            runInAction(() => {
+                this.isLoadingCurrentCar = false;
+            })
         }
     }
 

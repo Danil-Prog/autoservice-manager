@@ -5,6 +5,7 @@ import {toast} from "react-hot-toast";
 
 class JobStore {
     isLoading: boolean = false;
+    isLoadingNewJob: boolean = false;
     jobs: TJobs[] = [];
 
 
@@ -19,9 +20,10 @@ class JobStore {
     receiveJobList = async () => {
         try {
             this.setLoading(true);
-            const response = await $api.get<JobResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/job');
+            const response = await $api.get<JobResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/job?size=9999');
+            const reverseResponse = [...response.data.content].reverse();
             runInAction(() => {
-                this.jobs = response.data.content;
+                this.jobs = reverseResponse
             })
         } catch (error) {
             console.error('*---receiveJobList', error);
@@ -31,10 +33,10 @@ class JobStore {
         }
     }
 
-    addJob = async (job: TCar) => {
+    addJob = async (job: TJobs) => {
         try {
             runInAction(() => {
-                this.isLoading = true;
+                this.isLoadingNewJob = true;
             })
             await $api.post<JobResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/job',
                 job,
@@ -46,7 +48,26 @@ class JobStore {
             )}`);
         } finally {
             runInAction(() => {
-                this.isLoading = false;
+                this.isLoadingNewJob = false;
+            })
+        }
+    }
+
+    deleteJob = async (id: string) => {
+        console.log(id)
+        try {
+            runInAction(() => {
+                this.isLoadingNewJob = true;
+            })
+            await $api.post<JobResponse>(process.env.REACT_APP_ROUTE_PREFIX + `/job/${id}`);
+        } catch (error) {
+            // TODO: Сделать отдельную обработку ошибок
+            toast.error(`${error?.response?.data?.violations?.map(item =>
+                `${item.fieldName}: ${item.message}; \n`
+            )}`);
+        } finally {
+            runInAction(() => {
+                this.isLoadingNewJob = false;
             })
         }
     }

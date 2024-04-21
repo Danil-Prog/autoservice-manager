@@ -16,7 +16,6 @@ const HomePage: React.FC<IHomePage> = ({ carStore }) => {
 
   React.useEffect(() => {}, [currentCar])
   React.useEffect(() => {}, [])
-  console.log(JSON.stringify(carStore.currentCar));
 
   return (
     <div className={styles.container}>

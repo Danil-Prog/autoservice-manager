@@ -7,12 +7,14 @@ import {AnimatePresence, motion} from "framer-motion";
 import {IconArrow} from "~/components/icons/IconArrow";
 import CarItem from "~/components/simple/CarItem/CarItem";
 import {
-    FormControl,
+    Button,
+    FormControl, InputAdornment,
     InputLabel,
-    MenuItem,
+    MenuItem, Pagination,
     Select, Skeleton,
     TextField,
 } from "@mui/material";
+import EastIcon from '@mui/icons-material/East';
 
 interface ISidebarProps {
     carStore: ICarStore;
@@ -20,38 +22,36 @@ interface ISidebarProps {
 
 const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
 
-    const { receiveListCars, cars, receiveCurrentCar, createCar, currentCar, isLoading, isLoadingNewCar } = carStore;
-    const [car, setCar] = React.useState({
-        licencePlate: '',
-        stamp: '',
-        model: '',
-        year: '',
-        bodyNumber: '',
-        oil: '',
-        odometer: null
-    })
+    const {
+        receiveListCars,
+        cars,
+        receiveCurrentCar,
+        isLoading,
+        isLoadingSidebar,
+        isLoadingSearchCar,
+        searchCar,
+
+    } = carStore;
     const [isShowSidebar, setIsShowSidebar] = React.useState(true);
     const [selectedItem, setSelectedItem] = React.useState(null);
-    const [age, setAge] = React.useState('');
+    const [searchField, setSearchField] = React.useState('LICENCE_PLATE');
+    const [searchValue, setSearchValue] = React.useState('');
 
     React.useEffect(() => {
         receiveListCars()
-    }, [isLoadingNewCar])
+    }, [isLoadingSidebar])
 
     React.useEffect(() => {
-    }, [isLoading])
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setCar(prevCar => ({
-            ...prevCar,
-            [name]: value,
-        }));
-    };
+    }, [isLoading, searchField, isLoadingSearchCar])
 
     const handleSelect = (item) => {
         receiveCurrentCar(item.id)
         setSelectedItem(item);
+    };
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        searchCar(searchField, searchValue)
     };
 
     const sidebarVariants = {
@@ -69,7 +69,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
               <IconArrow />
           </div>
           <AnimatePresence>
-              <motion.div className={styles.container}
+              <motion.div
                           initial="closed"
                           animate={isShowSidebar ? 'open' : 'closed'}
                           variants={sidebarVariants}
@@ -85,47 +85,75 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                               ease: 'easeInOut',
                           }}
                           style={{overflow: 'scroll'}}
+                          className={styles.container}
                       >
-                          <div className={styles.search}>
-                              <FormControl variant="standard" sx={{m: 1, minWidth: 120}}>
+                          <form className={styles.search} onSubmit={handleSubmit}>
+                              <FormControl variant="standard" sx={{flex: 1, width: '100%'}}>
                                   <InputLabel id="demo-simple-select-standard-label">Поиск по...</InputLabel>
                                   <Select
                                       labelId="demo-simple-select-standard-label"
                                       id="demo-simple-select-standard"
-                                      value={age}
-                                      onChange={handleChange}
+                                      value={searchField}
+                                      onChange={(e) => setSearchField(e.target.value)}
                                       label="Поиск по"
                                   >
-                                      <MenuItem value="">
-                                          <em>None</em>
-                                      </MenuItem>
-                                      <MenuItem value={10}>Номер машины</MenuItem>
-                                      <MenuItem value={20}>Номер телефона</MenuItem>
-                                      <MenuItem value={30}>Фио</MenuItem>
+                                      <MenuItem value={'LICENCE_PLATE'}>Номер машины</MenuItem>
+                                      <MenuItem value={'MODEL'}>Модель</MenuItem>
+                                      <MenuItem value={'DESCRIPTION'}>Описание</MenuItem>
+                                      <MenuItem value={'BODY_NUMBER'}>VIN</MenuItem>
                                   </Select>
                               </FormControl>
-                              <TextField id="standard-basic" label="Поиск" variant="standard"/>
+                              <TextField
+                                  id="standard-basic"
+                                  label="Поиск"
+                                  variant="standard"
+                                  value={searchValue}
+                                  onChange={(e) => setSearchValue(e.target.value)}
+                                  InputProps={{
+                                      endAdornment: <Button variant="text" color="primary"
+                                                            type="submit"><EastIcon/></Button>,
+                                  }}
+                                  sx={{flex: 1, width: '100%'}}
+
+                              />
+                          </form>
+                          <div className={styles.carList}>
+                              {isLoading ?
+                                  <>
+                                      <Skeleton animation="wave" variant="rounded" height={60}
+                                                style={{margin: 5, flex: 1}}/>
+                                      <Skeleton animation="wave" variant="rounded" height={60}
+                                                style={{margin: 5, flex: 1}}/>
+                                      <Skeleton animation="wave" variant="rounded" height={60}
+                                                style={{margin: 5, flex: 1}}/>
+                                      <Skeleton animation="wave" variant="rounded" height={60}
+                                                style={{margin: 5, flex: 1}}/>
+                                  </>
+                                  : cars?.content?.map((car, index) => (
+                                      <div key={index} className={styles.carItem}>
+                                          <CarItem
+                                              item={car}
+                                              isSelected={selectedItem === car}
+                                              onSelect={handleSelect}
+                                          />
+                                      </div>
+                                  ))}
                           </div>
-                          {isLoading ?
-                              <>
-                                  <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>
-                                  <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>
-                                  <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>
-                                  <Skeleton animation="wave" variant="rounded" height={60} style={{margin: 5, flex: 1}}/>
-                              </>
-                              : cars?.map((car, index) => (
-                                  <div key={index}>
-                                      <CarItem
-                                          item={car}
-                                          isSelected={selectedItem === car}
-                                          onSelect={handleSelect}
-                                      />
-                                  </div>
-                              ))}
+                          <div className={styles.pagination}>
+                              {isShowSidebar ?
+                                  <Pagination
+                                      variant="outlined"
+                                      color="primary"
+                                      count={cars.totalPages}
+                                      onChange={(event, page) => {
+                                          receiveListCars(page - 1)
+                                      }}
+                                  />
+                              : null}
+                          </div>
                       </motion.div>
                       : null}
-                  <div style={{backgroundColor: '#fff'}}>
-                  </div>
+
               </motion.div>
           </AnimatePresence>
       </div>
