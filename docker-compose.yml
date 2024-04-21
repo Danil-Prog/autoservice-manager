@@ -22,7 +22,7 @@ services:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://psql_server:5432/${DB_NAME}"
       SPRING_DATASOURCE_USERNAME: "${DB_USERNAME}"
       SPRING_DATASOURCE_PASSWORD: "${DB_PASSWORD}"
-      app.cors.allowed-origins: "http://localhost"
+      app.cors.allowed-origins: "http://${SERVER_IP}"
     ports:
       - "8080:8080"
     networks:
