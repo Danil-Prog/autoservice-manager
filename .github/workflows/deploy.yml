@@ -11,9 +11,9 @@ jobs:
       - name: Git pull
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: 194.87.252.63
-          username: root
-          password: BUqs,ARN{PH5
+          host:
+          username:
+          password:
           script: |
             cd autoservice-manager
             git pull
@@ -21,9 +21,9 @@ jobs:
       - name: stop services
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: 194.87.252.63
-          username: root
-          password: BUqs,ARN{PH5
+          host:
+          username:
+          password:
           script: |
             cd autoservice-manager
             docker compose stop frontend backend
@@ -35,9 +35,9 @@ jobs:
       - name: build and run
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host: 194.87.252.63
-          username: root
-          password: BUqs,ARN{PH5
+          host:
+          username:
+          password:
           script: |
             cd autoservice-manager
             gradle -p backend/ jibDockerBuild
