@@ -1,6 +1,6 @@
 FROM node:21-alpine
 WORKDIR /frontend
-COPY package*.json .
+COPY package*.json frontend/
 RUN npm install --legacy-peer-deps
 COPY . .
 EXPOSE 3000
