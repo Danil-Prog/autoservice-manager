@@ -45,7 +45,9 @@ const SettingsPage: React.FC<ISettingsPage> = ({ carStore }) => {
             case 0:
                 return <SettingsMain />
             case 1:
-                return <div>test 2</div>
+                return <div>
+                    <p>Тестовый коммит</p>
+                </div>
             case 2:
                 return <div>test 3</div>
 
