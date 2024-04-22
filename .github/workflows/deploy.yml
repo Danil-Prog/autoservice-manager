@@ -11,9 +11,10 @@ jobs:
       - name: Git pull
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host:
-          username:
-          password:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{  secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           script: |
             cd autoservice-manager
             git pull
@@ -21,9 +22,10 @@ jobs:
       - name: stop services
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host:
-          username:
-          password:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{  secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           script: |
             cd autoservice-manager
             docker compose stop frontend backend
@@ -35,9 +37,10 @@ jobs:
       - name: build and run
         uses: appleboy/ssh-action@v1.0.3
         with:
-          host:
-          username:
-          password:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{  secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
           script: |
             cd autoservice-manager
             gradle -p backend/ jibDockerBuild
