@@ -54,10 +54,6 @@ public class Car {
     @Column(name = "description", length = 1000)
     private String description;
 
-    public Car(String licencePlate) {
-        this.licencePlate = licencePlate;
-    }
-
     public Car() {
 
     }

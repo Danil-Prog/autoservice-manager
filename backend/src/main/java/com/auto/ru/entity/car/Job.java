@@ -6,6 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,8 +25,10 @@ public class Job {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Size(min = 1, max = 255)
+    @NotBlank
     @Column(name = "type")
-    private String type;
+    private String name;
 
     @Column(name = "description")
     private String description;
@@ -34,4 +38,7 @@ public class Job {
 
     @Column(name = "is_done")
     private boolean isDone = false;
+
+    @Column(name = "is_template")
+    private Boolean isTemplate = false;
 }

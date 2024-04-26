@@ -1,5 +1,6 @@
 package com.auto.ru.service;
 
+import com.auto.ru.entity.car.CarVisit;
 import com.auto.ru.entity.car.Job;
 import com.auto.ru.exception.BadRequestException;
 import com.auto.ru.repository.JobRepository;
@@ -20,11 +21,15 @@ public class JobService {
         this.jobRepository = jobRepository;
     }
 
+    /**
+     *  Поиск шаблонов {@link Job} которые не привязаны к {@link CarVisit}
+     */
     public Page<Job> findAllJobs(String search, PageRequest pageRequest) {
-        return jobRepository.findAllByTypeContaining(search, pageRequest);
+        return jobRepository.findAllByNameContainingAndIsTemplateTrue(search, pageRequest);
     }
 
     public Optional<Job> addJob(Job job) {
+        job.setIsTemplate(true);
         return Optional.of(jobRepository.save(job));
     }
 

@@ -9,6 +9,8 @@ services:
       POSTGRES_PASSWORD: "${DB_PASSWORD}"
     networks:
       - network-manager
+    ports:
+      - "5432:5432"
 
   # --------BACKEND_SERVICE--------
 

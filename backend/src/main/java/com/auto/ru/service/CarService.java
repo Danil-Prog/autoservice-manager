@@ -80,4 +80,16 @@ public class CarService {
         return carRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Car not found with id: " + id));
     }
+
+    public void deleteVisitById(Long id) {
+        CarVisit carVisit = carVisitRepository.findById(id)
+                .orElseThrow(() -> new BadRequestException("CarVisit not found with id: " + id));
+
+        Long carId = carVisit.getCarId();
+        Car car = carRepository.findById(carId)
+                .orElseThrow(() -> new BadRequestException("Car not found with id: " + carId));
+        car.getVisits().remove(carVisit);
+
+        carVisitRepository.save(carVisit);
+    }
 }

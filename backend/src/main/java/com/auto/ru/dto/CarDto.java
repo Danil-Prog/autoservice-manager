@@ -1,4 +1,4 @@
-package com.auto.ru.config.dto;
+package com.auto.ru.dto;
 
 public record CarDto(Long id,
                      String licencePlate,

@@ -1,7 +1,7 @@
 package com.auto.ru.controller;
 
-import com.auto.ru.config.dto.CarDto;
-import com.auto.ru.config.mapper.CarMapper;
+import com.auto.ru.dto.CarDto;
+import com.auto.ru.mapper.CarMapper;
 import com.auto.ru.entity.car.Car;
 import com.auto.ru.entity.car.CarSearchField;
 import com.auto.ru.entity.car.CarVisit;
@@ -66,6 +66,12 @@ public class CarController {
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
     public ResponseEntity<List<CarVisit>> addVisit(@RequestBody CarVisit visit) {
         return ResponseEntity.of(carService.addVisit(visit));
+    }
+
+    @PostMapping("/visit/{id}")
+    @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
+    public void deleteVisit(@PathVariable Long id) {
+        carService.deleteVisitById(id);
     }
 
     @GetMapping("/{id}")
