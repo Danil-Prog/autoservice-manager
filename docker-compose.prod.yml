@@ -1,6 +1,10 @@
 
 services:
 
+  psql:
+    ports: !override
+      - "127.0.0.1:5432:5432"
+
   backend:
     environment:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://psql_server:5432/${DB_NAME}"
