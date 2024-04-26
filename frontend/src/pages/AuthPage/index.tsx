@@ -57,7 +57,7 @@ const AuthPage: React.FC<IAuthPage> = ({ authStore }) => {
           id="outlined-basic"
           label="Логин"
           variant="standard"
-          onChange={() => handleChangeUsername}
+          onChange={(event) => handleChangeUsername(event.target.value)}
           name={'username'}
           autoComplete="username"
         />
@@ -65,7 +65,7 @@ const AuthPage: React.FC<IAuthPage> = ({ authStore }) => {
           id="outlined-basic"
           label="Пароль"
           variant="standard"
-          onChange={() => handleChangePassword}
+          onChange={(event) => handleChangePassword(event.target.value)}
           name={'password'}
           type={'password'}
           autoComplete="password"
