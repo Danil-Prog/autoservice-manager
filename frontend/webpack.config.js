@@ -14,7 +14,9 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
-    new Dotenv()
+    new Dotenv({
+      path: '../.env'
+    })
   ],
   resolve: {
     alias: {
@@ -38,11 +40,11 @@ module.exports = {
           {
             loader: 'css-loader',
             options: {
-              modules: true,
-            },
+              modules: true
+            }
           },
-          { loader: 'sass-loader' },
-        ],
+          { loader: 'sass-loader' }
+        ]
       },
       {
         test: /\.(png|svg|jpg|gif)$/,

@@ -31,7 +31,7 @@
       ]
     },
     // Language and Environment Configuration
-    "target": "ES2022",
+    "target": "esnext",
     "jsx": "react-jsx",
     // JavaScript Support Configuration
     "allowJs": true,
@@ -41,7 +41,8 @@
     "isolatedModules": true
   },
   "include": [
-    "src/**/**/**/**/*"
+    "src/**/**/**/**/*",
+    "./declaration.d.ts"
   ],
   "exclude": [
     "node_modules"

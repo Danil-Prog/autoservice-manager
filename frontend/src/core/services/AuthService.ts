@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import $api from '~/core/services/http';
 import { AuthResponse } from '~/core/models/response/AuthResponse';
 
@@ -7,7 +7,7 @@ export default class AuthService {
     return $api.post<AuthResponse>('/auth/login', { username, password });
   }
 
-  static async logout(): Promise<axios.AxiosResponse<any>> {
-    return $api.post('/logout');
-  }
-};
+  // static async logout(): Promise<axios.AxiosResponse<any>> {
+  //   return $api.post('/logout');
+  // }
+}

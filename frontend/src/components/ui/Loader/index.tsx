@@ -1,7 +1,12 @@
-import styles from './Loader.module.scss';
+import { CircularProgress } from '@mui/material';
+import Box from '@mui/material/Box';
 
 const Loader = () => {
-  return <div className={styles.loader}>Loading...</div>;
+  return (
+    <Box sx={{ display: 'flex' }}>
+      <CircularProgress />
+    </Box>
+  );
 };
 
 export default Loader;

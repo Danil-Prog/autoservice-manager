@@ -4,11 +4,9 @@ import React from 'react';
 import styles from './PageContainer.module.scss';
 import { Outlet } from 'react-router-dom';
 
-interface IPageContainer {
+interface IPageContainer {}
 
-}
-
-const PageContainer: React.FC<IPageContainer> = ({}) => {
+const PageContainer: React.FC<IPageContainer> = () => {
   return (
     <div className={styles.container}>
       <div className={styles.content}>

@@ -8,16 +8,20 @@ interface ICookiesModal {
 }
 
 const CookiesModal: React.FC<ICookiesModal> = ({ isModalCookie, setIsModalCookie }) => {
-  React.useEffect(() => {
-  }, [isModalCookie]);
+  React.useEffect(() => {}, [isModalCookie]);
 
   return (
     <>
       <div className={styles.container}>
-        <p className={styles.description}>Мы используем файлы cookies для улучшения работы сайта. Оставаясь на нашем
-          сайте, вы соглашаетесь с условиями
-          использования файлов cookies. Чтобы ознакомиться с нашими Положениями о конфиденциальности и об использовании
-          файлов cookie, <a href="#" target="_blank">нажмите здесь</a>.</p>
+        <p className={styles.description}>
+          Мы используем файлы cookies для улучшения работы сайта. Оставаясь на нашем сайте, вы
+          соглашаетесь с условиями использования файлов cookies. Чтобы ознакомиться с нашими
+          Положениями о конфиденциальности и об использовании файлов cookie,{' '}
+          <a href="#" target="_blank">
+            нажмите здесь
+          </a>
+          .
+        </p>
         <BaseButton value={'Я согласен'} onClick={setIsModalCookie} type={'button'} />
       </div>
     </>

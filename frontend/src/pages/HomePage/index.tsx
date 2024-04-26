@@ -1,30 +1,32 @@
 import React from 'react';
-import {inject} from "mobx-react";
-import {observer} from "mobx-react-lite";
-import {ICarStore} from "~/core/stores/Car.store";
-import styles from './HomePage.module.scss'
-import ClientCard from "~/components/ordinary/ClientCard/CarCard";
-import ClientCardInfo from "~/components/ordinary/ClientCardInfo/CarCardInfo";
-import EmptyItem from "~/components/simple/EmptyItem/EmptyItem";
+import { inject } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
+import { ICarStore } from '~/core/stores/Car.store';
+import styles from './HomePage.module.scss';
+import ClientCard from '~/components/ordinary/ClientCard/CarCard';
+import ClientCardInfo from '~/components/ordinary/ClientCardInfo/CarCardInfo';
+import EmptyItem from '~/components/simple/EmptyItem/EmptyItem';
 
 interface IHomePage {
-  carStore: ICarStore;
+  carStore?: ICarStore;
 }
 
 const HomePage: React.FC<IHomePage> = ({ carStore }) => {
-  const { currentCar } = carStore
+  const { currentCar } = carStore!;
 
-  React.useEffect(() => {}, [currentCar])
-  React.useEffect(() => {}, [])
+  React.useEffect(() => {}, [currentCar]);
+  React.useEffect(() => {}, []);
 
   return (
     <div className={styles.container}>
-         {currentCar ?
-            <>
-                <ClientCard />
-                <ClientCardInfo />
-            </>
-         : <EmptyItem />}
+      {currentCar ? (
+        <>
+          <ClientCard />
+          <ClientCardInfo />
+        </>
+      ) : (
+        <EmptyItem />
+      )}
     </div>
   );
 };

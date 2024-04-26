@@ -5,7 +5,6 @@ import ThemeStore from '~/core/stores/Theme.store';
 import { inject } from 'mobx-react';
 import styles from './ThemeToggle.module.scss';
 import { IconMoon } from '~/components/icons/IconMoon';
-import { IconSun } from '~/components/icons/IconSun';
 
 interface IThemeToggle {
   themeStore: ThemeStore;
@@ -19,15 +18,14 @@ const ThemeToggle: React.FC<IThemeToggle> = ({ themeStore }) => {
       setIsChecked(true);
       themeStore.toggleTheme();
     }
-  }, []);
-  React.useEffect(() => {
-  }, [isChecked]);
+  }, [themeStore]);
+  React.useEffect(() => {}, [isChecked]);
 
-  const handleToggle = (e) => {
+  const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
     localStorage.setItem('theme', themeStore.isDarkMode ? 'light' : 'dark');
     setIsChecked(e.target.checked);
     themeStore.toggleTheme();
-    document.body.dataset.theme = themeStore.isDarkMode ? 'dark' : 'light';
+    document.body.dataset['theme'] = themeStore.isDarkMode ? 'dark' : 'light';
   };
 
   return (
@@ -35,8 +33,7 @@ const ThemeToggle: React.FC<IThemeToggle> = ({ themeStore }) => {
       <IconMoon />
       <p>Dark mode</p>
       <label className={styles.switch}>
-        <input type="checkbox" onChange={handleToggle}
-               checked={isChecked} />
+        <input type="checkbox" onChange={handleToggle} checked={isChecked} />
         <span className={[styles.slider, styles.round].join(' ')}></span>
       </label>
     </div>

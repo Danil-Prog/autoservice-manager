@@ -6,5 +6,8 @@ export interface CarResponse {
   content: TCar[];
 }
 export interface JobResponse {
-  content: TJobs[];
+  content: TJob[];
+}
+export interface VisitsResponse {
+  content: TJob[];
 }

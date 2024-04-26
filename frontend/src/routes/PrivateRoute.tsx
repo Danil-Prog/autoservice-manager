@@ -5,11 +5,11 @@ import AuthStore from '~/core/stores/Auth.store';
 import { inject } from 'mobx-react';
 
 interface IPrivateRoute {
-  children: any;
-  authStore: AuthStore;
+  children: React.ReactNode;
+  authStore?: AuthStore;
 }
 
-const PrivateRoute: React.FC<IPrivateRoute> = ({ children, authStore }) => {
+const PrivateRoute: React.FC<IPrivateRoute> = (children, authStore) => {
   return authStore.isAuthenticated ? children : <Navigate to="/login" />;
 };
 

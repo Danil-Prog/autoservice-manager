@@ -9,9 +9,7 @@ const StaticElements = () => {
   return (
     <div className={styles.mainContainer}>
       {<Header />}
-      <div className={styles.secondContainer}>
-        {<PageContainer />}
-      </div>
+      <div className={styles.secondContainer}>{<PageContainer />}</div>
     </div>
   );
 };

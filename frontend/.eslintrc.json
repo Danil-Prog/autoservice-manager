@@ -1,17 +1,74 @@
-// .eslintrc.json
 {
   "settings": {
-      "import/parsers": {
-        "@typescript-eslint/parser": [
-          ".ts",
-          ".tsx"
-        ]
+    "react": {
+      "version": "detect"
     },
-    "import/resolver": {
-      "alias": {
-        "map": [["#components", "./src/components"]],
-        "extensions": [".ts", ".js", ".json"]
+    "import/extensions": [".js", ".jsx", ".ts", ".tsx"],
+     "import/parsers": {
+       "@typescript-eslint/parser": [".ts", ".tsx"]
+     },
+    "import/resolver": "webpack"
+  },
+  "parser": "@typescript-eslint/parser",
+  "env": {
+    "node": true
+  },
+  "globals": {
+    "window": true,
+    "module": true,
+    "document": true,
+    "localStorage": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:react-hooks/recommended",
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "plugin:import/typescript",
+    "plugin:prettier/recommended",
+    "prettier",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "overrides": [
+    {
+      "env": {
+        "node": true
+      },
+      "files": [".eslintrc.{js,cjs}"],
+      "parserOptions": {
+        "sourceType": "module",
+        "project": "./tsconfig.json"
       }
     }
+  ],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "./tsconfig.json"
+  },
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "rules": {
+    "no-unsafe-optional-chaining": "off",
+    "@typescript-eslint/no-var-requires": "off",
+    "import/no-unresolved": "off",
+    "no-unused-vars": "warn",
+    "@typescript-eslint/no-unused-vars": "warn",
+    "@typescript-eslint/ban-ts-comment": "error",
+    "react/jsx-uses-react": "off",
+    "react/jsx-uses-vars": "error",
+    "react/react-in-jsx-scope": "off",
+    "no-var": "error",
+    "prefer-const": "warn",
+    "prettier/prettier": [
+      "warn",
+      {
+        "endOfLine": "auto"
+      }
+    ]
   }
 }

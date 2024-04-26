@@ -14,5 +14,4 @@ class ThemeStore {
 
 export default ThemeStore;
 
-export interface IThemeStore extends ThemeStore {
-}
+export interface IThemeStore extends ThemeStore {}

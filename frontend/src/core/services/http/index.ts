@@ -1,9 +1,8 @@
-import axios from 'axios';
-import { toast } from 'react-hot-toast';
+import axios, { AxiosResponse, AxiosError } from 'axios';
 
 const $api = axios.create({
   withCredentials: true,
-  baseURL: process.env.REACT_APP_BASE_URL,
+  baseURL: process.env['REACT_APP_BASE_URL']!
 });
 
 $api.interceptors.request.use((config) => {
@@ -15,22 +14,26 @@ $api.interceptors.request.use((config) => {
     return config;
   } catch (e) {
     console.log('ERROR', e);
+    return Promise.reject(e);
   }
 });
 
-$api.interceptors.response.use((config) => {
-  console.log(`<--- ${config.config.url}`, config);
-  console.log(`<--- config.data`, config.data);
-  return config;
-}, async (error) => {
-  console.error(`<--- ${error.config.url}`, error);
-  if (error.response.status == 401 && error.config && !error.config._isRetry) {
-    // toast.error(`${error.response.message}`);
-    localStorage.removeItem('token');
-  } else {
-    // toast.success(`${error.response.message}`);
+$api.interceptors.response.use(
+  (response: AxiosResponse) => {
+    console.log(`<--- ${response.config.url}`, response);
+    console.log(`<--- response.data`, response.data);
+    return response;
+  },
+  async (error: AxiosError) => {
+    console.error(`<--- ${error.config?.url}`, error);
+    if (error.response?.status === 401 && error.config) {
+      // toast.error(`${error.response?.message}`);
+      localStorage.removeItem('token');
+    } else {
+      // toast.success(`${error.response?.message}`);
+    }
+    throw error;
   }
-  throw error;
-});
+);
 
 export default $api;
