@@ -39,7 +39,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
 
   React.useEffect(() => {
     receiveListCars();
-  }, [isLoadingSidebar, receiveListCars]);
+  }, [isLoadingSidebar]);
 
   React.useEffect(() => {}, [isLoading, searchField, isLoadingSearchCar]);
 

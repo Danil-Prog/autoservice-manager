@@ -14,9 +14,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html'
     }),
-    new Dotenv({
-      path: '../.env'
-    })
+    new Dotenv()
   ],
   resolve: {
     alias: {
