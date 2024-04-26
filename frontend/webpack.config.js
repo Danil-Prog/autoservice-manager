@@ -21,7 +21,7 @@ module.exports = {
       '~': path.resolve(__dirname, 'src')
     },
     modules: [__dirname, 'src', 'node_modules'],
-    extensions: ['.*', '.js', '.jsx', '.tsx', '.ts']
+    extensions: ['.*', '.js', '.jsx', '.tsx', '.ts', '.json']
   },
   module: {
     rules: [
