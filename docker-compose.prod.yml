@@ -1,0 +1,31 @@
+
+services:
+
+  backend:
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://psql_server:5432/${DB_NAME}"
+    ports: !override
+      - "8080:8080"
+
+  frontend:
+    container_name: frontend_service
+    build: ./frontend
+    stdin_open: true
+    networks:
+      - network-manager
+    links:
+      - backend
+
+  nginx:
+    container_name: reverse_proxy
+    image: nginx:latest
+    volumes:
+      - ./nginx/templates:/etc/nginx/templates:rw,cached
+    environment:
+      REACT_URL: "http://frontend_service:3000"
+    ports:
+      - "80:80"
+    networks:
+      - network-manager
+    links:
+      - "frontend"

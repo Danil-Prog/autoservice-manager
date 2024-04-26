@@ -28,11 +28,13 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd autoservice-manager
-            docker compose stop frontend backend
+            docker stop frontend_service backend_service reverse_proxy
             docker rm backend_service
             docker rm frontend_service
+            docker rm reverse_proxy
             docker rmi autoservice-manager/backend
             docker rmi autoservice-manager-frontend
+            docker rmi nginx
 
       - name: build and run
         uses: appleboy/ssh-action@v1.0.3
@@ -44,5 +46,5 @@ jobs:
           script: |
             cd autoservice-manager
             gradle -p backend/ jibDockerBuild
-            docker compose build
-            docker compose up -d
+            docker compose -f docker-compose.yml -f docker-compose.prod.yml build
+            docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
