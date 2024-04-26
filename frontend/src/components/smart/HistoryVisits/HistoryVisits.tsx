@@ -20,7 +20,7 @@ const HistoryVisits: React.FC<IHistoryVisits> = ({ carStore }) => {
   };
   React.useEffect(() => {
     receiveCurrentCar(currentCar.id);
-  }, [currentCar.id, isLoadingNewVisit, receiveCurrentCar]);
+  }, [isLoadingNewVisit]);
 
   return (
     <>

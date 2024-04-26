@@ -26,7 +26,7 @@ $api.interceptors.response.use(
   },
   async (error: AxiosError) => {
     console.error(`<--- ${error.config?.url}`, error);
-    if (error.response?.status === 401 && error.config) {
+    if (error.response?.status === 401 && error.config && !error.config._isRetry) {
       // toast.error(`${error.response?.message}`);
       localStorage.removeItem('token');
     } else {

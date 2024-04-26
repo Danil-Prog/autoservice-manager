@@ -19,7 +19,7 @@ import {
 import EastIcon from '@mui/icons-material/East';
 
 interface ISidebarProps {
-  carStore: ICarStore;
+  carStore?: ICarStore;
 }
 
 const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
@@ -31,7 +31,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
     isLoadingSidebar,
     isLoadingSearchCar,
     searchCar
-  } = carStore;
+  } = carStore!;
   const [isShowSidebar, setIsShowSidebar] = React.useState(true);
   const [selectedItem, setSelectedItem] = React.useState<TCar | null>(null);
   const [searchField, setSearchField] = React.useState('LICENCE_PLATE');
@@ -41,7 +41,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
     receiveListCars();
   }, [isLoadingSidebar]);
 
-  React.useEffect(() => {}, [isLoading, searchField, isLoadingSearchCar]);
+  React.useEffect(() => {}, [isLoading, isLoadingSearchCar]);
 
   const handleSelect = (item: TCar) => {
     receiveCurrentCar(item.id);

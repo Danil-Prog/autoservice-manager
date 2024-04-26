@@ -4,7 +4,8 @@ import styles from './CarItem.module.scss';
 interface ICarItemProps {
   item: TCar;
   isSelected: boolean;
-  onSelect: () => void;
+  // eslint-disable-next-line no-unused-vars
+  onSelect: (item: TCar) => void;
 }
 
 const CarItem: React.FC<ICarItemProps> = ({ item, isSelected, onSelect }) => {
@@ -21,7 +22,7 @@ const CarItem: React.FC<ICarItemProps> = ({ item, isSelected, onSelect }) => {
   return (
     <div
       ref={itemRef}
-      onClick={onSelect}
+      onClick={() => onSelect(item)}
       style={{ padding: '10px', cursor: 'pointer' }}
       className={styles.carItem}>
       <p style={{ flex: 1, paddingLeft: 5 }}>{item.licencePlate}</p>

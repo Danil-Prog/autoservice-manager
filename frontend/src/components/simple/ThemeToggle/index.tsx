@@ -18,7 +18,7 @@ const ThemeToggle: React.FC<IThemeToggle> = ({ themeStore }) => {
       setIsChecked(true);
       themeStore.toggleTheme();
     }
-  }, [themeStore]);
+  }, []);
   React.useEffect(() => {}, [isChecked]);
 
   const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {

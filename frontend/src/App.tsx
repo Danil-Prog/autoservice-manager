@@ -26,7 +26,7 @@ const App: React.FC<IAppProps> = observer(({ authStore, themeStore }) => {
     } else {
       document.body.dataset['theme'] = themeStore?.isDarkMode ? 'dark' : 'light';
     }
-  }, [themeStore?.isDarkMode]);
+  }, []);
 
   React.useEffect(() => {
     if (localStorage.getItem('token')) {
@@ -34,7 +34,7 @@ const App: React.FC<IAppProps> = observer(({ authStore, themeStore }) => {
     } else {
       authStore?.setAuth(false);
     }
-  }, [authStore, authStore?.isAuthenticated]);
+  }, [authStore?.isAuthenticated]);
 
   return (
     <div className="App">

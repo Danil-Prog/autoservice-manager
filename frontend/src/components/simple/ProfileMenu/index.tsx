@@ -13,7 +13,7 @@ interface IProfileMenuProps {
 }
 
 const ProfileMenu: React.FC<IProfileMenuProps> = ({ authStore }) => {
-  // const [isShow, setIsShow] = React.useState(false);
+  const [isShow, setIsShow] = React.useState(false);
   const handleClickLogout = async () => {
     await localStorage.removeItem('token');
     await authStore?.setAuth(false);
@@ -21,7 +21,7 @@ const ProfileMenu: React.FC<IProfileMenuProps> = ({ authStore }) => {
   const ref = React.useRef(null);
   const handleClickOutside = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
-      // setIsShow(false);
+      setIsShow(false);
     }
   };
 
@@ -118,7 +118,7 @@ const ProfileMenu: React.FC<IProfileMenuProps> = ({ authStore }) => {
         </MenuItem>
         <MenuItem disabled={true} sx={{ ml: 2 }}>
           <ListItemIcon sx={{ fontSize: 'small', color: '#000' }}>
-            Версия приложения: {process.env.REACT_APP_VERSION}
+            Версия приложения: {process.env['REACT_APP_VERSION']}
           </ListItemIcon>
         </MenuItem>
       </Menu>

@@ -18,7 +18,7 @@ const SettingsMain: React.FC<ISettingsMain> = ({ jobStore }) => {
 
   React.useEffect(() => {
     receiveJobList();
-  }, [isLoadingNewJob, receiveJobList]);
+  }, [isLoadingNewJob]);
   React.useEffect(() => {}, [isLoading]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
