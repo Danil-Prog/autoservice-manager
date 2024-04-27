@@ -52,6 +52,7 @@ const AuthPage: React.FC<IAuthPage> = ({ authStore }) => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.background}></div>
       <form className={styles.formContainer}>
         <TextField
           id="outlined-basic"
@@ -78,9 +79,9 @@ const AuthPage: React.FC<IAuthPage> = ({ authStore }) => {
           Вход
         </Button>
       </form>
-      {isModalCookie ? (
-        <CookiesModal isModalCookie={isModalCookie} setIsModalCookie={handleClickCookie} />
-      ) : null}
+      {/*{isModalCookie ? (*/}
+      {/*  <CookiesModal isModalCookie={isModalCookie} setIsModalCookie={handleClickCookie} />*/}
+      {/*) : null}*/}
     </div>
   );
 };
