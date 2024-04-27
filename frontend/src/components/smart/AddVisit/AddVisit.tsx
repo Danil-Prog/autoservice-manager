@@ -24,13 +24,13 @@ interface IAddVisit {
 const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
   const { currentCar, currentVisit, createVisit } = carStore!;
   const { receiveJobList, jobs } = jobStore!;
-  const sortedJobs: TJob[] = [...jobs].sort((a: TJob, b: TJob) => a.type.localeCompare(b.type));
+  const sortedJobs: TJob[] = [...jobs].sort((a: TJob, b: TJob) => a.name.localeCompare(b.name));
   const [editingList, setEditingList] = React.useState([]);
   const [formData, setFormData] = React.useState(
     currentVisit ?? {
       comment: '',
       carId: currentCar?.id,
-      jobs: [{ type: '', description: '', price: '' }]
+      jobs: [{ name: '', description: '', price: '' }]
     }
   );
 
@@ -51,7 +51,7 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
 
   const handleSelectJobs = (index, field, value) => {
     const newjobs = [...formData.jobs];
-    const selectJob = jobs.find((job) => job.type === value);
+    const selectJob = jobs.find((job) => job.name === value);
     newjobs[index][field] = value;
     newjobs[index]['description'] = selectJob?.description ?? '';
     newjobs[index]['price'] = selectJob?.price ?? '';
@@ -111,8 +111,8 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
                       id="standard-basic"
                       label="Описание"
                       variant="standard"
-                      value={pair.type}
-                      onChange={(e) => handleInputChange(index, 'type', e.target.value)}
+                      value={pair.name}
+                      onChange={(e) => handleInputChange(index, 'name', e.target.value)}
                       sx={{ minWidth: 200, maxWidth: 700, width: 700 }}
                     />
                   ) : (
@@ -123,15 +123,15 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
                       <Select
                         labelId="demo-simple-select-standard-label"
                         id="demo-simple-select-standard"
-                        value={pair.type}
-                        onChange={(e) => handleSelectJobs(index, 'type', e.target.value)}
+                        value={pair.name}
+                        onChange={(e) => handleSelectJobs(index, 'name', e.target.value)}
                         label="Работа">
                         <MenuItem value="">
                           <em>Очистить</em>
                         </MenuItem>
                         {sortedJobs?.map((job) => (
-                          <MenuItem key={job.id} value={job.type}>
-                            {job.type}
+                          <MenuItem key={job.id} value={job.name}>
+                            {job.name}
                           </MenuItem>
                         ))}
                       </Select>

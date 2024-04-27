@@ -12,7 +12,7 @@ type TCar = {
 
 type TJob = {
   id: number;
-  type: string;
+  name: string;
   description: string;
   price: number;
   done: boolean;

@@ -88,7 +88,7 @@ const SettingsMain: React.FC<ISettingsMain> = ({ jobStore }) => {
                   id="standard-basic"
                   label="Название работы"
                   variant="standard"
-                  value={job.type}
+                  value={job.name}
                   sx={{ m: 1, minWidth: 200, maxWidth: 400, width: 300 }}
                 />
                 <TextField
