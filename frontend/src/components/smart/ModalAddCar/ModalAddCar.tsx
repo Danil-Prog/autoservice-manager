@@ -7,7 +7,7 @@ import { observer } from 'mobx-react-lite';
 
 interface IModalAddCarProps {
   title: string;
-  carStore: ICarStore;
+  carStore?: ICarStore;
 }
 
 const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
@@ -20,7 +20,7 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
     oil: '',
     odometer: null
   });
-  const { createCar } = carStore;
+  const { createCar } = carStore!;
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);

@@ -13,26 +13,12 @@ interface IProfileMenuProps {
 }
 
 const ProfileMenu: React.FC<IProfileMenuProps> = ({ authStore }) => {
-  const [isShow, setIsShow] = React.useState(false);
   const handleClickLogout = async () => {
     await localStorage.removeItem('token');
     await authStore?.setAuth(false);
   };
-  const ref = React.useRef(null);
-  const handleClickOutside = (event) => {
-    if (ref.current && !ref.current.contains(event.target)) {
-      setIsShow(false);
-    }
-  };
 
-  React.useEffect(() => {
-    // Добавляем обработчик нажатия вне компонента при монтировании компонента
-    document.addEventListener('mousedown', handleClickOutside);
-    // Удаляем обработчик нажатия вне компонента при размонтировании компонента
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, []);
+  React.useEffect(() => {}, []);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
