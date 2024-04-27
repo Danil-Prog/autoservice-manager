@@ -48,7 +48,7 @@ const SettingsMain: React.FC<ISettingsMain> = ({ jobStore }) => {
           </Typography>
           <div className={styles.job}>
             <form onSubmit={handleSubmit}>
-              <Button variant="outlined" color="success" name={'submit'}>
+              <Button variant="outlined" color="success" name={'submit'} type={'submit'}>
                 Сохранить
               </Button>
               <div className={styles.jobs}>
