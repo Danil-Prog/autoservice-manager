@@ -93,6 +93,11 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
     <form onSubmit={handleSubmit} className={styles.content}>
       <div className={styles.jobsContainer}>
         <div className={styles.job}>
+          <div className={styles.addJob}>
+            <Button variant="outlined" onClick={(event) => addInputPair(event)}>
+              Добавить работу
+            </Button>
+          </div>
           <div>
             {formData.jobs.map((pair, index) => (
               <div key={index} className={styles.jobs}>
@@ -156,11 +161,6 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
                 />
               </div>
             ))}
-          </div>
-          <div className={styles.addJob}>
-            <Button variant="outlined" onClick={(event) => addInputPair(event)}>
-              Добавить работу
-            </Button>
           </div>
         </div>
 
