@@ -31,7 +31,6 @@ const ProfileMenu: React.FC<IProfileMenuProps> = ({ authStore }) => {
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        {/*<Typography sx={{ minWidth: 100 }}><ThemeToggle /></Typography>*/}
         <ModalAddCar title={'Добавить клиента'} />
         <IconButton
           onClick={handleClick}

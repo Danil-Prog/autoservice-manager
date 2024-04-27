@@ -22,6 +22,7 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
   });
   const { createCar } = carStore!;
   const [open, setOpen] = React.useState(false);
+  const [error, setError] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const style = {
@@ -35,9 +36,15 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
     p: 4,
     borderRadius: 2
   };
-  const handleSubmit = (e) => {
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(car);
+    if (car.licencePlate.length < 6 || car.licencePlate.length > 9) {
+      setError(true);
+      return;
+    } else {
+      setError(false);
+    }
     try {
       createCar(car);
       setCar({
@@ -90,6 +97,8 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
                   id="standard-basic"
                   label="Номер машины"
                   variant="standard"
+                  error={error}
+                  helperText={error && 'Длина должна быть от 6 до 9'}
                 />
 
                 <TextField
