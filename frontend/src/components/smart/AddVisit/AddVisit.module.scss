@@ -16,6 +16,12 @@
       justify-content: center;
       flex-direction: column;
 
+      .addJob {
+        margin-top: 10px;
+        overflow: hidden;
+        align-self: flex-start;
+      }
+
       .job {
         flex: 9;
         width: 100%;
@@ -31,10 +37,6 @@
           border: var(--border) solid 1px;
           border-radius: 10px;
           margin: 10px 20px 10px 0;
-        }
-        .addJob {
-          margin-top: 20px;
-          overflow: hidden;
         }
       }
       .comment {

@@ -24,7 +24,7 @@ interface IAddVisit {
 const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
   const { currentCar, currentVisit, createVisit } = carStore!;
   const { receiveJobList, jobs } = jobStore!;
-  const sortedJobs: TJob[] = [...jobs].sort((a: TJob, b: TJob) => a.name.localeCompare(b.name));
+  const sortedJobs: TJob[] = [...jobs].sort((a: TJob, b: TJob) => a?.name?.localeCompare(b.name));
   const [editingList, setEditingList] = React.useState([]);
   const [formData, setFormData] = React.useState(
     currentVisit ?? {
@@ -92,12 +92,12 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
   return (
     <form onSubmit={handleSubmit} className={styles.content}>
       <div className={styles.jobsContainer}>
+        <div className={styles.addJob}>
+          <Button variant="outlined" onClick={(event) => addInputPair(event)}>
+            Добавить работу
+          </Button>
+        </div>
         <div className={styles.job}>
-          <div className={styles.addJob}>
-            <Button variant="outlined" onClick={(event) => addInputPair(event)}>
-              Добавить работу
-            </Button>
-          </div>
           <div>
             {formData.jobs.map((pair, index) => (
               <div key={index} className={styles.jobs}>
