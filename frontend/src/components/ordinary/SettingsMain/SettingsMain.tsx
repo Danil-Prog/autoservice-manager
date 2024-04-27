@@ -13,7 +13,7 @@ interface ISettingsMain {
 
 const SettingsMain: React.FC<ISettingsMain> = ({ jobStore }) => {
   const { receiveJobList, isLoading, isLoadingNewJob, jobs, addJob, deleteJob } = jobStore!;
-  const initialFormData = { id: 0, type: '', description: '', price: '', done: false };
+  const initialFormData = { id: 0, name: '', description: '', price: '', done: false };
   const [formData, setFormData] = React.useState(initialFormData);
 
   React.useEffect(() => {
@@ -48,7 +48,7 @@ const SettingsMain: React.FC<ISettingsMain> = ({ jobStore }) => {
           </Typography>
           <div className={styles.job}>
             <form onSubmit={handleSubmit}>
-              <Button variant="outlined" color="success" type={'submit'}>
+              <Button variant="outlined" color="success" name={'submit'}>
                 Сохранить
               </Button>
               <div className={styles.jobs}>
@@ -56,8 +56,8 @@ const SettingsMain: React.FC<ISettingsMain> = ({ jobStore }) => {
                   id="standard-basic"
                   label="Название работы"
                   variant="standard"
-                  name="type"
-                  value={formData.type}
+                  name="name"
+                  value={formData.name}
                   onChange={handleInputChange}
                   sx={{ m: 1, minWidth: 200, maxWidth: 400, width: 300 }}
                 />
