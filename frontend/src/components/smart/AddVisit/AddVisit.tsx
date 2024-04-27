@@ -49,7 +49,7 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
     });
   };
 
-  const handleSelectJobs = (index, field, value) => {
+  const handleSelectJobs = (index: number, field: keyof TJob, value: string) => {
     const newjobs = [...formData.jobs];
     const selectJob = jobs.find((job) => job.name === value);
     newjobs[index][field] = value;
@@ -76,7 +76,7 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
     });
   };
 
-  const addInputPair = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const addInputPair = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setFormData({
       ...formData,
@@ -158,7 +158,7 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
             ))}
           </div>
           <div className={styles.addJob}>
-            <Button variant="outlined" onClick={addInputPair}>
+            <Button variant="outlined" onClick={(event) => addInputPair(event)}>
               Добавить работу
             </Button>
           </div>
