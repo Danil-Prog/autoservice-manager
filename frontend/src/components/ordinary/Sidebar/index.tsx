@@ -68,7 +68,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
       </div>
       <AnimatePresence>
         <motion.div
-          initial="closed"
+          initial="open"
           animate={isShowSidebar ? 'open' : 'closed'}
           variants={sidebarVariants}
           transition={{ duration: 0.5 }}
