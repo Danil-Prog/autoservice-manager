@@ -5,7 +5,6 @@ import React from 'react';
 import styles from './ProfileMenu.module.scss';
 import { Avatar, Box, Divider, IconButton, ListItemIcon, Menu, MenuItem } from '@mui/material';
 import { Logout, Settings } from '@mui/icons-material';
-import ModalAddCar from '~/components/smart/ModalAddCar/ModalAddCar';
 import { Link } from 'react-router-dom';
 
 interface IProfileMenuProps {
@@ -31,7 +30,6 @@ const ProfileMenu: React.FC<IProfileMenuProps> = ({ authStore }) => {
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <ModalAddCar title={'Добавить клиента'} />
         <IconButton
           onClick={handleClick}
           size="small"

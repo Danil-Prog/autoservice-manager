@@ -1,34 +1,5 @@
-import React from 'react';
-import { inject } from 'mobx-react';
-import { observer } from 'mobx-react-lite';
-import { ICarStore } from '~/core/stores/Car.store';
-import styles from './HomePage.module.scss';
-import ClientCard from '~/components/ordinary/ClientCard/CarCard';
-import ClientCardInfo from '~/components/ordinary/ClientCardInfo/CarCardInfo';
-import EmptyItem from '~/components/simple/EmptyItem/EmptyItem';
-
-interface IHomePage {
-  carStore?: ICarStore;
-}
-
-const HomePage: React.FC<IHomePage> = ({ carStore }) => {
-  const { currentCar } = carStore!;
-
-  React.useEffect(() => {}, [currentCar]);
-  React.useEffect(() => {}, []);
-
-  return (
-    <div className={styles.container}>
-      {currentCar ? (
-        <>
-          <ClientCard />
-          <ClientCardInfo />
-        </>
-      ) : (
-        <EmptyItem />
-      )}
-    </div>
-  );
+const HomePage = () => {
+  return <div>Тут могла быть ваша реклама</div>;
 };
 
-export default inject('carStore')(observer(HomePage));
+export default HomePage;

@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AuthPage from './pages/AuthPage';
-import HomePage from '~/pages/HomePage';
+import CarMainPage from 'src/pages/CarMainPage';
 import PrivateRoute from '~/routes/PrivateRoute';
 import React from 'react';
 import { observer } from 'mobx-react-lite';
@@ -12,6 +12,8 @@ import StaticElementsWithSidebar from 'src/components/ordinary/StaticElementsWit
 import StaticElements from '~/components/ordinary/StaticElements';
 import AuthStore from '~/core/stores/Auth.store';
 import ThemeStore from '~/core/stores/Theme.store';
+import HomePage from '~/pages/HomePage';
+import CalendarPage from '~/pages/CalendarPage';
 
 interface IAppProps {
   authStore?: AuthStore;
@@ -62,7 +64,17 @@ const App: React.FC<IAppProps> = observer(({ authStore, themeStore }) => {
       />
       <BrowserRouter>
         <Routes>
-          <Route path={'/'} element={<StaticElementsWithSidebar />}>
+          <Route path={'/car-main'} element={<StaticElementsWithSidebar />}>
+            <Route
+              path={'/car-main'}
+              element={
+                <PrivateRoute>
+                  <CarMainPage />
+                </PrivateRoute>
+              }
+            />
+          </Route>
+          <Route path={'/'} element={<StaticElements />}>
             <Route
               path={'/'}
               element={
@@ -71,8 +83,14 @@ const App: React.FC<IAppProps> = observer(({ authStore, themeStore }) => {
                 </PrivateRoute>
               }
             />
-          </Route>
-          <Route path={'/'} element={<StaticElements />}>
+            <Route
+              path={'/calendar'}
+              element={
+                <PrivateRoute>
+                  <CalendarPage />
+                </PrivateRoute>
+              }
+            />
             <Route
               path={'/settings'}
               element={
