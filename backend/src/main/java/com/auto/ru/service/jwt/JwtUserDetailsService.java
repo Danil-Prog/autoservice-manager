@@ -1,6 +1,7 @@
 package com.auto.ru.service.jwt;
 
 import com.auto.ru.entity.User;
+import com.auto.ru.exception.BadRequestException;
 import com.auto.ru.exception.UserNotFoundException;
 import com.auto.ru.repository.UserRepository;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -24,7 +25,7 @@ public class JwtUserDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username).orElseThrow(
-                () -> new UserNotFoundException("User " + username + " not found"));
+                () -> new BadRequestException("Bad credentials"));
         List<SimpleGrantedAuthority> roles = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()));
         return new JwtUserDetails(user.getId(), username, user.getPassword(), roles);
     }
