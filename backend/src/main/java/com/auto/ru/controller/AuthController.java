@@ -37,13 +37,6 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @PostMapping("/registration")
-    public ResponseEntity<String> registration(@RequestBody User user) {
-        if (userService.saveUser(user))
-            return new ResponseEntity<>("User created", HttpStatus.OK);
-        return new ResponseEntity<>("User with the same name already exists", HttpStatus.FOUND);
-    }
-
     @PostMapping("/auth/login")
     public ResponseEntity<AuthResponse> login(@RequestBody AuthRequest authenticationRequest) {
         try {
@@ -56,7 +49,9 @@ public class AuthController {
         } catch (BadCredentialsException credentialsException) {
             throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
         }
-        JwtUserDetails userDetails = (JwtUserDetails) jwtUserDetailsService.loadUserByUsername(authenticationRequest.username());
+        JwtUserDetails userDetails = (JwtUserDetails) jwtUserDetailsService
+                .loadUserByUsername(authenticationRequest.username());
+
         String token = jwtTokenService.generateToken(userDetails);
         AuthResponse response = new AuthResponse(token);
 
