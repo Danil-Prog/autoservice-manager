@@ -1,11 +1,11 @@
 package com.auto.ru.controller;
 
-import com.auto.ru.dto.CarDto;
-import com.auto.ru.mapper.CarMapper;
-import com.auto.ru.entity.car.Car;
-import com.auto.ru.entity.car.CarSearchField;
-import com.auto.ru.entity.car.CarVisit;
-import com.auto.ru.service.CarService;
+import com.auto.ru.dto.ClientDto;
+import com.auto.ru.mapper.ClientMapper;
+import com.auto.ru.entity.client.Client;
+import com.auto.ru.entity.client.ClientSearchField;
+import com.auto.ru.entity.client.ClientVisit;
+import com.auto.ru.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,58 +26,59 @@ import java.util.List;
 import static com.auto.ru.config.SwaggerConfiguration.BEARER_AUTH_SCHEME;
 
 @RestController
-@RequestMapping("/api/v1/car")
-public class CarController {
+@RequestMapping("/api/v1/client")
+public class ClientController {
 
-    private final CarService carService;
+    private final ClientService clientService;
 
     @Autowired
-    public CarController(CarService carService) {
-        this.carService = carService;
+    public ClientController(ClientService clientService) {
+        this.clientService = clientService;
     }
 
     @PostMapping
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
-    public ResponseEntity<Car> addCar(@RequestBody Car car) {
-        return ResponseEntity.of(carService.addCar(car));
+    public ResponseEntity<Client> addClient(@RequestBody Client client) {
+        return ResponseEntity.of(clientService.addClient(client));
     }
 
     @GetMapping
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
-    public ResponseEntity<Page<CarDto>> getAllCars(
+    public ResponseEntity<Page<ClientDto>> getAllClients(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
-            @RequestParam(defaultValue = "") CarSearchField field,
+            @RequestParam(defaultValue = "") ClientSearchField field,
             @RequestParam(defaultValue = "") String value
     ) {
         PageRequest pageRequest = PageRequest.of(page, size);
-        Page<CarDto> cars = carService.findAllCars(field, value, pageRequest).map(CarMapper::toDto);
-        return ResponseEntity.ok(cars);
+        Page<ClientDto> clients = clientService.findAllClients(field, value, pageRequest).map(ClientMapper::toDto);
+
+        return ResponseEntity.ok(clients);
     }
 
-    @DeleteMapping
+    @PostMapping("/{id}")
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
-    public ResponseEntity<Car> deleteCar(@RequestParam Long id) {
-        carService.deleteCarById(id);
+    public ResponseEntity<Client> deleteClient(@PathVariable Long id) {
+        clientService.deleteClientById(id);
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/visit")
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
-    public ResponseEntity<List<CarVisit>> addVisit(@RequestBody CarVisit visit) {
-        return ResponseEntity.of(carService.addVisit(visit));
+    public ResponseEntity<List<ClientVisit>> addVisitToClient(@RequestBody ClientVisit visit) {
+        return ResponseEntity.of(clientService.addVisit(visit));
     }
 
     @PostMapping("/visit/{id}")
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
     public void deleteVisit(@PathVariable Long id) {
-        carService.deleteVisitById(id);
+        clientService.deleteVisitById(id);
     }
 
     @GetMapping("/{id}")
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
-    public ResponseEntity<Car> getCarById(@PathVariable Long id) {
-        Car car = carService.getCarById(id);
-        return ResponseEntity.ok(car);
+    public ResponseEntity<Client> getClientById(@PathVariable Long id) {
+        Client client = clientService.findByIdOrThrow(id);
+        return ResponseEntity.ok(client);
     }
 }

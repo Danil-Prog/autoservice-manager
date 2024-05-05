@@ -1,4 +1,4 @@
-package com.auto.ru.entity.car;
+package com.auto.ru.entity.client;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -22,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "autoservice_manager_visits")
-public class CarVisit {
+public class ClientVisit {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,6 +37,6 @@ public class CarVisit {
     @Column(name = "comment")
     private String comment;
 
-    @Column(name = "car_id")
-    private Long carId;
+    @Column(name = "client_id")
+    private Long clientId;
 }

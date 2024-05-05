@@ -1,4 +1,4 @@
-package com.auto.ru.entity.car;
+package com.auto.ru.entity.client;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -18,8 +18,8 @@ import java.util.List;
 @Getter
 @Setter
 @Entity
-@Table(name = "autoservice_manager_cars")
-public class Car {
+@Table(name = "autoservice_manager_clients")
+public class Client {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -49,16 +49,12 @@ public class Car {
     private Long odometer;
 
     @OneToMany(cascade = CascadeType.REMOVE)
-    private List<CarVisit> visits = new ArrayList<>();
+    private List<ClientVisit> visits = new ArrayList<>();
 
     @Column(name = "description", length = 1000)
     private String description;
 
-    public Car() {
-
-    }
-
-    public void setVisits(CarVisit carVisit) {
-        this.visits.add(carVisit);
+    public void setVisits(ClientVisit clientVisit) {
+        this.visits.add(clientVisit);
     }
 }

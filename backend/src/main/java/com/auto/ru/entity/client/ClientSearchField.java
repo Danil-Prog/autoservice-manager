@@ -1,6 +1,6 @@
-package com.auto.ru.entity.car;
+package com.auto.ru.entity.client;
 
-public enum CarSearchField {
+public enum ClientSearchField {
 
     MODEL,
     LICENCE_PLATE,
