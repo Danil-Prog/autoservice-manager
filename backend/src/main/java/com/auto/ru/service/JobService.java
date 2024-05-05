@@ -1,9 +1,8 @@
 package com.auto.ru.service;
 
-import com.auto.ru.entity.car.CarVisit;
-import com.auto.ru.entity.car.Job;
+import com.auto.ru.entity.client.JobTemplate;
 import com.auto.ru.exception.BadRequestException;
-import com.auto.ru.repository.JobRepository;
+import com.auto.ru.repository.JobTemplateRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,29 +13,25 @@ import java.util.Optional;
 @Service
 public class JobService {
 
-    private final JobRepository jobRepository;
+    private final JobTemplateRepository jobTemplateRepository;
 
     @Autowired
-    public JobService(JobRepository jobRepository) {
-        this.jobRepository = jobRepository;
+    public JobService(JobTemplateRepository jobTemplateRepository) {
+        this.jobTemplateRepository = jobTemplateRepository;
     }
 
-    /**
-     *  Поиск шаблонов {@link Job} которые не привязаны к {@link CarVisit}
-     */
-    public Page<Job> findAllJobs(String search, PageRequest pageRequest) {
-        return jobRepository.findAllByNameContainingAndIsTemplateTrue(search, pageRequest);
+    public Page<JobTemplate> getJobTemplates(String search, PageRequest pageRequest) {
+        return jobTemplateRepository.findAllByNameContains(search, pageRequest);
     }
 
-    public Optional<Job> addJob(Job job) {
-        job.setIsTemplate(true);
-        return Optional.of(jobRepository.save(job));
+    public Optional<JobTemplate> addJobTemplate(JobTemplate jobTemplate) {
+        return Optional.of(jobTemplateRepository.save(jobTemplate));
     }
 
-    public Job deleteJobById(Long id) {
-        Job job = jobRepository.findById(id)
+    public JobTemplate deleteJobTemplateById(Long id) {
+        JobTemplate job = jobTemplateRepository.findById(id)
                 .orElseThrow(() -> new BadRequestException("Job with id " + id + " not found"));
-        jobRepository.delete(job);
+        jobTemplateRepository.delete(job);
         return job;
     }
 }
