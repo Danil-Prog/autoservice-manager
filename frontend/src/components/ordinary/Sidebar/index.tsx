@@ -155,11 +155,11 @@ const Sidebar: React.FC<ISidebarProps> = ({ clientStore }) => {
                 )}
               </div>
               <div className={styles.pagination}>
-                {isShowSidebar ? (
+                {isShowSidebar && clients && clients.content?.length > 0 ? (
                   <Pagination
                     variant="outlined"
                     color="primary"
-                    count={clients?.totalPages || 0}
+                    count={clients.totalPages || 0}
                     onChange={(event, page) => {
                       receiveListClients(page - 1);
                       console.log(event);

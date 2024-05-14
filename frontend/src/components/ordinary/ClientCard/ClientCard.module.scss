@@ -28,3 +28,11 @@
     }
   }
 }
+
+.modalContentDeleteClient {
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  gap: 20%;
+  margin-top: 20px;
+}
