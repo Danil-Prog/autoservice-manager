@@ -1,22 +1,22 @@
 import { inject } from 'mobx-react';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { ICarStore } from '~/core/stores/Car.store';
-import styles from './CarCardInfo.module.scss';
+import { IClientStore } from '~/core/stores/Client.store';
+import styles from './ClientCardInfo.module.scss';
 import { Button, Divider } from '@mui/material';
 import AddVisit from '~/components/smart/AddVisit/AddVisit';
 import HistoryVisits from '~/components/smart/HistoryVisits/HistoryVisits';
 
 interface ICarCardInfo {
-  carStore?: ICarStore;
+  clientStore?: IClientStore;
 }
 
-const CarCardInfo: React.FC<ICarCardInfo> = ({ carStore }) => {
+const ClientCardInfo: React.FC<ICarCardInfo> = ({ clientStore }) => {
   const [isShowFormVisit, setShowFormVisit] = React.useState(false);
-  const { currentVisit, setCurrentVisit, currentCar, isLoadingNewVisit } = carStore!;
+  const { currentVisit, setCurrentVisit, currentClient, isLoadingNewVisit } = clientStore!;
   React.useEffect(() => {
     setShowFormVisit(false);
-  }, [currentCar, isLoadingNewVisit]);
+  }, [currentClient, isLoadingNewVisit]);
 
   return (
     <div className={styles.container}>
@@ -39,4 +39,4 @@ const CarCardInfo: React.FC<ICarCardInfo> = ({ carStore }) => {
   );
 };
 
-export default inject('carStore')(observer(CarCardInfo));
+export default inject('clientStore')(observer(ClientCardInfo));

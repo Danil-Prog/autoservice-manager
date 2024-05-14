@@ -1,14 +1,14 @@
 import React from 'react';
-import styles from './CarItem.module.scss';
+import styles from './ClientItem.module.scss';
 
-interface ICarItemProps {
-  item: TCar;
+interface IClientItemProps {
+  item: TClient;
   isSelected: boolean;
   // eslint-disable-next-line no-unused-vars
-  onSelect: (item: TCar) => void;
+  onSelect: (item: TClient) => void;
 }
 
-const CarItem: React.FC<ICarItemProps> = ({ item, isSelected, onSelect }) => {
+const ClientItem: React.FC<IClientItemProps> = ({ item, isSelected, onSelect }) => {
   const itemRef = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -24,7 +24,7 @@ const CarItem: React.FC<ICarItemProps> = ({ item, isSelected, onSelect }) => {
       ref={itemRef}
       onClick={() => onSelect(item)}
       style={{ padding: '10px', cursor: 'pointer' }}
-      className={styles.carItem}>
+      className={styles.clientItem}>
       <p style={{ flex: 1, paddingLeft: 5 }}>{item.licencePlate}</p>
       <p>{item.stamp}</p>
       <p>{item.model}</p>
@@ -33,4 +33,4 @@ const CarItem: React.FC<ICarItemProps> = ({ item, isSelected, onSelect }) => {
   );
 };
 
-export default CarItem;
+export default ClientItem;

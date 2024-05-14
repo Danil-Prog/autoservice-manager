@@ -1,4 +1,4 @@
-type TCar = {
+type TClient = {
   id: number;
   licencePlate: string;
   stamp: string;
@@ -23,7 +23,7 @@ type TVisit = {
   visitDate: string;
   jobs: TJob[];
   comment: string;
-  carId: number;
+  clientId: number;
 };
 
 type SortType = {
@@ -43,13 +43,13 @@ type PageableType = {
   unpaged: boolean;
 };
 
-type TCarPagination = {
+type TClientPagination = {
   totalPages: number;
   totalElements: number;
   pageable: PageableType;
   first: boolean;
   size: number;
-  content: TCar[];
+  content: TClient[];
   number: number;
   sort: SortType[];
   numberOfElements: number;

@@ -6,7 +6,7 @@ import { observer } from 'mobx-react-lite';
 import ProfileMenu from '~/components/simple/ProfileMenu';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@mui/material';
-import ModalAddCar from '~/components/smart/ModalAddCar/ModalAddCar';
+import ModalAddClient from '~/components/smart/ModalAddClient/ModalAddClient';
 
 interface IHeaderProps {
   authStore?: AuthStore;
@@ -18,7 +18,7 @@ const Header: React.FC<IHeaderProps> = () => {
   //   await authStore?.setAuth(false);
   // };
   const location = useLocation();
-  const isSpecificPath = location.pathname === '/car-main';
+  const isSpecificPath = location.pathname === '/client-main';
 
   return (
     <>
@@ -33,12 +33,12 @@ const Header: React.FC<IHeaderProps> = () => {
               Календарь
             </Button>
           </Link>
-          <Link to={'/car-main'} className={styles.button}>
+          <Link to={'/client-main'} className={styles.button}>
             <Button variant="contained" color={'inherit'}>
               Клиенты
             </Button>
           </Link>
-          {isSpecificPath ? <ModalAddCar title={'Добавить клиента'} /> : null}
+          {isSpecificPath ? <ModalAddClient title={'Добавить клиента'} /> : null}
           <ProfileMenu />
         </div>
       </div>

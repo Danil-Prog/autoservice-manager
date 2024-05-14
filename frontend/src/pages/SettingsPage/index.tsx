@@ -1,7 +1,7 @@
 import React from 'react';
 import { inject } from 'mobx-react';
 import { observer } from 'mobx-react-lite';
-import { ICarStore } from '~/core/stores/Car.store';
+import { IClientStore } from '~/core/stores/Client.store';
 import styles from './SettingsPage.module.scss';
 import ListSubheader from '@mui/material/ListSubheader';
 import List from '@mui/material/List';
@@ -16,7 +16,7 @@ import { Container } from '@mui/material';
 import SettingsMain from '~/components/ordinary/SettingsMain/SettingsMain';
 
 interface ISettingsPage {
-  carStore?: ICarStore;
+  clientStore?: IClientStore;
 }
 
 const SettingsPage: React.FC<ISettingsPage> = () => {
@@ -100,4 +100,4 @@ const SettingsPage: React.FC<ISettingsPage> = () => {
   );
 };
 
-export default inject('carStore')(observer(SettingsPage));
+export default inject('clientStore')(observer(SettingsPage));

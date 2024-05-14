@@ -2,12 +2,14 @@ export interface AuthResponse {
   token: string;
 }
 
-export interface CarResponse {
-  content: TCar[];
+export interface ClientResponse {
+  content: TClient[];
 }
-export interface JobResponse {
-  content: TJob[];
-}
+
 export interface VisitsResponse {
+  content: TVisit[];
+}
+
+export interface JobResponse {
   content: TJob[];
 }

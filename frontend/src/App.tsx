@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import AuthPage from './pages/AuthPage';
-import CarMainPage from 'src/pages/CarMainPage';
+import ClientMainPage from 'src/pages/ClientMainPage';
 import PrivateRoute from '~/routes/PrivateRoute';
 import React from 'react';
 import { observer } from 'mobx-react-lite';
@@ -64,12 +64,12 @@ const App: React.FC<IAppProps> = observer(({ authStore, themeStore }) => {
       />
       <BrowserRouter>
         <Routes>
-          <Route path={'/car-main'} element={<StaticElementsWithSidebar />}>
+          <Route path={'/client-main'} element={<StaticElementsWithSidebar />}>
             <Route
-              path={'/car-main'}
+              path={'/client-main'}
               element={
                 <PrivateRoute>
-                  <CarMainPage />
+                  <ClientMainPage />
                 </PrivateRoute>
               }
             />

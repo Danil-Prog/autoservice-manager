@@ -1,17 +1,17 @@
 import { makeAutoObservable, runInAction } from 'mobx';
 import { toast } from 'react-hot-toast';
 import $api from '~/core/services/http';
-import { CarResponse } from '~/core/models/response/AuthResponse';
+import { ClientResponse, VisitsResponse } from '~/core/models/response/AuthResponse';
 
-class CarStore {
+class ClientStore {
   isLoading: boolean = false;
   isLoadingSidebar: boolean = false;
-  isLoadingCurrentCar: boolean = false;
-  isLoadingSearchCar: boolean = false;
+  isLoadingCurrentClient: boolean = false;
+  isLoadingSearchClient: boolean = false;
   isLoadingNewVisit: boolean = false;
-  cars: TCarPagination | null = null;
-  currentCar: TCar | null = null;
-  currentCarVisits: TVisit[] = [];
+  clients: TClientPagination | null = null;
+  currentClient: TClient | null = null;
+  currentClientVisits: TVisit[] = [];
   currentVisit: TVisit | null = null;
 
   constructor() {
@@ -22,18 +22,18 @@ class CarStore {
     this.isLoading = bool;
   };
 
-  createCar = async (car: TCar) => {
+  createClient = async (client: TClient) => {
     try {
       runInAction(() => {
         this.isLoadingSidebar = true;
       });
-      await $api.post<CarResponse>(process.env['REACT_APP_ROUTE_PREFIX'] + '/car', car);
+      await $api.post<ClientResponse>(process.env['REACT_APP_ROUTE_PREFIX'] + '/client', client);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.error('*---createCar', error);
+        console.error('*---createClient', error);
         toast.error(`${error.message}`);
       } else {
-        console.error('*---createCar', error);
+        console.error('*---createClient', error);
         toast.error('An unknown error occurred');
       }
     } finally {
@@ -43,19 +43,19 @@ class CarStore {
     }
   };
 
-  deleteCar = async (id: number) => {
+  deleteClient = async (id: number) => {
     try {
       runInAction(() => {
         this.isLoadingSidebar = true;
       });
-      await $api.delete<CarResponse>(process.env['REACT_APP_ROUTE_PREFIX'] + `/car?id=${id}`);
+      await $api.delete<ClientResponse>(process.env['REACT_APP_ROUTE_PREFIX'] + `/client?id=${id}`);
       toast.success(`Операция выполнена успешно`);
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.error('*---deleteCar', error);
+        console.error('*---deleteClient', error);
         toast.error(`${error.message}`);
       } else {
-        console.error('*---deleteCar', error);
+        console.error('*---deleteClient', error);
         toast.error('An unknown error occurred');
       }
     } finally {
@@ -70,7 +70,10 @@ class CarStore {
       runInAction(() => {
         this.isLoadingNewVisit = true;
       });
-      await $api.post<CarResponse>(process.env['REACT_APP_ROUTE_PREFIX'] + '/car/visit', visit);
+      await $api.post<ClientResponse>(
+        process.env['REACT_APP_ROUTE_PREFIX'] + '/client/visit',
+        visit
+      );
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error('*---createVisit', error);
@@ -86,90 +89,94 @@ class CarStore {
     }
   };
 
-  // Получение списка машин
-  receiveListCars = async (page?: number) => {
+  // Получение списка клиентов
+  receiveListClients = async (page?: number) => {
     try {
       this.setLoading(true);
-      const response = await $api.get<TCarPagination>(
-        process.env['REACT_APP_ROUTE_PREFIX'] + `/car?page=${page ?? '0'}`
+      const response = await $api.get<TClientPagination>(
+        process.env['REACT_APP_ROUTE_PREFIX'] + `/client?page=${page ?? '0'}`
       );
       runInAction(() => {
-        this.cars = response.data;
+        this.clients = response.data;
       });
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.error('*---receiveListCars', error);
+        console.error('*---receiveListClients', error);
         toast.error(`${error.message}`);
       } else {
-        console.error('*---receiveListCars', error);
+        console.error('*---receiveListClients', error);
         toast.error('An unknown error occurred');
       }
     } finally {
       this.setLoading(false);
     }
   };
-  // Поиск машины
-  searchCar = async (field: string, value: string) => {
+  // Поиск клиента
+  searchClient = async (field: string, value: string) => {
     try {
       runInAction(() => {
-        this.isLoadingSearchCar = true;
+        this.isLoadingSearchClient = true;
       });
-      const response = await $api.get<TCarPagination>(
-        process.env['REACT_APP_ROUTE_PREFIX'] + `/car?field=${field}&value=${value}`
+      const response = await $api.get<TClientPagination>(
+        process.env['REACT_APP_ROUTE_PREFIX'] + `/client?field=${field}&value=${value}`
       );
       runInAction(() => {
-        this.cars = response.data;
+        this.clients = response.data;
       });
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.error('*---searchCar', error);
+        console.error('*---searchClient', error);
         toast.error(`${error.message}`);
       } else {
-        console.error('*---searchCar', error);
+        console.error('*---searchClient', error);
         toast.error('An unknown error occurred');
       }
     } finally {
       runInAction(() => {
-        this.isLoadingSearchCar = false;
+        this.isLoadingSearchClient = false;
       });
     }
   };
 
   // Получение информации по выбранной машине
-  receiveCurrentCar = async (id: number) => {
+  receiveCurrentClient = async (id: number) => {
     try {
       runInAction(() => {
-        this.isLoadingCurrentCar = true;
+        this.isLoadingCurrentClient = true;
       });
-      const response = await $api.get<TCar>(process.env['REACT_APP_ROUTE_PREFIX'] + `/car/${id}`);
+      const response = await $api.get<TClient>(
+        process.env['REACT_APP_ROUTE_PREFIX'] + `/client/${id}`
+      );
 
       const reverseVisits: TVisit[] = [...response?.data?.visits]?.reverse();
       runInAction(() => {
-        this.currentCar = { ...response.data, visits: reverseVisits };
+        this.currentClient = { ...response.data, visits: reverseVisits };
       });
     } catch (error: unknown) {
       if (error instanceof Error) {
-        console.error('*---receiveCurrentCar', error);
+        console.error('*---receiveCurrentClient', error);
         toast.error(`${error.message}`);
       } else {
-        console.error('*---receiveCurrentCar', error);
+        console.error('*---receiveCurrentClient', error);
         toast.error('An unknown error occurred');
       }
     } finally {
       runInAction(() => {
-        this.isLoadingCurrentCar = false;
+        this.isLoadingCurrentClient = false;
       });
     }
   };
 
   // Получение списка посещений для машины
-  receiveListVisits = (id: number) => {
+  receiveListVisits = async (id: number) => {
     try {
       this.setLoading(true);
-      // const response = await $api.post<AuthResponse>(process.env.REACT_APP_ROUTE_PREFIX + '/cars/visits/${id}');
-      const response = require('./__mock__/data.js').data[`/cars/visits/${id}`];
+      const response = await $api.post<VisitsResponse>(
+        process.env['REACT_APP_ROUTE_PREFIX'] + `/client/visit/${id}`
+      );
+      // const response = require('./__mock__/data.js').data[`/cars/visits/${id}`];
       runInAction(() => {
-        this.currentCarVisits = response;
+        this.currentClientVisits = response;
       });
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -191,6 +198,6 @@ class CarStore {
   };
 }
 
-export default CarStore;
+export default ClientStore;
 
-export interface ICarStore extends CarStore {}
+export interface IClientStore extends ClientStore {}

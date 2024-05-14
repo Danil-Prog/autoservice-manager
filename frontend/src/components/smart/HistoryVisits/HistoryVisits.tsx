@@ -1,5 +1,5 @@
 import React from 'react';
-import { ICarStore } from '~/core/stores/Car.store';
+import { IClientStore } from '~/core/stores/Client.store';
 import { inject } from 'mobx-react';
 import { observer } from 'mobx-react-lite';
 import styles from './HistoryVisits.module.scss';
@@ -9,17 +9,17 @@ import AddVisit from '~/components/smart/AddVisit/AddVisit';
 import { formatDate } from '~/core/utils/formatDate';
 
 interface IHistoryVisits {
-  carStore?: ICarStore;
+  clientStore?: IClientStore;
 }
 
-const HistoryVisits: React.FC<IHistoryVisits> = ({ carStore }) => {
-  const { setCurrentVisit, currentVisit, currentCar, isLoadingNewVisit, receiveCurrentCar } =
-    carStore!;
+const HistoryVisits: React.FC<IHistoryVisits> = ({ clientStore }) => {
+  const { setCurrentVisit, currentVisit, currentClient, isLoadingNewVisit, receiveCurrentClient } =
+    clientStore!;
   const handleClickVisit = (visit: TVisits) => {
     setCurrentVisit(visit);
   };
   React.useEffect(() => {
-    receiveCurrentCar(currentCar.id);
+    receiveCurrentClient(currentClient.id);
   }, [isLoadingNewVisit]);
 
   return (
@@ -28,7 +28,7 @@ const HistoryVisits: React.FC<IHistoryVisits> = ({ carStore }) => {
         <AddVisit />
       ) : (
         <div className={styles.itemsContainer}>
-          {currentCar?.visits.map((visit: TVisits, index: number) => (
+          {currentClient?.visits.map((visit: TVisits, index: number) => (
             <div
               key={index + 'visit'}
               className={styles.item}
@@ -47,4 +47,4 @@ const HistoryVisits: React.FC<IHistoryVisits> = ({ carStore }) => {
   );
 };
 
-export default inject('carStore')(observer(HistoryVisits));
+export default inject('clientStore')(observer(HistoryVisits));

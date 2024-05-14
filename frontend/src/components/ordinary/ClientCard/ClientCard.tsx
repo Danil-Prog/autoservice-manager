@@ -1,22 +1,22 @@
 import { inject } from 'mobx-react';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { ICarStore } from '~/core/stores/Car.store';
-import styles from './CarCard.module.scss';
+import { IClientStore } from '~/core/stores/Client.store';
+import styles from './ClientCard.module.scss';
 import EmptyItem from '~/components/simple/EmptyItem/EmptyItem';
 import { Button, Skeleton, TextField } from '@mui/material';
 
-interface ICarCard {
-  carStore?: ICarStore;
+interface IClientCard {
+  clientStore?: IClientStore;
 }
 
-const CarCard: React.FC<ICarCard> = ({ carStore }) => {
-  const { currentCar, deleteCar, isLoadingCurrentCar } = carStore!;
-  React.useEffect(() => {}, [currentCar]);
+const ClientCard: React.FC<IClientCard> = ({ clientStore }) => {
+  const { currentClient, deleteClient, isLoadingCurrentClient } = clientStore!;
+  React.useEffect(() => {}, [currentClient]);
   return (
     <div className={styles.container}>
-      {isLoadingCurrentCar ? (
-        <div className={styles.carInfo}>
+      {isLoadingCurrentClient ? (
+        <div className={styles.clientInfo}>
           <Skeleton variant="rounded" width={207} height={48} />
           <Skeleton variant="rounded" width={207} height={48} />
           <Skeleton variant="rounded" width={207} height={48} />
@@ -24,86 +24,89 @@ const CarCard: React.FC<ICarCard> = ({ carStore }) => {
           <Skeleton variant="rounded" width={207} height={48} />
           <Skeleton variant="rounded" width={207} height={48} />
           <Skeleton variant="rounded" width={207} height={48} />
-          <div className={styles.deleteCar}>
+          <div className={styles.deleteClient}>
             <Skeleton variant="rounded" width={180} height={40} />
           </div>
         </div>
       ) : (
         <>
-          {currentCar ? (
-            <div className={styles.carInfo}>
+          {currentClient ? (
+            <div className={styles.clientInfo}>
               <TextField
                 id="standard-read-only-input"
                 label="Номерной знак"
-                value={currentCar.licencePlate ?? ''}
+                value={currentClient.licencePlate ?? ''}
                 InputProps={{
                   readOnly: true
                 }}
                 variant="standard"
-                className={styles.carInfoItem}
+                className={styles.clientInfoItem}
               />
               <TextField
                 id="standard-read-only-input"
                 label="Марка"
-                value={currentCar.stamp ?? ''}
+                value={currentClient.stamp ?? ''}
                 InputProps={{
                   readOnly: true
                 }}
                 variant="standard"
-                className={styles.carInfoItem}
+                className={styles.clientInfoItem}
               />
               <TextField
                 id="standard-read-only-input"
                 label="Модель"
-                value={currentCar.model ?? ''}
+                value={currentClient.model ?? ''}
                 InputProps={{
                   readOnly: true
                 }}
                 variant="standard"
-                className={styles.carInfoItem}
+                className={styles.clientInfoItem}
               />
               <TextField
                 id="standard-read-only-input"
                 label="VIN"
-                value={currentCar.bodyNumber ?? ''}
+                value={currentClient.bodyNumber ?? ''}
                 InputProps={{
                   readOnly: true
                 }}
                 variant="standard"
-                className={styles.carInfoItem}
+                className={styles.clientInfoItem}
               />
               <TextField
                 id="standard-read-only-input"
                 label="Год"
-                value={currentCar.year ?? ''}
+                value={currentClient.year ?? ''}
                 InputProps={{
                   readOnly: true
                 }}
                 variant="standard"
-                className={styles.carInfoItem}
+                className={styles.clientInfoItem}
               />
               <TextField
                 id="standard-read-only-input"
                 label="Масло"
-                value={currentCar.oil ?? ''}
+                value={currentClient.oil ?? ''}
                 InputProps={{
                   readOnly: true
                 }}
                 variant="standard"
-                className={styles.carInfoItem}
+                className={styles.clientInfoItem}
               />
               <TextField
                 id="standard-read-only-input"
                 label="Пробег"
-                value={currentCar.odometer ?? ''}
+                value={currentClient.odometer ?? ''}
                 InputProps={{
                   readOnly: true
                 }}
                 variant="standard"
-                className={styles.carInfoItem}
+                className={styles.clientInfoItem}
               />
-              <div className={styles.deleteCar}>
-                <Button variant="outlined" color="error" onClick={() => deleteCar(currentCar.id)}>
+              <div className={styles.deleteClient}>
+                <Button
+                  variant="outlined"
+                  color="error"
+                  onClick={() => deleteClient(currentClient.id)}>
                   Удалить машину
                 </Button>
               </div>
@@ -117,4 +120,4 @@ const CarCard: React.FC<ICarCard> = ({ carStore }) => {
   );
 };
 
-export default inject('carStore')(observer(CarCard));
+export default inject('clientStore')(observer(ClientCard));

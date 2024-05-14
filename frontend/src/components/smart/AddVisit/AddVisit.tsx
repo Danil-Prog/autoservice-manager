@@ -1,7 +1,7 @@
 import { inject } from 'mobx-react';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { ICarStore } from '~/core/stores/Car.store';
+import { IClientStore } from '~/core/stores/Client.store';
 import styles from './AddVisit.module.scss';
 import {
   Button,
@@ -17,24 +17,24 @@ import EditIcon from '@mui/icons-material/Edit';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
 
 interface IAddVisit {
-  carStore?: ICarStore;
+  clientStore?: IClientStore;
   jobStore?: IJobStore;
 }
 
-const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
-  const { currentCar, currentVisit, createVisit } = carStore!;
+const AddVisit: React.FC<IAddVisit> = ({ clientStore, jobStore }) => {
+  const { currentClient, currentVisit, createVisit } = clientStore!;
   const { receiveJobList, jobs } = jobStore!;
   const sortedJobs: TJob[] = [...jobs].sort((a: TJob, b: TJob) => a?.name?.localeCompare(b.name));
   const [editingList, setEditingList] = React.useState([]);
   const [formData, setFormData] = React.useState(
     currentVisit ?? {
       comment: '',
-      carId: currentCar?.id,
+      clientId: currentClient?.id,
       jobs: [{ name: '', description: '', price: '' }]
     }
   );
 
-  React.useEffect(() => {}, [currentCar, currentVisit]);
+  React.useEffect(() => {}, [currentClient, currentVisit]);
 
   React.useEffect(() => {
     receiveJobList();
@@ -186,4 +186,4 @@ const AddVisit: React.FC<IAddVisit> = ({ carStore, jobStore }) => {
   );
 };
 
-export default inject('carStore', 'jobStore')(observer(AddVisit));
+export default inject('clientStore', 'jobStore')(observer(AddVisit));

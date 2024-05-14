@@ -20,7 +20,7 @@ class JobStore {
     try {
       this.setLoading(true);
       const response = await $api.get<JobResponse>(
-        process.env['REACT_APP_ROUTE_PREFIX'] + '/job?size=9999'
+        process.env['REACT_APP_ROUTE_PREFIX'] + '/job/templates?size=9999'
       );
       const reverseResponse = [...response.data.content].reverse();
       runInAction(() => {
@@ -44,7 +44,7 @@ class JobStore {
       runInAction(() => {
         this.isLoadingNewJob = true;
       });
-      await $api.post<JobResponse>(process.env['REACT_APP_ROUTE_PREFIX'] + '/job', job);
+      await $api.post<JobResponse>(process.env['REACT_APP_ROUTE_PREFIX'] + '/job/templates', job);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error('*---addJob', error);
@@ -66,7 +66,7 @@ class JobStore {
       runInAction(() => {
         this.isLoadingNewJob = true;
       });
-      await $api.post<JobResponse>(process.env['REACT_APP_ROUTE_PREFIX'] + `/job/${id}`);
+      await $api.post<JobResponse>(process.env['REACT_APP_ROUTE_PREFIX'] + `/job/templates/${id}`);
     } catch (error: unknown) {
       if (error instanceof Error) {
         console.error('*---deleteJob', error);

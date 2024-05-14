@@ -1,17 +1,17 @@
 import { Backdrop, Box, Button, Fade, Modal, TextField } from '@mui/material';
 import React from 'react';
-import styles from './ModalAddCar.module.scss';
-import { ICarStore } from '~/core/stores/Car.store';
+import styles from './ModalAddClient.module.scss';
+import { IClientStore } from '~/core/stores/Client.store';
 import { inject } from 'mobx-react';
 import { observer } from 'mobx-react-lite';
 
-interface IModalAddCarProps {
+interface IModalAddClientProps {
   title: string;
-  carStore?: ICarStore;
+  clientStore?: IClientStore;
 }
 
-const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
-  const [car, setCar] = React.useState({
+const ModalAddClient: React.FC<IModalAddClientProps> = ({ title, clientStore }) => {
+  const [client, setClient] = React.useState({
     licencePlate: '',
     stamp: '',
     model: '',
@@ -20,7 +20,7 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
     oil: '',
     odometer: null
   });
-  const { createCar } = carStore!;
+  const { createClient } = clientStore!;
   const [open, setOpen] = React.useState(false);
   const [error, setError] = React.useState(false);
   const handleOpen = () => setOpen(true);
@@ -39,15 +39,15 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (car.licencePlate.length < 6 || car.licencePlate.length > 9) {
+    if (client.licencePlate.length < 6 || client.licencePlate.length > 9) {
       setError(true);
       return;
     } else {
       setError(false);
     }
     try {
-      createCar(car);
-      setCar({
+      createClient(client);
+      setClient({
         licencePlate: '',
         stamp: '',
         model: '',
@@ -63,8 +63,8 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
   };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setCar((prevCar) => ({
-      ...prevCar,
+    setClient((prevClient) => ({
+      ...prevClient,
       [name]: value
     }));
   };
@@ -89,11 +89,11 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
           }}>
           <Fade in={open}>
             <Box sx={style}>
-              <form onSubmit={handleSubmit} className={styles.createCarForm}>
+              <form onSubmit={handleSubmit} className={styles.createClientForm}>
                 <TextField
                   onChange={handleChange}
                   name="licencePlate"
-                  value={car.licencePlate}
+                  value={client.licencePlate}
                   id="standard-basic"
                   label="Номер машины"
                   variant="standard"
@@ -104,7 +104,7 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
                 <TextField
                   onChange={handleChange}
                   name="stamp"
-                  value={car.stamp}
+                  value={client.stamp}
                   id="standard-basic"
                   label="Марка"
                   variant="standard"
@@ -113,7 +113,7 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
                 <TextField
                   onChange={handleChange}
                   name="model"
-                  value={car.model}
+                  value={client.model}
                   id="standard-basic"
                   label="Модель"
                   variant="standard"
@@ -122,7 +122,7 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
                 <TextField
                   onChange={handleChange}
                   name="bodyNumber"
-                  value={car.bodyNumber}
+                  value={client.bodyNumber}
                   id="standard-basic"
                   label="VIN"
                   variant="standard"
@@ -131,7 +131,7 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
                 <TextField
                   onChange={handleChange}
                   name="year"
-                  value={car.year}
+                  value={client.year}
                   id="standard-basic"
                   label="Год"
                   variant="standard"
@@ -140,7 +140,7 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
                 <TextField
                   onChange={handleChange}
                   name="oil"
-                  value={car.oil}
+                  value={client.oil}
                   id="standard-basic"
                   label="Масло"
                   variant="standard"
@@ -149,7 +149,7 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
                 <TextField
                   onChange={handleChange}
                   name="odometer"
-                  value={car.odometer ?? ''}
+                  value={client.odometer ?? ''}
                   id="standard-basic"
                   label="Пробег"
                   variant="standard"
@@ -166,4 +166,4 @@ const ModalAddCar: React.FC<IModalAddCarProps> = ({ title, carStore }) => {
   );
 };
 
-export default inject('carStore')(observer(ModalAddCar));
+export default inject('clientStore')(observer(ModalAddClient));

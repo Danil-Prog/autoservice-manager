@@ -2,10 +2,10 @@ import styles from './Sidebar.module.scss';
 import { inject } from 'mobx-react';
 import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { ICarStore } from '~/core/stores/Car.store';
+import { IClientStore } from '~/core/stores/Client.store';
 import { AnimatePresence, motion } from 'framer-motion';
 import { IconArrow } from '~/components/icons/IconArrow';
-import CarItem from '~/components/simple/CarItem/CarItem';
+import ClientItem from '~/components/simple/ClientItem/ClientItem';
 import {
   Button,
   FormControl,
@@ -19,38 +19,38 @@ import {
 import EastIcon from '@mui/icons-material/East';
 
 interface ISidebarProps {
-  carStore?: ICarStore;
+  clientStore?: IClientStore;
 }
 
-const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
+const Sidebar: React.FC<ISidebarProps> = ({ clientStore }) => {
   const {
-    receiveListCars,
-    cars,
-    receiveCurrentCar,
+    receiveListClients,
+    clients,
+    receiveCurrentClient,
     isLoading,
     isLoadingSidebar,
-    isLoadingSearchCar,
-    searchCar
-  } = carStore!;
+    isLoadingSearchClient,
+    searchClient
+  } = clientStore!;
   const [isShowSidebar, setIsShowSidebar] = React.useState(true);
-  const [selectedItem, setSelectedItem] = React.useState<TCar | null>(null);
+  const [selectedItem, setSelectedItem] = React.useState<TClient | null>(null);
   const [searchField, setSearchField] = React.useState('LICENCE_PLATE');
   const [searchValue, setSearchValue] = React.useState('');
 
   React.useEffect(() => {
-    receiveListCars();
+    receiveListClients();
   }, [isLoadingSidebar]);
 
-  React.useEffect(() => {}, [isLoading, isLoadingSearchCar]);
+  React.useEffect(() => {}, [isLoading, isLoadingSearchClient]);
 
-  const handleSelect = (item: TCar) => {
-    receiveCurrentCar(item.id);
+  const handleSelect = (item: TClient) => {
+    receiveCurrentClient(item.id);
     setSelectedItem(item);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    searchCar(searchField, searchValue);
+    searchClient(searchField, searchValue);
   };
 
   const sidebarVariants = {
@@ -114,7 +114,7 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                   sx={{ flex: 1, width: '100%' }}
                 />
               </form>
-              <div className={styles.carList}>
+              <div className={styles.clientList}>
                 {isLoading ? (
                   <>
                     <Skeleton
@@ -143,12 +143,12 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                     />
                   </>
                 ) : (
-                  cars?.content?.map((car, index) => (
-                    <div key={index} className={styles.carItem}>
-                      <CarItem
-                        item={car}
-                        isSelected={selectedItem === car}
-                        onSelect={() => handleSelect(car)}
+                  clients?.content?.map((client, index) => (
+                    <div key={index} className={styles.clientItem}>
+                      <ClientItem
+                        item={client}
+                        isSelected={selectedItem === client}
+                        onSelect={() => handleSelect(client)}
                       />
                     </div>
                   ))
@@ -159,9 +159,9 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
                   <Pagination
                     variant="outlined"
                     color="primary"
-                    count={cars?.totalPages || 0}
+                    count={clients?.totalPages || 0}
                     onChange={(event, page) => {
-                      receiveListCars(page - 1);
+                      receiveListClients(page - 1);
                       console.log(event);
                     }}
                   />
@@ -175,4 +175,4 @@ const Sidebar: React.FC<ISidebarProps> = ({ carStore }) => {
   );
 };
 
-export default inject('carStore')(observer(Sidebar));
+export default inject('clientStore')(observer(Sidebar));

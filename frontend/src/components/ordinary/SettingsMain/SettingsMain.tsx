@@ -3,11 +3,11 @@ import { inject } from 'mobx-react';
 import React from 'react';
 import styles from './SettingsMain.module.scss';
 import { Button, TextField, Typography } from '@mui/material';
-import { ICarStore } from '~/core/stores/Car.store';
+import { IClientStore } from '~/core/stores/Client.store';
 import { IJobStore } from '~/core/stores/Job.store';
 
 interface ISettingsMain {
-  carStore?: ICarStore;
+  clientStore?: IClientStore;
   jobStore?: IJobStore;
 }
 
@@ -121,4 +121,4 @@ const SettingsMain: React.FC<ISettingsMain> = ({ jobStore }) => {
   );
 };
 
-export default inject('carStore', 'jobStore')(observer(SettingsMain));
+export default inject('clientStore', 'jobStore')(observer(SettingsMain));
