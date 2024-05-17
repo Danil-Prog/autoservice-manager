@@ -56,7 +56,7 @@ public class ClientController {
         return ResponseEntity.ok(clients);
     }
 
-    @PostMapping("/{id}")
+    @DeleteMapping("/{id}")
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
     public ResponseEntity<Client> deleteClient(@PathVariable Long id) {
         clientService.deleteClientById(id);
@@ -69,7 +69,7 @@ public class ClientController {
         return ResponseEntity.of(clientService.addVisit(visit));
     }
 
-    @PostMapping("/visit/{id}")
+    @DeleteMapping("/visit/{id}")
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
     public void deleteVisit(@PathVariable Long id) {
         clientService.deleteVisitById(id);
