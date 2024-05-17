@@ -67,8 +67,8 @@ function rebuildFrontend() {
     frontendBuildImage
 
     # Собираем и запускаем
-    docker compose -f docker-compose.yml -f docker-compose.prod.yml build
-    docker compose -f docker-compose.yml -f docker-compose.prod.yml up -d
+    docker compose -f docker-compose.yml -f docker-compose.prod.yml build frontend
+    docker compose -f docker-compose.yml -f docker-compose.prod.yml up frontend -d
 }
 
 function rebuildBackend() {
