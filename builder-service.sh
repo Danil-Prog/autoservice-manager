@@ -15,9 +15,10 @@ NGINX="reverse_proxy"
 function status() {
     docker compose ls
 }
+
 function upgradeProject() {
     echo -e "${YELLOW}Run command git pull${NC}"
-    #    git pull
+    git pull
     echo -e "${GREEN}Command 'git pull' successfully${NC}"
 }
 

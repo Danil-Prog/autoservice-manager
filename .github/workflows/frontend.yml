@@ -1,0 +1,22 @@
+name: frontend
+on:
+  push:
+    branches: ['main']
+    paths:
+      - 'frontend/**'
+
+jobs:
+
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: rebuild-front
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{  secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd autoservice-manager
+            ./builder-service.sh --rebuild-front
