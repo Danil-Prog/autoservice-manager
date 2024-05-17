@@ -1,6 +1,5 @@
 package com.auto.ru.controller;
 
-import com.auto.ru.entity.client.Job;
 import com.auto.ru.entity.client.JobTemplate;
 import com.auto.ru.service.JobService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -43,7 +42,7 @@ public class JobController {
         return ResponseEntity.of(jobService.addJobTemplate(jobTemplate));
     }
 
-    @PostMapping("/templates/{id}")
+    @DeleteMapping("/templates/{id}")
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
     public ResponseEntity<JobTemplate> deleteJobTemplate(@PathVariable("id") Long id) {
         JobTemplate deletedJobTemplate = jobService.deleteJobTemplateById(id);
