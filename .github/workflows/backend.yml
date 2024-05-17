@@ -1,0 +1,22 @@
+name: deploy
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - 'backend/**'
+
+jobs:
+
+  backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: rebuild-backend
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST_IP }}
+          username: ${{  secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd autoservice-manager
+            ./builder-service.sh --rebuild-back
