@@ -1,16 +1,18 @@
 package com.auto.ru.controller;
 
 import com.auto.ru.dto.ClientDto;
-import com.auto.ru.mapper.ClientMapper;
+import com.auto.ru.dto.ClientVisitDateRangeDto;
 import com.auto.ru.entity.client.Client;
 import com.auto.ru.entity.client.ClientSearchField;
 import com.auto.ru.entity.client.ClientVisit;
+import com.auto.ru.mapper.ClientMapper;
 import com.auto.ru.service.ClientService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
+import java.time.Instant;
 import java.util.List;
 
 import static com.auto.ru.config.SwaggerConfiguration.BEARER_AUTH_SCHEME;
@@ -54,6 +58,17 @@ public class ClientController {
         Page<ClientDto> clients = clientService.findAllClients(field, value, pageRequest).map(ClientMapper::toDto);
 
         return ResponseEntity.ok(clients);
+    }
+
+    @GetMapping("/visit")
+    @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)},
+    description = "Example params 'start=2024-01-01T12:00:00Z&end=2025-01-01T12:00:00Z'")
+    public ResponseEntity<List<ClientVisitDateRangeDto>> getClientVisitsByDateRange(
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant start,
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) Instant end
+    ) {
+        List<ClientVisitDateRangeDto> clientVisits = clientService.getClientVisitsByDateRange(start, end);
+        return ResponseEntity.ok(clientVisits);
     }
 
     @DeleteMapping("/{id}")

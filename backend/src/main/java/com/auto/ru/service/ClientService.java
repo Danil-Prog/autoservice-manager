@@ -1,5 +1,6 @@
 package com.auto.ru.service;
 
+import com.auto.ru.dto.ClientVisitDateRangeDto;
 import com.auto.ru.entity.client.Client;
 import com.auto.ru.entity.client.ClientSearchField;
 import com.auto.ru.entity.client.ClientVisit;
@@ -12,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -90,5 +92,24 @@ public class ClientService {
         client.getVisits().remove(clientVisit);
 
         clientVisitRepository.save(clientVisit);
+    }
+
+    public List<ClientVisitDateRangeDto> getClientVisitsByDateRange(Instant stateDate, Instant endDate) {
+        if (endDate.isBefore(stateDate)) {
+            throw new BadRequestException("End date cannot be before start date");
+        }
+        List<ClientVisit> clientVisits = clientVisitRepository.findByDateRange(stateDate, endDate);
+
+        return clientVisits.stream().map(clientVisit -> {
+            Client client = findByIdOrThrow(clientVisit.getClientId());
+            return new ClientVisitDateRangeDto(
+                    client.getId(),
+                    clientVisit.getId(),
+                    client.getLicencePlate(),
+                    client.getStamp(),
+                    client.getModel(),
+                    clientVisit.getVisitDate()
+            );
+        }).toList();
     }
 }
