@@ -71,9 +71,9 @@ public class ClientController {
         return ResponseEntity.ok(clientVisits);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping
     @Operation(security = {@SecurityRequirement(name = BEARER_AUTH_SCHEME)})
-    public ResponseEntity<Client> deleteClient(@PathVariable Long id) {
+    public ResponseEntity<Client> deleteClient(@RequestParam Long id) {
         clientService.deleteClientById(id);
         return ResponseEntity.ok().build();
     }
