@@ -11,8 +11,15 @@ import Box from '@mui/material/Box';
 import React from 'react';
 import { Button } from '@mui/material';
 import ru from 'date-fns/locale/ru';
+import MainStore from '~/core/stores/Main.store';
+import { inject } from 'mobx-react';
+import { observer } from 'mobx-react-lite';
 
-const CalendarPage = () => {
+interface ICalendarPageProps {
+  mainStore: MainStore;
+}
+
+const CalendarPage: React.FC<ICalendarPageProps> = ({ mainStore }) => {
   const WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
   const [currentDate, setCurrentDate] = React.useState(new Date());
   const firstDayOfMonth = startOfMonth(currentDate);
@@ -33,6 +40,7 @@ const CalendarPage = () => {
 
   const startingDayIndex = getDay(firstDayOfMonth);
 
+  const { receiveCalendarVisits, calendarVisits } = mainStore;
   React.useEffect(() => {}, [currentDate]);
   React.useEffect(() => {
     const initialArray = Array.from({ length: startingDayIndex - 1 }, () => ({
@@ -50,6 +58,7 @@ const CalendarPage = () => {
         date: format(day, 'dd.MM.yyyy')
       }))
     ]);
+    receiveCalendarVisits(firstDayOfMonth.toISOString(), lastDayOfMonth.toISOString());
   }, [currentDate]);
 
   const splitArray = (array: { id: number; title: string; date: string }[], size: number) => {
@@ -69,7 +78,7 @@ const CalendarPage = () => {
   const splitArrays = splitArray(formatMonth, 7);
   const paddedArrays = splitArrays.map((week) => padArray(week, 7));
 
-  console.log('paddedArray --->', paddedArrays);
+  console.log('paddedArrays ------->', paddedArrays);
 
   return (
     <Box style={{ height: '100%', width: '100%' }}>
@@ -124,13 +133,27 @@ const CalendarPage = () => {
         <div style={{ flex: 1, display: 'flex', flexDirection: 'column', height: '100%' }}>
           {paddedArrays.map((week, i) => (
             <div key={`week-${i}`} style={{ flex: 1, display: 'flex', flexDirection: 'row' }}>
-              {week.map((day: string, index: number) => (
-                <div
-                  key={`day-${index}`}
-                  style={{ padding: 10, border: '1px solid #000000', flex: 1, height: 300 }}>
-                  {day?.title}
-                </div>
-              ))}
+              {week.map((day: string, index: number) => {
+                // Фильтруем элементы из calendarVisits, где visitDate равен day?.date
+                const relevantVisits = calendarVisits.filter(
+                  (visit) => format(visit.visitDate, 'dd.MM.yyyy') === day.date
+                );
+
+                return (
+                  <div
+                    key={`day-${index}`}
+                    style={{ padding: 10, border: '1px solid #000000', flex: 1, height: 300 }}>
+                    {day?.title}
+                    {/* Рендерим список релевантных посещений */}
+                    {relevantVisits.map((visit, visitIndex) => (
+                      <div key={visitIndex}>
+                        Client ID: {visit.clientId}, Visit ID: {visit.visitId}, License Plate:{' '}
+                        {visit.licencePlate}, Stamp: {visit.stamp}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
             </div>
           ))}
         </div>
@@ -139,4 +162,4 @@ const CalendarPage = () => {
   );
 };
 
-export default CalendarPage;
+export default inject('mainStore')(observer(CalendarPage));

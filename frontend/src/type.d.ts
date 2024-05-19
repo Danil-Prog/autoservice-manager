@@ -1,13 +1,13 @@
 type TClient = {
   id: number;
   licencePlate: string;
-  stamp: string;
-  model: string;
+  stamp?: string;
+  model?: string;
   year: string;
-  bodyNumber: string;
-  oil: string;
-  odometer: number;
-  visits: TVisit[];
+  bodyNumber?: string;
+  oil?: string;
+  odometer?: number;
+  visits?: TVisit[];
 };
 
 type TJob = {
@@ -55,4 +55,13 @@ type TClientPagination = {
   numberOfElements: number;
   last: boolean;
   empty: boolean;
+};
+
+type TCalendarVisits = {
+  clientId: number;
+  visitId: number;
+  licencePlate: string;
+  stamp?: string;
+  model?: string;
+  visitDate: string;
 };
