@@ -6,7 +6,6 @@
   .item {
     flex: 1;
     display: flex;
-    cursor: pointer;
     border: 1px solid #9fb8ff;
     border-radius: 5px;
     margin: 10px 20px 0 0;
@@ -23,10 +22,22 @@
       width: 100px;
       display: inline-block;
     }
-
-    &:hover {
-      background-color: var(--hover);
-    }
   }
+}
+
+.trash,.select {
+  padding: 5px;
+  border-radius: 50px;
+  cursor: pointer;
+  &:hover {
+    background-color: var(--hover);
+  }
+}
+.modalContentDeleteVisit{
+  display: flex;
+  flex: 1;
+  justify-content: space-around;
+  gap: 20%;
+  margin-top: 20px;
 }
 

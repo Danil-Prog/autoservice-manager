@@ -89,6 +89,29 @@ class ClientStore {
     }
   };
 
+  deleteVisit = async (id: number) => {
+    try {
+      // runInAction(() => {
+      //   this.isLoadingNewVisit = true;
+      // });
+      await $api.delete<ClientResponse>(
+        process.env['REACT_APP_ROUTE_PREFIX'] + `/client/visit/${id}`
+      );
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        console.error('*---deleteVisit', error);
+        toast.error(`${error.message}`);
+      } else {
+        console.error('*---deleteVisit', error);
+        toast.error('An unknown error occurred');
+      }
+    } finally {
+      // runInAction(() => {
+      //   this.isLoadingNewVisit = false;
+      // });
+    }
+  };
+
   // Получение списка клиентов
   receiveListClients = async (page?: number) => {
     try {
