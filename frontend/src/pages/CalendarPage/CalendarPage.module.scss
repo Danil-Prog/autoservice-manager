@@ -1,0 +1,39 @@
+.visitDay {
+  border: #3c56a5 solid 1px;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  transition: all .2s ease-in-out;
+  &:hover {
+    background-color: var(--hover);
+    box-shadow: var(--hover) 5px 5px 10px;
+  }
+}
+
+.iconIsDone {
+  margin-left: 10px;
+}
+
+.visitDayInfo {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: stretch;
+}
+
+.headerDay {
+  height: 10%;
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.listVisitsInDay {
+  padding: 5px;
+}

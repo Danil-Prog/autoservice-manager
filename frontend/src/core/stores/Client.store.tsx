@@ -22,6 +22,12 @@ class ClientStore {
     this.isLoading = bool;
   };
 
+  clear = () => {
+    this.currentVisit = null;
+    this.currentClient = null;
+    this.currentClientVisits = [];
+  };
+
   createClient = async (client: TClient) => {
     try {
       runInAction(() => {

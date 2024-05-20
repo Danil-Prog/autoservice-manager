@@ -9,17 +9,22 @@ import {
 } from 'date-fns';
 import Box from '@mui/material/Box';
 import React from 'react';
-import { Button } from '@mui/material';
+import { Button, Divider } from '@mui/material';
 import ru from 'date-fns/locale/ru';
 import MainStore from '~/core/stores/Main.store';
 import { inject } from 'mobx-react';
 import { observer } from 'mobx-react-lite';
+import { Link } from 'react-router-dom';
+import ClientStore from '~/core/stores/Client.store';
+import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import styles from './CalendarPage.module.scss';
 
 interface ICalendarPageProps {
   mainStore: MainStore;
+  clientStore: ClientStore;
 }
 
-const CalendarPage: React.FC<ICalendarPageProps> = ({ mainStore }) => {
+const CalendarPage: React.FC<ICalendarPageProps> = ({ mainStore, clientStore }) => {
   const WEEKDAYS = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
   const [currentDate, setCurrentDate] = React.useState(new Date());
   const firstDayOfMonth = startOfMonth(currentDate);
@@ -41,6 +46,7 @@ const CalendarPage: React.FC<ICalendarPageProps> = ({ mainStore }) => {
   const startingDayIndex = getDay(firstDayOfMonth);
 
   const { receiveCalendarVisits, calendarVisits } = mainStore;
+  const { receiveCurrentClient } = clientStore;
   React.useEffect(() => {}, [currentDate]);
   React.useEffect(() => {
     const initialArray = Array.from({ length: startingDayIndex - 1 }, () => ({
@@ -77,8 +83,6 @@ const CalendarPage: React.FC<ICalendarPageProps> = ({ mainStore }) => {
 
   const splitArrays = splitArray(formatMonth, 7);
   const paddedArrays = splitArrays.map((week) => padArray(week, 7));
-
-  console.log('paddedArrays ------->', paddedArrays);
 
   return (
     <Box style={{ height: '100%', width: '100%' }}>
@@ -119,7 +123,7 @@ const CalendarPage: React.FC<ICalendarPageProps> = ({ mainStore }) => {
             <div
               key={`nameDay-${day}`}
               style={{
-                border: '1px solid #000',
+                border: '1px solid #808080FF',
                 padding: 10,
                 flex: 1,
                 justifyContent: 'center',
@@ -142,15 +146,35 @@ const CalendarPage: React.FC<ICalendarPageProps> = ({ mainStore }) => {
                 return (
                   <div
                     key={`day-${index}`}
-                    style={{ padding: 10, border: '1px solid #000000', flex: 1, height: 300 }}>
-                    {day?.title}
+                    style={{ padding: 0, border: '1px solid #808080FF', flex: 1, height: 300 }}>
+                    <div className={styles.headerDay}>{day?.title}</div>
+                    <Divider color={'#808080'} />
                     {/* Рендерим список релевантных посещений */}
-                    {relevantVisits.map((visit, visitIndex) => (
-                      <div key={visitIndex}>
-                        Client ID: {visit.clientId}, Visit ID: {visit.visitId}, License Plate:{' '}
-                        {visit.licencePlate}, Stamp: {visit.stamp}
-                      </div>
-                    ))}
+                    <div className={styles.listVisitsInDay}>
+                      {relevantVisits.map((visit, visitIndex) => (
+                        <Link
+                          key={visitIndex}
+                          to={`/client-main/${visit.visitId}`}
+                          onClick={() => receiveCurrentClient(visit.clientId)}
+                          style={{ textDecoration: 'none', color: '#000' }}>
+                          <div className={styles.visitDay}>
+                            <FiberManualRecordIcon
+                              style={{ color: '#328314' }}
+                              className={styles.iconIsDone}
+                              fontSize="small"
+                            />
+                            <div className={styles.visitDayInfo}>
+                              <div style={{ fontWeight: '600' }}>{visit.licencePlate}</div>
+                              <div>Марка: {visit.stamp}</div>
+                              <div>Модель: {visit.model}</div>
+                            </div>
+                            <div style={{ color: '#595959' }}>
+                              {format(visit.visitDate, 'HH:mm')}
+                            </div>
+                          </div>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 );
               })}
@@ -162,4 +186,4 @@ const CalendarPage: React.FC<ICalendarPageProps> = ({ mainStore }) => {
   );
 };
 
-export default inject('mainStore')(observer(CalendarPage));
+export default inject('mainStore', 'clientStore')(observer(CalendarPage));

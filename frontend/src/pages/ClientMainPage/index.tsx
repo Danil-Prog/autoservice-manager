@@ -12,10 +12,14 @@ interface IHomePage {
 }
 
 const ClientMainPage: React.FC<IHomePage> = ({ clientStore }) => {
-  const { currentClient } = clientStore!;
+  const { currentClient, clear } = clientStore!;
 
   React.useEffect(() => {}, [currentClient]);
-  React.useEffect(() => {}, []);
+  React.useEffect(() => {
+    return () => {
+      clear();
+    };
+  }, []);
 
   return (
     <div className={styles.container}>

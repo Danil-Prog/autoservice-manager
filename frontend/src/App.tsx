@@ -66,7 +66,7 @@ const App: React.FC<IAppProps> = observer(({ authStore, themeStore }) => {
         <Routes>
           <Route path={'/client-main'} element={<StaticElementsWithSidebar />}>
             <Route
-              path={'/client-main'}
+              path={'/client-main/:id'}
               element={
                 <PrivateRoute>
                   <ClientMainPage />
