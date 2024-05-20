@@ -16,6 +16,7 @@ type TJob = {
   description: string;
   price: number;
   done: boolean;
+  isTemplate: boolean;
 };
 
 type TVisit = {

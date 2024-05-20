@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './ClientItem.module.scss';
+import { Link } from 'react-router-dom';
 
 interface IClientItemProps {
   item: TClient;
@@ -20,16 +21,17 @@ const ClientItem: React.FC<IClientItemProps> = ({ item, isSelected, onSelect }) 
   }, [isSelected]);
 
   return (
-    <div
+    <Link
+      to={`/client-main/${item.id}`}
       ref={itemRef}
       onClick={() => onSelect(item)}
-      style={{ padding: '10px', cursor: 'pointer' }}
+      style={{ padding: '10px', cursor: 'pointer', textDecoration: 'none', color: '#000' }}
       className={styles.clientItem}>
       <p style={{ flex: 1, paddingLeft: 5 }}>{item.licencePlate}</p>
       <p>{item.stamp}</p>
       <p>{item.model}</p>
       <p style={{ paddingRight: 5 }}>{item.year}</p>
-    </div>
+    </Link>
   );
 };
 

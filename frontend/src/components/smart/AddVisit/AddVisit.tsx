@@ -30,7 +30,7 @@ const AddVisit: React.FC<IAddVisit> = ({ clientStore, jobStore }) => {
     currentVisit ?? {
       comment: '',
       clientId: currentClient?.id,
-      jobs: [{ name: '', description: '', price: '' }]
+      jobs: [{ name: '', description: '', price: '', isTemplate: true, done: false }]
     }
   );
 
@@ -80,7 +80,10 @@ const AddVisit: React.FC<IAddVisit> = ({ clientStore, jobStore }) => {
     e.preventDefault();
     setFormData({
       ...formData,
-      jobs: [...formData.jobs, { type: '', description: '', price: '' }]
+      jobs: [
+        ...formData.jobs,
+        { type: '', description: '', price: '', isTemplate: true, done: false }
+      ]
     });
   };
 
@@ -106,15 +109,16 @@ const AddVisit: React.FC<IAddVisit> = ({ clientStore, jobStore }) => {
                   style={{ marginLeft: 10 }}
                   icon={<EditOutlinedIcon />}
                   checkedIcon={<EditIcon />}
+                  value={pair.isTemplate}
                   onChange={(e) => handleEditJobs(index, e.target.checked)}
                 />
                 <FormControl
                   variant="standard"
                   sx={{ m: 1, minWidth: 120, maxWidth: 250, width: 250 }}>
-                  {editingList[index] ? (
+                  {!pair.isTemplate ? (
                     <TextField
                       id="standard-basic"
-                      label="Описание"
+                      label="Выполненная работа"
                       variant="standard"
                       value={pair.name}
                       onChange={(e) => handleInputChange(index, 'name', e.target.value)}
@@ -129,7 +133,10 @@ const AddVisit: React.FC<IAddVisit> = ({ clientStore, jobStore }) => {
                         labelId="demo-simple-select-standard-label"
                         id="demo-simple-select-standard"
                         value={pair.name}
-                        onChange={(e) => handleSelectJobs(index, 'name', e.target.value)}
+                        onChange={(e) => {
+                          handleSelectJobs(index, 'name', e.target.value);
+                          handleInputChange(index, 'isTemplate', true);
+                        }}
                         label="Работа">
                         <MenuItem value="">
                           <em>Очистить</em>

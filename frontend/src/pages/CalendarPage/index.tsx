@@ -20,8 +20,8 @@ import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import styles from './CalendarPage.module.scss';
 
 interface ICalendarPageProps {
-  mainStore: MainStore;
-  clientStore: ClientStore;
+  mainStore?: MainStore;
+  clientStore?: ClientStore;
 }
 
 const CalendarPage: React.FC<ICalendarPageProps> = ({ mainStore, clientStore }) => {
@@ -45,8 +45,8 @@ const CalendarPage: React.FC<ICalendarPageProps> = ({ mainStore, clientStore }) 
 
   const startingDayIndex = getDay(firstDayOfMonth);
 
-  const { receiveCalendarVisits, calendarVisits } = mainStore;
-  const { receiveCurrentClient } = clientStore;
+  const { receiveCalendarVisits, calendarVisits } = mainStore!;
+  const { receiveCurrentClient } = clientStore!;
   React.useEffect(() => {}, [currentDate]);
   React.useEffect(() => {
     const initialArray = Array.from({ length: startingDayIndex - 1 }, () => ({
