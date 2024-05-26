@@ -30,7 +30,7 @@ const AddVisit: React.FC<IAddVisit> = ({ clientStore, jobStore }) => {
     currentVisit ?? {
       comment: '',
       clientId: currentClient?.id,
-      jobs: [{ name: '', description: '', price: '', isTemplate: true, done: false }]
+      jobs: [{ name: '', description: '', price: '', isTemplate: true, isDone: false }]
     }
   );
 
@@ -82,7 +82,7 @@ const AddVisit: React.FC<IAddVisit> = ({ clientStore, jobStore }) => {
       ...formData,
       jobs: [
         ...formData.jobs,
-        { type: '', description: '', price: '', isTemplate: true, done: false }
+        { type: '', description: '', price: '', isTemplate: true, isDone: false }
       ]
     });
   };
